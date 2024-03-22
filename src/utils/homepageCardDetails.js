@@ -1,6 +1,6 @@
 export const data = [
     {
-        "title":"F2f",
+        "title":"Face to face",
         "price": "3150",
         "list": [
             "Food and Beverage",

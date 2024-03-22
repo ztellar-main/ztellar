@@ -252,7 +252,7 @@ const BuyCoursePage = () => {
                 </>
                 :
                 <>
-                <PaypalButton data={data} price={finalPrice} regType={registrationType} />
+                {/* <PaypalButton data={data} price={finalPrice} regType={registrationType} /> */}
                 <PaymongoButton regType={registrationType} price={finalPrice} courseId={courseId} ownerId={data?.author_id?._id} type={data?.type} />
                 </>
                 }
