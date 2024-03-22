@@ -14,6 +14,7 @@ import BannerMobileImage from "../icons/HomeRightImageOne.png";
 
 import CloudinaryImg from '../components/Author/CloudinaryImg'
 import {data} from '../utils/homepageCardDetails'
+import {Link} from 'react-router-dom'
 
 
 
@@ -85,7 +86,10 @@ function HomePage() {
 
             <HomeContainer>
               <GetStartButtonContainer>
-                <GetStartedButton>Get Started</GetStartedButton>
+                <Link to='/search?query='>
+                  <GetStartedButton>Get Started</GetStartedButton>
+                </Link>
+                
               </GetStartButtonContainer>
               <HomeText>Start you Ztellar experience today.</HomeText>
               <PoweredByText>Powered by:</PoweredByText>
