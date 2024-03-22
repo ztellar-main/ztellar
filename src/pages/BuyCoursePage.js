@@ -176,7 +176,6 @@ const BuyCoursePage = () => {
         )
     }
 
-    console.log(data?.type)
     let PHP = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'PHP',
@@ -187,12 +186,11 @@ const BuyCoursePage = () => {
     const f2f = `${data?.f2f_price}/f2f`;
     const virtual = `${data?.virtual_price}/virtual`
     const jpsme = `${data?.jpsme_price}/JPSME`
+    const normal = `${data?.price}/registration`
 
     const finalPrice = price.split('/')[0];
     const registrationType = price.split('/')[1];
 
-
-    console.log(data)
 
   return (
         <>
@@ -207,7 +205,7 @@ const BuyCoursePage = () => {
                 <Title>{data?.title}</Title>
 
                 {/* AUTHOR */}
-                <Author><i>By Engr.</i> Juan Tan</Author>
+                <Author>{data?.author_id?.username}</Author>
 
                 {/* SUB TITLE */}
                 <SubTitleContainer>
@@ -217,6 +215,12 @@ const BuyCoursePage = () => {
                 </SubTitleContainer>
 
                 {/* SELECT REGISTRATION */}
+                {courseId === '65fd67b74439e104b0c2103d' ?
+                <Select value={price} onChange={e => setPrice(e.target.value)}>
+                    <Option value={0}>Choose Registration</Option>
+                    <Option value={normal}>Registration Fee - {PHP.format(data?.price)}</Option>
+                </Select>
+                :
                 <Select value={price} onChange={e => setPrice(e.target.value)}>
                     <Option value={0}>Choose Registration</Option>
                     <Option value={f2f}>Face to Face Registration Fee - {PHP.format(data?.f2f_price)}</Option>
@@ -226,6 +230,8 @@ const BuyCoursePage = () => {
                     <Option value={jpsme}>JPSME Registration Fee - {PHP.format(data?.jpsme_price)}</Option>
                     }
                 </Select>
+                }
+
 
                 {/* SUB TITLE */}
                 <SubTitleContainer>

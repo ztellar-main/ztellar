@@ -347,6 +347,17 @@ const OwnedEvent = () => {
                         <QrMessage>Your registration is virtual.</QrMessage>
                         }
 
+                        {qrCode?.reg_type === 'registration' &&
+                            <QrContainer>
+                            <QRCode
+                                size={256}
+                                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                                value={qrCode.qr_code}
+                                viewBox={`0 0 256 256`}
+                                />
+                            </QrContainer>
+                        }
+
                     </QrCodeContainer>
 
                     

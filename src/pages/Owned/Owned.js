@@ -136,7 +136,7 @@ const Owned = () => {
         console.log(error)
     }
 
-    console.log(user?.course_owned.length)
+    // console.log(user?.course_owned.length)
 
   return (
     <>
@@ -145,7 +145,7 @@ const Owned = () => {
         <Wrapper>
             <Title>My courses and events</Title>
             
-            {user?.course_owned.length === 0
+            {user?.course_owned?.length === 0
             ?
             <p>NO COURSE OR EVENT</p>
             :

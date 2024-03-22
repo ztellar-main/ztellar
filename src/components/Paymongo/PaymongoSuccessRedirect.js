@@ -161,14 +161,21 @@ const PaymongoSuccessRedirect = () => {
                 include:{withCredentials:true}
             })
             setToatifyState(true)
+            console.log()
             setTimeout(() => {
-              dispatch(loginSuccess(savePayMongo.data.data4))
+              if(savePayMongo.data.data4 === undefined){
+                dispatch(loginSuccess(savePayMongo.data.data3))
+              }else{
+                dispatch(loginSuccess(savePayMongo.data.data4))
+              }
+              console.log({data1:savePayMongo.data.data3, data2:savePayMongo.data.data4})
+
               dispatch(paymongoIdClear())
               navigate('/owned')
             },500)
         }catch(err){
             navigate('/paymongo-refresh')
-            console.log('qweasdqewasd')
+            console.log(err)
         }
         }
         res()

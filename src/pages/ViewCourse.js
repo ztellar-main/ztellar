@@ -147,14 +147,14 @@ const ViewCourse = () => {
                         :
                         <>
                         {/* BUY BUTTON */}
-                        {data?.type === 'course'
+                        {courseId === '65fd612f881c189c54553617'
                         ?
-                        <Link to={`/buy-course?id=${courseId}`}>
-                            <BuyButtonTablet>Buy now</BuyButtonTablet>
-                        </Link>
-                        :
                         <Link to={`/course?id=65f73f2ae5f0979b8772bcd1`}>
                             <BuyButtonTablet>Buy this course to avail the event</BuyButtonTablet>
+                        </Link>
+                        :
+                        <Link to={`/buy-course?id=${courseId}`}>
+                            <BuyButtonTablet>Buy now</BuyButtonTablet>
                         </Link>
                         }
                         </>
@@ -190,7 +190,13 @@ const ViewCourse = () => {
                 <BottomRightContainer>
                     {/* BUTTONS CONTAINER */}
                     <ButtonsContainer>
-                        {recentSubjectData !== undefined
+
+                        
+
+                        
+                        
+
+                                                {recentSubjectData !== undefined
                         ?
                         <Link to={`/owned/${data?.type}/?${data?.type}Id=${data?._id}`} style={{textDecoration:"none"}}>
                             <BuyButton>View</BuyButton>
@@ -198,19 +204,19 @@ const ViewCourse = () => {
                         :
                         <>
                         {/* BUY BUTTON */}
-                        {data?.type === 'course'
+                        {courseId === '65fd612f881c189c54553617'
                         ?
+                        <Link to={`/course?id=65fd60b6881c189c54553606`}>
+                            <BuyButton>Buy this course to avail the event</BuyButton>
+                        </Link>
+                        :
+                        <>
                         <Link to={`/buy-course?id=${courseId}`}>
                             <BuyButton>Buy now</BuyButton>
                         </Link>
-                        :
-                        <Link to={`/course?id=65f73f2ae5f0979b8772bcd1`}>
-                            <BuyButton>Buy this course to avail the event</BuyButton>
-                        </Link>
-                        }
-
-                        
                         <AddToCartButton>Add to cart</AddToCartButton>
+                        </>
+                        }
                         </>
                         }
 

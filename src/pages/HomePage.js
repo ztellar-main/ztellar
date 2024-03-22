@@ -1,91 +1,187 @@
-import React from 'react'
-import vizcomSmallLogo from '../icons/vizcomSmallLogo.svg'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
+
+// COMPONENT IMPORT
+
+// import Footer from "./../Components/Footer";
+
+// IMAGE IMPORT
+// import BannerRightImg from "../icons/HomeBannerImage.png";
+import LogoIcon from "../icons/SmallLogo.png";
+import FeaturedOneIcon from "../icons/FeaturedImageOne.png";
+import FeaturedTwoIcon from "../icons/FeaturedTwoImage.png";
+import BannerMobileImage from "../icons/HomeRightImageOne.png";
+
 import CloudinaryImg from '../components/Author/CloudinaryImg'
+import {data} from '../utils/homepageCardDetails'
 
+
+
+// STYLES IMPORT
 import {
-  Container,
-  Sidings,
-  Wrapper,
+  HomepageContainer,
   BannerContainer,
-  TaglineContainer,
-  TaglineLeftContainer,
-  TaglineRightContainer,
-  TaglineMessage,
-  TaglineText,
-  PoweredBy,
-  PoweredByContainer,
-  PoweredByLogo,
-  PoweredByTitle,
-  BottomContainer,
-  BannerImg,
-  BannerLeftContainer,
-  BannerRightContainer,
-  Hr
-} from '../styles/Homepage.style'
+  BannerImage,
+  HomeContainer,
+  HomeText,
+  PoweredByText,
+  DisplayRowCon,
+  LogoContainer,
+  LogoImage,
+  VizcomText,
+  HomeLineHr,
+  GetStartedButton,
+  WhatContainer,
+  WhatTitle,
+  WhatDescription,
+  FeaturedContainer,
+  FeaturedTitle,
+  FeaturedHalfContainer,
+  FeaturedImage,
+  EarlyContainer,
+  EarlyTitle,
+  EarlySubTitle,
+  EarlyCardContainer,
+  SideCon,
+  UpperCon,
+  FeaturedRowCon,
+  UpperBannerCon,
+  UpperMobileCon,
+  BannerText,
+  BannerTextSpan,
+  MobileGetStartedButton,
+  GetStartButtonContainer,
+} from "../styles/Homepage.style";
+import { HomeDiscountCard } from "../components/HomeDiscountCard";
 
-const Img = styled.img`
-  width:100%;
-  object-fit: cover;
+const CardsWrapper = styled.div`
+    width:100%;
+    display: grid;
+    grid-template-columns:repeat(auto-fill,422px);
+    justify-content: space-around;
+    gap:10px;
+    position:relative;
+
+    @media (max-width:450px){
+      width:100%;
+      display: grid;
+      grid-template-columns:repeat(auto-fill,90%);
+      justify-content: space-around;
+      gap:10px;
+      position:relative;
+    }
 `
 
-const HomePage = () => {
+function HomePage() {
   return (
-    <>
-    <Container>
-      <Sidings />
-      <Wrapper>
-        {/* TOP CONTAINER */}
+    <div>
+      {/* <NavbarLogedIn /> */}
+      <HomepageContainer>
+        <UpperBannerCon>
+          <SideCon />
+          <BannerContainer>
+            {/* <BannerImage src={BannerRightImg} /> */}
+            <CloudinaryImg imageUrl='ztellar/ztellar/fzpaxecrkgom2im3kfxw' width='1366' height='400' widthMain='100%' />
 
-        
-        {/* BOTTOM CONTAINER START */}
-        <BottomContainer>
-        {/* TAGLINE MAIN CONTAINER */}
-        <TaglineContainer>
-          {/* TAGLINE LEFT CONTAINER */}
-          <TaglineLeftContainer>
-            <TaglineMessage>
-            Connecting <b>MINDS</b>,<br /> 
-            Redefining <b>LEARNING</b> and <br />
-            <b>COLLABORATION</b>
-            </TaglineMessage>
-          </TaglineLeftContainer>
+            <HomeContainer>
+              <GetStartButtonContainer>
+                <GetStartedButton>Get Started</GetStartedButton>
+              </GetStartButtonContainer>
+              <HomeText>Start you Ztellar experience today.</HomeText>
+              <PoweredByText>Powered by:</PoweredByText>
+              <DisplayRowCon>
+                <LogoContainer>
+                  <LogoImage src={LogoIcon} />
+                </LogoContainer>
+                <VizcomText>Vizcom Corporation</VizcomText>
+              </DisplayRowCon>
+            </HomeContainer>
+          </BannerContainer>
+          <SideCon />
+        </UpperBannerCon>
 
-          {/* TAGLINE RIGHT CONTAINER */}
-          <TaglineRightContainer>
-            <TaglineText>
-            <b>ZTELLAR</b> is your Reliable Companion<br />
-            Streamlining Events & Learning.
-            </TaglineText>
+        <UpperMobileCon>
+          <DisplayRowCon>
+            <BannerText>
+              <BannerTextSpan>Connecting</BannerTextSpan> minds
+            </BannerText>
+          </DisplayRowCon>
+          <DisplayRowCon>
+            <BannerText>
+              <BannerTextSpan> Redefining</BannerTextSpan> Learning and
+            </BannerText>
+          </DisplayRowCon>
+          <DisplayRowCon>
+            <BannerTextSpan>Collaboration</BannerTextSpan>
+          </DisplayRowCon>
 
-            <PoweredBy>Powered by</PoweredBy>
-            <PoweredByContainer>
-              <PoweredByLogo src={vizcomSmallLogo} />
-              <PoweredByTitle><i>Vizcom Corporation</i></PoweredByTitle>
-            </PoweredByContainer>
-          </TaglineRightContainer>
-        </TaglineContainer>
-        {/* TAGLINE MAIN CONTAINER END */}
+          <BannerImage src={BannerMobileImage} />
+          <MobileGetStartedButton>Get Started</MobileGetStartedButton>
+          <HomeContainer>
+            <HomeText>Start you Ztellar experience today.</HomeText>
+            <PoweredByText>Powered by:</PoweredByText>
+            <DisplayRowCon>
+              <LogoContainer>
+                <LogoImage src={LogoIcon} />
+              </LogoContainer>
+              <VizcomText>Vizcom Corporation</VizcomText>
+            </DisplayRowCon>
+          </HomeContainer>
+        </UpperMobileCon>
+        <HomeLineHr />
 
+        <WhatContainer>
+          <WhatTitle>What's in it?</WhatTitle>
+          <WhatDescription>
+            Welcome to Ztellar, where we believe in the power of connecting
+            minds to revolutionize learning and collaboration. Our platform is
+            designed to streamline the process, making it easier and more
+            efficient for individuals and teams to come together, share
+            knowledge, and work towards common goals.
+          </WhatDescription>
+        </WhatContainer>
 
-        </BottomContainer>
+        <HomeLineHr />
+        <UpperCon>
+          <SideCon />
+          <FeaturedContainer>
+            <DisplayRowCon>
+              <FeaturedTitle>Featured Events</FeaturedTitle>
+            </DisplayRowCon>
+            <FeaturedRowCon>
+              <FeaturedHalfContainer>
+                <CloudinaryImg imageUrl='ztellar/ztellar/sanj9kjlh7etnbglc2lv' width='683' height='350' widthMain='100%' />
+                {/* <FeaturedImage src={FeaturedOneIcon} /> */}
+              </FeaturedHalfContainer>
+              <FeaturedHalfContainer>
+                <CloudinaryImg imageUrl='ztellar/psme LRC 2024/qsniqu3fmmxehktnj3zc' width='683' height='350' widthMain='100%' />
+              </FeaturedHalfContainer>
+            </FeaturedRowCon>
+          </FeaturedContainer>
+          <SideCon />
+        </UpperCon>
 
-        <BannerContainer>
-          <BannerLeftContainer>
-            {/* <BannerImg src={bannerLeftImg} /> */}
-            <CloudinaryImg imageUrl='ztellar/ztellar/sanj9kjlh7etnbglc2lv' height='350' width='683' maxWidth='100%' heightMain='auto' />
-          </BannerLeftContainer>
+        <EarlyContainer>
+          <EarlyTitle>Early Bird Discount</EarlyTitle>
+          <EarlySubTitle>Valid Until April 15, 2024</EarlySubTitle>
+        </EarlyContainer>
+        <UpperCon>
+          <SideCon />
 
-          <BannerRightContainer>
-            <CloudinaryImg imageUrl='ztellar/psme LRC 2024/qsniqu3fmmxehktnj3zc' height='350' width='683' widthMain='100%' heightMain='auto' />
-          </BannerRightContainer>
-        </BannerContainer>
-
-      </Wrapper>
-      <Sidings />
-    </Container>
-    </>
-  )
+            <CardsWrapper>
+            {/* HOME DISCOUNT CARDS */}
+            {data?.map((dat,i) => {
+              return(
+                <HomeDiscountCard key={i} data={dat} />
+              )
+            })}
+            
+            </CardsWrapper>
+          <SideCon />
+        </UpperCon>
+      </HomepageContainer>
+    </div>
+  );
 }
 
-export default HomePage
+export default HomePage;

@@ -11,7 +11,7 @@ export const NavbarContainer = styled.nav`
     top:0;
     left: 0;
     background-color: #D5EBF2;
-    z-index: 10;
+    z-index: 20;
 
     /* PHONE */
     @media (max-width:450px) {
