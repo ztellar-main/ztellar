@@ -120,7 +120,9 @@ function HomePage() {
           </DisplayRowCon>
 
           <BannerImage src={BannerMobileImage} />
-          <MobileGetStartedButton>Get Started</MobileGetStartedButton>
+          <Link to='/search?query='>
+            <MobileGetStartedButton>Get Started</MobileGetStartedButton>
+          </Link>
           <HomeContainer>
             <HomeText>Start you Ztellar experience today.</HomeText>
             <PoweredByText>Powered by:</PoweredByText>
