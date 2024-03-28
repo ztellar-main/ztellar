@@ -5,6 +5,7 @@ import ThumnailImage from "../icons/CardImage.png";
 import XIcon from "../icons/XIcon.png";
 import CheckIcon from "../icons/CheckIcon.png";
 import HomePopImage from "../icons/HomePopupImage.png";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 800px;
@@ -319,7 +320,9 @@ const HomeDiscountCardPopup = ({data}) => {
 
         </UpperCon>
         <RegisterButtonContainer>
-          <RegisterButton>Register Now</RegisterButton>
+          <Link to="/course?id=65fd60b6881c189c54553606">
+            <RegisterButton>Register Now</RegisterButton>
+          </Link>
         </RegisterButtonContainer>
       </RightContainer>
     </Container>
