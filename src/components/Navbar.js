@@ -122,7 +122,9 @@ function Navbar(query) {
             {/* LEFT CONTAINER START */}
             <LeftContainer>
                 {/* <Logo src={logo} /> */}
-                <CloudinaryImg imageUrl='ztellar/ztellar/luctbarw5pzfsk4bgkfl'  height='60' width='auto' heightMain='50px' widthMain='auto' marginLeft='10px' />
+                <Link to='/'>
+                    <CloudinaryImg imageUrl='ztellar/ztellar/luctbarw5pzfsk4bgkfl'  height='60' width='auto' heightMain='50px' widthMain='auto' marginLeft='10px' />
+                </Link>
             </LeftContainer>
             {/* LEFT CONRAINER END */}
             
