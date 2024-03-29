@@ -229,7 +229,6 @@ const BuyCoursePage = () => {
                     <Option value={virtual}>Virtual Registration Fee - {PHP.format(data?.virtual_price)}</Option>
                     <Option value={newRegF2f}>Newly registered M.E f2f Registration Fee - {PHP.format(data?.new_reg_f2f)}</Option>
                     <Option value={newRegVirtual}>Newly registered M.E virtual Registration Fee - {PHP.format(data?.new_reg_virtual)}</Option>
-                    // <Option value={jpsme}>JPSME Registration Fee - {PHP.format(data?.jpsme_price)}</Option>
                 </Select>
                 }
 
