@@ -359,6 +359,19 @@ const OwnedEvent = () => {
                             </QrContainer>
                         }
 
+                        {qrCode?.reg_type === 'newly registered M.E f2f' &&
+                            <QrContainer>
+                            <QRCode
+                                size={256}
+                                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                                value={qrCode.qr_code}
+                                viewBox={`0 0 256 256`}
+                                />
+                            </QrContainer>
+                        }
+
+
+
                     </QrCodeContainer>
 
                     
