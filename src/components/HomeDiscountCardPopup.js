@@ -319,11 +319,21 @@ const HomeDiscountCardPopup = ({data}) => {
 
 
         </UpperCon>
+        {data?.data?.title === 'JPSME'
+        ?
+        <RegisterButtonContainer>
+          <Link to="/course?id=66063132af09bb16defccd1c">
+            <RegisterButton>Register Now</RegisterButton>
+          </Link>
+        </RegisterButtonContainer>
+        :
         <RegisterButtonContainer>
           <Link to="/course?id=65fd60b6881c189c54553606">
             <RegisterButton>Register Now</RegisterButton>
           </Link>
         </RegisterButtonContainer>
+        }
+
       </RightContainer>
     </Container>
   );
