@@ -45,6 +45,36 @@ export const data = [
             "Compete in Regional Quiz Bee and Machine Design Contest; winners advance to national finals on October 17th-19th,2024",
             // "Digital ID"
         ]
+    },
+    {
+        "title":"Newly Registered M.E f2f",
+        "price": "2800",
+        "list": [
+           "Food and Beverage",
+            "Socialization/Networking Night Ticket",
+            "Racket Ticket",
+            "CPD",
+            "Self-Directed Learning (Free Courses CPD creditable)",
+            "Access to Weekly Technical Forums within 1 month ahead LRC",
+            "Digital Certificates",
+            "Handouts/Learning Materials-downloadable resources",
+            "Free Online Account, Cloud Learning (Ztellar)",
+            "SouvenirPSME Theme Flask/Ear BudWireless",
+            "Digital ID"
+        ]
+    },
+    {
+        "title":"New Registered M.E virtual",
+        "price": "1680",
+        "list": [
+            "CPD",
+            "Self-Directed Learning (Free Courses CPD creditable)",
+            "Access to Weekly Technical Forums within 1 month ahead LRC",
+            "Digital Certificates",
+            "Handouts/Learning Materials-downloadable resources",
+            "Free Online Account, Cloud Learning (Ztellar)",
+            "SouvenirPSME Theme Flask/Ear BudWireless",
+        ]
     }
 ]
 
