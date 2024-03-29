@@ -187,6 +187,8 @@ const BuyCoursePage = () => {
     const virtual = `${data?.virtual_price}/virtual`
     const jpsme = `${data?.jpsme_price}/JPSME`
     const normal = `${data?.price}/registration`
+    const newRegF2f = `${data?.new_reg_f2f}/newly registered M.E f2f`
+    const newRegVirtual = `${data?.new_reg_virtual}/newly registered M.E virtual`
 
     const finalPrice = price.split('/')[0];
     const registrationType = price.split('/')[1];
@@ -225,6 +227,8 @@ const BuyCoursePage = () => {
                     <Option value={0}>Choose Registration</Option>
                     <Option value={f2f}>Face to Face Registration Fee - {PHP.format(data?.f2f_price)}</Option>
                     <Option value={virtual}>Virtual Registration Fee - {PHP.format(data?.virtual_price)}</Option>
+                    <Option value={newRegF2f}>Newly registered M.E f2f Registration Fee - {PHP.format(data?.new_reg_f2f)}</Option>
+                    <Option value={newRegVirtual}>Newly registered M.E virtual Registration Fee - {PHP.format(data?.new_reg_virtual)}</Option>
                     // <Option value={jpsme}>JPSME Registration Fee - {PHP.format(data?.jpsme_price)}</Option>
                 </Select>
                 }
