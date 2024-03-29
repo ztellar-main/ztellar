@@ -225,7 +225,7 @@ const BuyCoursePage = () => {
                     <Option value={0}>Choose Registration</Option>
                     <Option value={f2f}>Face to Face Registration Fee - {PHP.format(data?.f2f_price)}</Option>
                     <Option value={virtual}>Virtual Registration Fee - {PHP.format(data?.virtual_price)}</Option>
-                    <Option value={jpsme}>JPSME Registration Fee - {PHP.format(data?.jpsme_price)}</Option>
+                    // <Option value={jpsme}>JPSME Registration Fee - {PHP.format(data?.jpsme_price)}</Option>
                 </Select>
                 }
 
