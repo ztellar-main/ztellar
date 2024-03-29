@@ -215,7 +215,7 @@ const BuyCoursePage = () => {
                 </SubTitleContainer>
 
                 {/* SELECT REGISTRATION */}
-                {courseId === '65fd67b74439e104b0c2103d' ?
+                {courseId !== '65fd60b6881c189c54553606' ?
                 <Select value={price} onChange={e => setPrice(e.target.value)}>
                     <Option value={0}>Choose Registration</Option>
                     <Option value={normal}>Registration Fee - {PHP.format(data?.price)}</Option>
