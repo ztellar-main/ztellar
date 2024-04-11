@@ -150,11 +150,11 @@ const ViewCourse = () => {
                         {courseId === '65fd612f881c189c54553617'
                         ?
                         <Link to={`/course?id=65f73f2ae5f0979b8772bcd1`}>
-                            <BuyButtonTablet>Buy this course to avail the event</BuyButtonTablet>
+                            <BuyButtonTablet>Aquire this course to avail the event</BuyButtonTablet>
                         </Link>
                         :
                         <Link to={`/buy-course?id=${courseId}`}>
-                            <BuyButtonTablet>Buy now</BuyButtonTablet>
+                            <BuyButtonTablet>Register now</BuyButtonTablet>
                         </Link>
                         }
                         </>
@@ -207,12 +207,12 @@ const ViewCourse = () => {
                         {courseId === '65fd612f881c189c54553617'
                         ?
                         <Link to={`/course?id=65fd60b6881c189c54553606`}>
-                            <BuyButton>Buy this course to avail the event</BuyButton>
+                            <BuyButton>Aquire this course to avail the event</BuyButton>
                         </Link>
                         :
                         <>
                         <Link to={`/buy-course?id=${courseId}`}>
-                            <BuyButton>Buy now</BuyButton>
+                            <BuyButton>Register now</BuyButton>
                         </Link>
                         <AddToCartButton>Add to cart</AddToCartButton>
                         </>
