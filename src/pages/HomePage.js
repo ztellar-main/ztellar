@@ -169,7 +169,7 @@ function HomePage() {
 
         <EarlyContainer>
           <EarlyTitle>Early Bird Discount</EarlyTitle>
-          <EarlySubTitle>Valid Until April 15, 2024</EarlySubTitle>
+          <EarlySubTitle>Valid Until April 23, 2024</EarlySubTitle>
         </EarlyContainer>
         <UpperCon>
           <SideCon />
