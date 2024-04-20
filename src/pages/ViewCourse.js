@@ -149,7 +149,7 @@ const ViewCourse = () => {
                         {/* BUY BUTTON */}
                         {courseId === '65fd612f881c189c54553617'
                         ?
-                        <Link to={`/course?id=65f73f2ae5f0979b8772bcd1`}>
+                        <Link to={`/course?id=65fd60b6881c189c54553606`}>
                             <BuyButtonTablet>Aquire this course to avail the event</BuyButtonTablet>
                         </Link>
                         :
