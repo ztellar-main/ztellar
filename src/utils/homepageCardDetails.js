@@ -1,7 +1,7 @@
 export const data = [
     {
         "title":"Face to face",
-        "price": "3150",
+        "price": "3500",
         "list": [
             "Food and Beverage",
             "Socialization/Networking Night Ticket",
@@ -18,7 +18,7 @@ export const data = [
     },
     {
         "title":"Virtual",
-        "price": "1890",
+        "price": "2100",
         "list": [
             // "Food and Beverage",
             // "Socialization/Networking Night Ticket",
