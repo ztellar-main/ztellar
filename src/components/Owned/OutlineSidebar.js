@@ -22,7 +22,7 @@ import {
     TitleMainContainer
 } from '../../styles/Owned/Components/OutlineSidebar.style'
 
-const OutlineSidebar = ({style,setSidebarCloser,data,setVideoData,videoData,userData,courseId,setPlayState,isFetched}) => {
+const OutlineSidebar = ({style,setSidebarCloser,data,setVideoData,videoData,userData,courseId,setPlayState,isFetched,courseTitle}) => {
 
   const recentSubjectData = userData?.find(e => {
     return e._id === courseId
@@ -66,7 +66,7 @@ const OutlineSidebar = ({style,setSidebarCloser,data,setVideoData,videoData,user
         </TopContainer>
         <TitleMainContainer>
           <TitleContainer>
-            <p style={{fontWeight:'bold',display:'inline-block'}}>Course Outline  - </p> Learn Python Programming in just a week
+            <p style={{fontWeight:'bold',display:'inline-block'}}>Course Outline  - </p> {courseTitle}
           </TitleContainer>
         </TitleMainContainer>
         
