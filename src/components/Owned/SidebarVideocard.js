@@ -103,7 +103,7 @@ useEffect(() => {
       
     <TopContainer>
       <VideoIcon  src={videoIcon}/>
-      <Title>Part {props.index + 1} : {props.data.title}  das d</Title>  
+      <Title>Part {props.index + 1} : {props.data.title}</Title>  
       <Time style={{marginLeft:'10px'}}>{minutes}:{seconds}</Time>
     </TopContainer>
 
