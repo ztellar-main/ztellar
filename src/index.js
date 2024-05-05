@@ -8,7 +8,7 @@ import  {PersistGate}  from 'redux-persist/lib/integration/react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://ztellar-api-backend.onrender.com/api";
+axios.defaults.baseURL = "http://localhost:5000/api";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
