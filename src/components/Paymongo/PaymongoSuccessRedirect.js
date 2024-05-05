@@ -107,7 +107,8 @@ const PaymongoSuccessRedirect = () => {
 
 
           const productId = description.split('/')[0]
-          const buyerId = user._id
+          // const buyerId = "66375d4c1640535ec179a628" 
+          const buyerId =  user._id
           const productOwnerId = description.split('/')[1]
           const productType = description.split('/')[2]
           const regType = description.split('/')[3]
