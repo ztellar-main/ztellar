@@ -119,12 +119,12 @@ const OwnedCourse = () => {
         {sidebarCloser 
         ?
         <>
-        <OutlineSidebar isFetched={isFetched} setPlayState={setPlayState} courseId={courseId} userData={userData} videoData={videoData} setVideoData={setVideoData} data={data} setSidebarCloser={setSidebarCloser} style={{marginLeft:'0px',left:0}} />
+        <OutlineSidebar courseTitle={data[0]?.title} isFetched={isFetched} setPlayState={setPlayState} courseId={courseId} userData={userData} videoData={videoData} setVideoData={setVideoData} data={data} setSidebarCloser={setSidebarCloser} style={{marginLeft:'0px',left:0}} />
         <BackgroundCloser onClick={e => setSidebarCloser(false)} />
         </>
         :
         <>
-        <OutlineSidebar isFetched={isFetched} setPlayState={setPlayState} courseId={courseId} userData={userData} videoData={videoData} setVideoData={setVideoData} data={data} setSidebarCloser={setSidebarCloser} style={{marginLeft:'-400px',left:'-100%'}} />
+        <OutlineSidebar courseTitle={data[0]?.title} isFetched={isFetched} setPlayState={setPlayState} courseId={courseId} userData={userData} videoData={videoData} setVideoData={setVideoData} data={data} setSidebarCloser={setSidebarCloser} style={{marginLeft:'-400px',left:'-100%'}} />
         </>
         }
         {/* MAIN BODY */}
