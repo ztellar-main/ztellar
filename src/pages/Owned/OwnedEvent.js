@@ -317,7 +317,7 @@ const OwnedEvent = () => {
                     {/* MESSAGE */}
                     <BottomMessage>After completing the course, a brief assessment will be provided for your learning. E-certificates can be downloaded post-event.</BottomMessage>
                     
-                    <BottomMessage>Download button for certificate is for testing purposes only.</BottomMessage>
+                    <BottomMessage>You will receive notifications indicating when it's time to download your certificate.</BottomMessage>
                     {/* <PDFDownloadLink document={<PdfCertificate fname={user?.fname} mname={user?.mname} lname={user?.lname} />} fileName='Lrc Certificate'>
                         <DownloadCertButton>DOWNLOAD</DownloadCertButton>
                     </PDFDownloadLink> */}
