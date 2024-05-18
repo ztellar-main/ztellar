@@ -68,7 +68,7 @@ const PaymongoSuccessRedirect = () => {
 
       const buyerId = description.split("/")[4];
 
-      // const buyerId = "664731d9d324ee229b299f26";
+      // const buyerId = "66013d10434f3dabe9624d1a";
 
       try {
         await axios({

@@ -22,6 +22,8 @@ const ProductSearchCard = ({ data }: Props) => {
     }
   };
 
+  console.log(data?.average_rating)
+
   return (
     <>
       <div
@@ -55,7 +57,7 @@ const ProductSearchCard = ({ data }: Props) => {
                     marginRight: "10",
                     cursor: "pointer",
                   }}
-                  color={3 > index ? colors.orange : colors.gray}
+                  color={data?.average_rating > index ? colors.orange : colors.gray}
                 />
               );
             })}

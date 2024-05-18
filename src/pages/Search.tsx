@@ -32,8 +32,6 @@ const Search = () => {
     );
   }
 
-  console.log(productData);
-
   return (
     <>
       <div className="">

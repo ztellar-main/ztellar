@@ -249,7 +249,7 @@ const ViewProduct = () => {
               />
             </div>
             <p className="text-blue-800 font-semibold text-lg">
-              Denver Bigayan
+              JSB
             </p>
             <p className="text-xs text-gray-700">Author</p>
           </div>
