@@ -74,7 +74,10 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
 
         {/* HOME AND ABOUT US BUTTON CONTAINER */}
         <div className="w-100 flex">
-          <button className="bg-blue-100 text-gray-800 grow w-[auto] p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]">
+          <button
+            onClick={() => navigate("/")}
+            className="bg-blue-100 text-gray-800 grow w-[auto] p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
+          >
             Home
           </button>
 
