@@ -7,7 +7,8 @@ type Props = {
 
 const EventFeedbackPopup = ({ data,setReviewPopupOpen }: Props) => {
   return (
-    <div className="w-[50%] bg-blue-50 fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded border border-gray-400 shadow z-[10] h-[80%]">
+    <div className="w-[50%] bg-blue-50 fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded border border-gray-400 shadow
+     z-[10] h-[80%] laptop:w-[70%] tablet:w-[90%] mobile:w-[95%]">
       <div className="w-100 bg-blue-800 rounded-t h-[50px] flex items-center justify-center">
         <p className="text-white text-xl text-center font-semibold">Feedback</p>
       </div>
