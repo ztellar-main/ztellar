@@ -18,6 +18,7 @@ const ViewProduct = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const token = useAppSelector((state) => state.user.token);
+  const user = useAppSelector((state) => state.user.currentUser);
   const productId = query.get("id") || "";
   const stars = Array(5).fill(0);
   const colors = {
@@ -55,9 +56,15 @@ const ViewProduct = () => {
     return <Navigate to="/" />;
   }
 
-  console.log(eventData?.feedback_count);
+  // console.log(eventData?.registered);
 
   const date = new window.Date(eventData?.createdAt);
+
+  const registered = eventData?.registered?.find((data: any) => {
+    return data?._id === user?._id;
+  });
+
+  console.log(registered)
 
   return (
     <div className="w-100 ">
@@ -75,17 +82,31 @@ const ViewProduct = () => {
           </div>
           {/* REG BUTTON TOP */}
           <div className="w-100 p-[10px] pb-0 tabletMin:hidden">
-            <button
-              onClick={() => {
-                if (!token) {
-                  return navigate("/login");
-                }
-                navigate(`/buy/product?id=${productId}`);
-              }}
-              className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
-            >
-              Register now
-            </button>
+            {registered !== undefined ? (
+              <button
+                onClick={() => {
+                  if (!token) {
+                    return navigate("/login");
+                  }
+                  navigate(`/owned/event/credentials?id=${productId}`);
+                }}
+                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+              >
+                View
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (!token) {
+                    return navigate("/login");
+                  }
+                  navigate(`/buy/product?id=${productId}`);
+                }}
+                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+              >
+                Register now
+              </button>
+            )}
           </div>
 
           {/* DETAILS CONTAINER */}
@@ -164,8 +185,6 @@ const ViewProduct = () => {
                   />
                 </div>
 
-
-
                 <div className="">
                   <CloudinaryImg
                     imageUrl="ztellar/LRC 2024 sponsrs/leki2i9awhp7wxjgew5t"
@@ -228,17 +247,31 @@ const ViewProduct = () => {
           </div>
           {/* TOTAL RATINGS DETAILS END */}
 
-          <button
-            onClick={() => {
-              if (!token) {
-                return navigate("/login");
-              }
-              navigate(`/buy/product?id=${productId}`);
-            }}
-            className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
-          >
-            Register now
-          </button>
+          {registered !== undefined ? (
+              <button
+                onClick={() => {
+                  if (!token) {
+                    return navigate("/login");
+                  }
+                  navigate(`/owned/event/credentials?id=${productId}`);
+                }}
+                className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+              >
+                View
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (!token) {
+                    return navigate("/login");
+                  }
+                  navigate(`/buy/product?id=${productId}`);
+                }}
+                className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+              >
+                Register now
+              </button>
+            )}
 
           {/* AUTHOR CONTAINER */}
           <div className="w-100 p-[20px] rounded bg-blue-50 flex flex-col items-center shadow border border-gray-300 mb-[10px]">
@@ -248,9 +281,7 @@ const ViewProduct = () => {
                 className="h-100 w-100 border-[4px] border-blue-800 rounded-circle "
               />
             </div>
-            <p className="text-blue-800 font-semibold text-lg">
-              JSB
-            </p>
+            <p className="text-blue-800 font-semibold text-lg">JSB</p>
             <p className="text-xs text-gray-700">Author</p>
           </div>
           {/* AUTHOR CONTAINER END */}

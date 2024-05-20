@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { RiLiveFill } from "react-icons/ri";
 import { PiIdentificationCardFill } from "react-icons/pi";
+import { useAppSelector } from "../../state/store";
 
 type Props = {
   setOpenSide: any;
@@ -20,6 +21,7 @@ const OwnedSEventSidebar = ({
   page,
   productId,
 }: Props) => {
+  const user = useAppSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   const buttonLinskDetails = [
     {
@@ -77,7 +79,7 @@ const OwnedSEventSidebar = ({
               />
             </div>
             <div className="ml-[10px] text-white font-semibold text-lg tracking-wider">
-              Denver Bigayan
+              {user?.fname} {user?.lname}
             </div>
           </div>
           {/* USER DETAILS END */}
