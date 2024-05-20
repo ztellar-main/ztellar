@@ -266,6 +266,8 @@ const ViewProduct = () => {
               return <ProductViewReviewCard key={i} data={reviewData}  />
             })} */}
 
+            <p className="text-center my-[10px]">No feedback yet.</p>
+
             {eventData?.feedback[0] && (
               <ProductViewReviewCard data={eventData?.feedback[0]} />
             )}

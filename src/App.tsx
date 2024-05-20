@@ -22,6 +22,8 @@ import AddVideoToSubjectEvent from "./pages/Author/AddVideoToSubjectEvent";
 import LiveEvent from "./pages/Author/LiveEvent";
 import LiveEventsList from "./pages/Author/LiveEventsList";
 import GoLiveEvent from "./pages/Author/GoLiveEvent";
+import ScanQrCode from "./pages/Author/ScanQrCode";
+import GoScan from "./pages/Author/GoScan";
 
 // PRIVATE ROUTES
 import EmailVerifyPrivateRoute from "./privateRoutes/EmailVerifyPrivateRoute";
@@ -99,6 +101,10 @@ function App() {
                   element={<LiveEventsList />}
                 />
                 <Route path="/author/event/go-live" element={<GoLiveEvent />} />
+                <Route path="/author/event/scan-qr-code" element={<ScanQrCode />} />
+                <Route path="/author/event/go-scan" element={<GoScan />} />
+                
+                
               </Route>
             </Routes>
           </Router>

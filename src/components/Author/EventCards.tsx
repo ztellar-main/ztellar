@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
     data:any
+    index:any
 }
 
-function EventCards({data}: Props) {
+function EventCards({data,index}: Props) {
     const navigate = useNavigate()
   const [action, setAction] = useState(false);
   return (
     <tr>
-      <td className="p-3 text-sm tracking-wide">{"1.)"}</td>
+      <td className="p-3 text-sm tracking-wide">{index + 1}.)</td>
       <td className="p-3 text-sm tracking-wide">
         {data?.title}
       </td>

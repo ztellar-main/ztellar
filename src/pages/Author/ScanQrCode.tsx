@@ -5,11 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAppSelector } from "../../state/store";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import ScanEventCard from "../../components/Author/ScanEventCard";
 
-// COMPONENTS
-import GoLiveEventCard from "../../components/Author/GoLiveEventCard";
-
-const LiveEventsList = () => {
+const ScanQrCode = () => {
   const [openSidebar, setOpenSide] = useState(true);
   const token = useAppSelector((state) => state.user.token);
 
@@ -27,7 +25,7 @@ const LiveEventsList = () => {
 
   // GET ALL AUTHOR EVENTS
   const { data: eventData, isLoading } = useQuery({
-    queryKey: ["Live event list"],
+    queryKey: ["Live event Qr"],
     queryFn: async () => {
       const res = await axios({
         method: "get",
@@ -54,7 +52,7 @@ const LiveEventsList = () => {
     <>
       <div className="flex">
         <AuthorSidebar
-          page="event/live-list"
+          page="event/scan-qr-code"
           openSidebar={openSidebar}
           setOpenSide={setOpenSide}
         />
@@ -85,7 +83,7 @@ const LiveEventsList = () => {
               </button>
             )}
 
-            <p className="mr-[10px]">Choose live</p>
+            <p className="mr-[10px]">Choose Scan Qr</p>
           </div>
 
           {/* MAIN BODY */}
@@ -100,7 +98,7 @@ const LiveEventsList = () => {
               </thead>
               <tbody className="class">
                 {eventData?.map((eData: any, i: any) => {
-                  return <GoLiveEventCard key={i} index={i} data={eData} />;
+                  return <ScanEventCard key={i} data={eData} index={i} />;
                 })}
               </tbody>
             </table>
@@ -112,4 +110,4 @@ const LiveEventsList = () => {
   );
 };
 
-export default LiveEventsList;
+export default ScanQrCode;

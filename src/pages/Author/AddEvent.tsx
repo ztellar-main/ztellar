@@ -138,7 +138,7 @@ const AddEvent = () => {
                 </thead>
                 <tbody>
                   {eventData?.map((dataEvent: any, i: Key) => {
-                    return <EventCards key={i} data={dataEvent} />;
+                    return <EventCards key={i} data={dataEvent} index={i} />;
                   })}
                 </tbody>
               </table>

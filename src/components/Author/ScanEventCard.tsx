@@ -1,11 +1,10 @@
-import { RiLiveLine } from "react-icons/ri";
+import { LuScanLine } from "react-icons/lu";
 
 type Props = {
   data: any;
-  index:any
+  index: any;
 };
-
-const GoLiveEventCard = ({ data,index }: Props) => {
+const ScanEventCard = ({ data, index }: Props) => {
   return (
     <tr>
       <td className="p-3 text-sm tracking-wide">{index + 1}.)</td>
@@ -13,16 +12,16 @@ const GoLiveEventCard = ({ data,index }: Props) => {
       <td className="p-3 text-sm tracking-wide">
         <button
           onClick={() =>
-            (window.location.href = `/author/event/go-live?id=${data?._id}`)
+            (window.location.href = `/author/event/go-scan?id=${data?._id}`)
           }
           className="bg-indigo-900 text-white p-[5px] px-[10px] rounded flex items-center hover:bg-indigo-700 active-indigo-800"
         >
-          Go live
-          <RiLiveLine className="ml-[5px]" />
+          Go scan
+          <LuScanLine className="ml-[5px]" />
         </button>
       </td>
     </tr>
   );
 };
 
-export default GoLiveEventCard;
+export default ScanEventCard;

@@ -4,6 +4,8 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { RiLiveLine } from "react-icons/ri";
+import { useAppSelector } from "../../state/store";
+
 
 const pages = [
   {
@@ -26,7 +28,14 @@ const pages = [
     page: "event/live-list",
     icon: <RiLiveLine className="w-[auto] h-[20px] mr-[10px]" />,
   },
+  {
+    title: "Qr scan - event",
+    page: "event/scan-qr-code",
+    icon: <RiLiveLine className="w-[auto] h-[20px] mr-[10px]" />,
+  },
 ];
+
+
 
 type Props = {
   page: string;
@@ -35,6 +44,7 @@ type Props = {
 };
 
 const AuthorSidebar = ({ page, openSidebar, setOpenSide }: Props) => {
+  const user = useAppSelector(state => state.user.currentUser)
   return (
     <>
       <div
@@ -68,7 +78,7 @@ const AuthorSidebar = ({ page, openSidebar, setOpenSide }: Props) => {
             </div>
 
             <p className="text-white font-semibold text-xl ml-[10px]">
-              Denver Bigayan
+              {user?.fname} {user?.lname}
             </p>
           </div>
           {/* USER CONTAINER END */}
