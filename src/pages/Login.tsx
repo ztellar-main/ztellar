@@ -125,7 +125,10 @@ const Login = () => {
       {resetOpen && (
         <>
           <ResetPasswordPopup />
-          <div onClick={() => setResetOpen(false)} className="w-100 h-[100vh] bg-gray-900 fixed top-0 left-0 z-[10] opacity-[50%]" />
+          <div
+            onClick={() => setResetOpen(false)}
+            className="w-100 h-[100vh] bg-gray-900 fixed top-0 left-0 z-[10] opacity-[50%]"
+          />
         </>
       )}
 
@@ -194,7 +197,7 @@ const Login = () => {
                 onClick={() => setResetOpen(true)}
                 className="text-right mr-[5px] mt-[10px] text-blue-800 underline cursor-pointer"
               >
-                Reset password
+                Forgot password
               </p>
             </div>
           </div>
