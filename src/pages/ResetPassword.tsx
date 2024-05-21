@@ -76,6 +76,8 @@ const ResetPassword = () => {
         url: "/users/reset-password",
         data: { email: userData?.email, otp, password },
       });
+      toas("Successfully changed password.", "success");
+      navigate("/login");
 
       console.log(res);
     } catch (err) {
@@ -111,7 +113,6 @@ const ResetPassword = () => {
       setLoading("success");
 
       toas("Successful. OTP was re sent to your email.", "success");
-      navigate("/login");
     } catch (err) {
       setLoading("failed");
       console.log(err);
