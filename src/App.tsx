@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import ViewProduct from "./pages/ViewProduct";
 import BuyProduct from "./pages/BuyProduct";
 import UpdateUserBeforeLoggingIn from "./pages/UpdateUserBeforeLoggingIn";
+import ResetPassword from "./pages/ResetPassword";
 
 // AUTHOR
 import AuthorDashboard from "./pages/Author/AuthorDashboard";
@@ -52,8 +53,11 @@ function App() {
               <Route path="/search" element={<Search />} />
               <Route path="/view/event" element={<ViewProduct />} />
               <Route path="/buy/product" element={<BuyProduct />} />
-              <Route path="/complete-info" element={<UpdateUserBeforeLoggingIn />} />
-              
+              <Route
+                path="/complete-info"
+                element={<UpdateUserBeforeLoggingIn />}
+              />
+              <Route path="/reset-password" element={<ResetPassword />} />
 
               {/* PAYMONGO */}
               <Route
@@ -101,10 +105,11 @@ function App() {
                   element={<LiveEventsList />}
                 />
                 <Route path="/author/event/go-live" element={<GoLiveEvent />} />
-                <Route path="/author/event/scan-qr-code" element={<ScanQrCode />} />
+                <Route
+                  path="/author/event/scan-qr-code"
+                  element={<ScanQrCode />}
+                />
                 <Route path="/author/event/go-scan" element={<GoScan />} />
-                
-                
               </Route>
             </Routes>
           </Router>

@@ -10,6 +10,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import ResetPasswordPopup from "../components/ResetPasswordPopup";
 
 const Login = () => {
   const [passwordSeen, setPasswordSeen] = useState("password");
@@ -17,10 +18,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
   const navigate = useNavigate();
 
   const loginButtonFunction = async () => {
-
     try {
       const res = await axios({
         method: "post",
@@ -121,6 +122,13 @@ const Login = () => {
 
   return (
     <>
+      {resetOpen && (
+        <>
+          <ResetPasswordPopup />
+          <div onClick={() => setResetOpen(false)} className="w-100 h-[100vh] bg-gray-900 fixed top-0 left-0 z-[10] opacity-[50%]" />
+        </>
+      )}
+
       <div className="bg-gray-50 h-100vh">
         <Navbar />
 
@@ -181,6 +189,13 @@ const Login = () => {
               >
                 Login
               </button>
+
+              <p
+                onClick={() => setResetOpen(true)}
+                className="text-right mr-[5px] mt-[10px] text-blue-800 underline cursor-pointer"
+              >
+                Reset password
+              </p>
             </div>
           </div>
 

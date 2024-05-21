@@ -11,6 +11,7 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 const GoLiveEvent = () => {
   const [openSidebar, setOpenSide] = useState(true);
   const token = useAppSelector((e) => e.user.token);
+  const user = useAppSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     function handleResize() {
@@ -51,7 +52,10 @@ const GoLiveEvent = () => {
     );
   }
 
+  const userId = user?._id;
+
   const roomId = eventData?.liveId;
+  const name = `${user?.fname} ${user?.lname}`;
 
   const appID = 1419563012;
   const serverSecret = "7f853fd9293aa601543f494dabd96943";
@@ -59,8 +63,8 @@ const GoLiveEvent = () => {
     appID,
     serverSecret,
     roomId,
-    "qwe",
-    "SAMSAN HOST"
+    userId,
+    name
   );
   // start the call
   const myMeeting = async (element: any) => {
@@ -79,8 +83,8 @@ const GoLiveEvent = () => {
       showPreJoinView: false,
       lowerLeftNotification: {
         showUserJoinAndLeave: true, // Whether to display notifications on the lower left area when participants join and leave the room. Displayed by default.
-        showTextChat: true // Whether to display the latest messages on the lower left area. Displayed by default.
-      }
+        showTextChat: true, // Whether to display the latest messages on the lower left area. Displayed by default.
+      },
     });
   };
 
