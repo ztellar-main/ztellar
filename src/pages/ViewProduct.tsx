@@ -12,6 +12,10 @@ import ProductViewReviewCard from "../components/ProductViewReviewCard";
 import EventFeedbackPopup from "../components/EventFeedbackPopup";
 import { useState } from "react";
 import { useAppSelector } from "../state/store";
+import SponsorPostCard from "../components/SponsorPostCard";
+import {sponsor} from "../utils/psmeSponsers";
+
+
 
 const ViewProduct = () => {
   const navigate = useNavigate();
@@ -194,20 +198,9 @@ const ViewProduct = () => {
               </div>
             </div>
             {/* SPONSORS LOGO END */}
-
-            {/* SPONSOR POST */}
-            <div className="w-100 bg-blue-50 p-[10px] mt-[10px] rounded shadow border border-gray-300">
-              {/* TOP CONTAINER */}
-              <div className="w-100 bg-red-100 flex items-center">
-                <div className="w-[50px] h-[50px] ">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/w2mr85nyjahi5mx8pxxc"
-                    className="w-100 h-100"
-                  />
-                </div>
-                <p className="bg-red-100 ml-[10px]">Company name</p>
-              </div>
-            </div>
+            {sponsor?.map((sponsorData: any, i: any) => {
+              return <SponsorPostCard data={sponsorData} key={i} />;
+            })}
           </div>
         </div>
 
