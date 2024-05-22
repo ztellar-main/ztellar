@@ -30,10 +30,10 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
         {/* TOP CONTAINER */}
         <div className="bg-blue-600 w-100 rounded flex flex-col items-center py-[10px]">
           {/* USER IMAGE CONTAINER */}
-          <div className="h-[100px] w-[100px] border-[2px] border-white rounded-circle ">
+          <div className="h-[100px] w-[100px] border-[2px] border-white rounded-circle object-cover">
             <CloudinaryImg
               imageUrl={user?.avatar}
-              className="w-100 h-100 border-[2px] border-blue-600 rounded-circle"
+              className="w-100 h-100 border-[2px] border-blue-600 rounded-circle object-cover"
             />
           </div>
 
