@@ -70,7 +70,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         >
           Author Dashboard{" "}
         </button>
-        <button className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700">
+        <button onClick={() => navigate('/edit-profile')} className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700">
           Account settings
         </button>
 

@@ -6,7 +6,7 @@ import { paymongoIdClear } from "../../state/userSlice";
 import toas from "../../utils/toas";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 
-const PaymongoSuccessRedirect = () => {
+const PaymongoSuccessRedirectCashPayment = () => {
   const paymongoId = useAppSelector((e) => e.user.paymongo);
   const token = useAppSelector((e) => e.user.token);
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const PaymongoSuccessRedirect = () => {
     queryFn: async () => {
       const res = await axios({
         method: "get",
-        url: `/paymongo/retrieve-checkout?checkoutId=${paymongoId}`,
+        url: `/paymongo/retrieve-checkout-cash-payment?checkoutId=${paymongoId}`,
         headers: {
           authorization: `Token ${token}`,
         },
@@ -31,6 +31,8 @@ const PaymongoSuccessRedirect = () => {
 
       const paymentStatus =
         result?.data?.attributes?.payment_intent?.attributes.status;
+
+      console.log(paymentStatus);
 
       if (paymentStatus !== "succeeded") {
         toas("You have no present registration.", "error");
@@ -66,57 +68,34 @@ const PaymongoSuccessRedirect = () => {
 
       const buyerId = description.split("/")[4];
 
+      // const buyerId = "6648af4ed324ee229b29acd5";
+
       try {
-        const res = await axios({
-          method: "get",
-          url: `/product/get-event-qr-scan?id=${productId}`,
+        await axios({
+          method: "put",
+          url: "/payment/create-payment-cash-payment",
+          data: {
+            lessAmount,
+            baseAmount,
+            paymentMode,
+            paymentSource,
+            authorId,
+            productId,
+            productType,
+            regType,
+            buyerId,
+            authorPayment,
+            ztellarFee,
+          },
           headers: {
-            authorization: `Token ${token}`,
+            Authorization: `Token ${token}`,
           },
         });
-
-        const user = res?.data?.registered.find((u: any) => {
-          return u?.qr_code === buyerId;
-        });
-
-        if (user) {
-          toas(
-            "Transaction is already successfull. Please check your aquired coursesa and events.",
-            "error"
-          );
-          return navigate("/");
-        }
-        try {
-          await axios({
-            method: "put",
-            url: "/payment/create-payment",
-            data: {
-              lessAmount,
-              baseAmount,
-              paymentMode,
-              paymentSource,
-              authorId,
-              productId,
-              productType,
-              regType,
-              buyerId,
-              authorPayment,
-              ztellarFee,
-            },
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          });
-          dispatch(paymongoIdClear());
-          toas("Transaction successful", "success");
-          navigate("/");
-        } catch (err) {
-          console.log(err);
-        }
-
-        return res?.data;
+        dispatch(paymongoIdClear());
+        toas("Transaction successful", "success");
+        navigate("/author/dashboard");
       } catch (err) {
-        toas("Something went wrong. Please check RFQ's", "error");
+        console.log(err);
       }
 
       return res?.data;
@@ -150,4 +129,4 @@ const PaymongoSuccessRedirect = () => {
   }
 };
 
-export default PaymongoSuccessRedirect;
+export default PaymongoSuccessRedirectCashPayment;

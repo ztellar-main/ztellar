@@ -33,6 +33,11 @@ const pages = [
     page: "event/scan-qr-code",
     icon: <RiLiveLine className="w-[auto] h-[20px] mr-[10px]" />,
   },
+  {
+    title: "Pay cash - event",
+    page: "event/event-cash-payment-list",
+    icon: <RiLiveLine className="w-[auto] h-[20px] mr-[10px]" />,
+  },
 ];
 
 

@@ -22,8 +22,8 @@ const CreateEvent = () => {
   // const navigate = useNavigate();
   const preset_key = "zh6pbgqx";
   const CLOUD_NAME = "dbagrkam0";
-  const token = useAppSelector((e) => e.user.token);
-  const user = useAppSelector((e) => e.user.currentUser);
+  const token = useAppSelector((state) => state.user.token);
+  const user = useAppSelector((state) => state.user.currentUser);
 
   // FOR RESPONSIVE PAGE DESIGN
   useEffect(() => {

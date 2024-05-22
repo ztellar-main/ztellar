@@ -105,7 +105,7 @@ const OwnedEventCredentials = () => {
               {eventdata?.eventData?.reg_type === "face_to_face" && (
                 <>
                   <p className="text-gray-400">
-                    This qr code is your pass to event
+                  This QR code serves as your Access ID
                   </p>
                   <div className="w-[70%] p-[20px] bg-white rounded mb-[5px]">
                     <QRCode

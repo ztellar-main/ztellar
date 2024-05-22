@@ -83,10 +83,10 @@ const Navbar = () => {
             {/* USER IMAGE */}
             {token ? (
               <>
-                <div className=" h-[50px] w-[auto] rounded-circle border-[2px] border-blue-600 laptop:h-[45px]">
+                <div className=" h-[50px] w-[50px] rounded-circle border-[2px] border-blue-600 laptop:h-[45px]">
                   <CloudinaryImg
                     imageUrl={user?.avatar}
-                    className="h-100 w-[auto] bg-blue-900 rounded-circle"
+                    className="h-100 w-100 bg-blue-900 rounded-circle object-cover"
                   />
                 </div>
 
@@ -148,7 +148,7 @@ const Navbar = () => {
             <>
               {/* USER ICON */}
               <div onClick={() => setIsOpen(true)} className="">
-                <div className="w-[35px] height-[35px] bg-blue-800 rounded-circle">
+                <div className="w-[35px] h-[35px] bg-blue-800 rounded-circle border-[2px] border-blue-800 ">
                   <CloudinaryImg
                     imageUrl={user?.avatar}
                     className="h-100 w-100 border border-blue-900 bg-blue-900 rounded-circle mr-[5px]"

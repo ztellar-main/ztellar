@@ -12,6 +12,8 @@ import ViewProduct from "./pages/ViewProduct";
 import BuyProduct from "./pages/BuyProduct";
 import UpdateUserBeforeLoggingIn from "./pages/UpdateUserBeforeLoggingIn";
 import ResetPassword from "./pages/ResetPassword";
+import UserList from "./pages/UserList";
+import EditProfile from "./pages/EditProfile";
 
 // AUTHOR
 import AuthorDashboard from "./pages/Author/AuthorDashboard";
@@ -25,6 +27,9 @@ import LiveEventsList from "./pages/Author/LiveEventsList";
 import GoLiveEvent from "./pages/Author/GoLiveEvent";
 import ScanQrCode from "./pages/Author/ScanQrCode";
 import GoScan from "./pages/Author/GoScan";
+import EventListCashPayment from "./pages/Author/EventListCashPayment";
+import GoEventCash from "./pages/Author/GoEventCash";
+import PaymongoSuccessRedirectCashPayment from "./pages/Paymongo/PaymongoSuccessRedirectCashPayment";
 
 // PRIVATE ROUTES
 import EmailVerifyPrivateRoute from "./privateRoutes/EmailVerifyPrivateRoute";
@@ -58,6 +63,8 @@ function App() {
                 element={<UpdateUserBeforeLoggingIn />}
               />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/thisisasampleuserlist" element={<UserList />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
 
               {/* PAYMONGO */}
               <Route
@@ -110,6 +117,18 @@ function App() {
                   element={<ScanQrCode />}
                 />
                 <Route path="/author/event/go-scan" element={<GoScan />} />
+                <Route
+                  path="/author/event/event-cash-payment-list"
+                  element={<EventListCashPayment />}
+                />
+                <Route
+                  path="/author/event/go-event-cash"
+                  element={<GoEventCash />}
+                />
+                <Route
+                  path="/paymongo-save-cash-payment"
+                  element={<PaymongoSuccessRedirectCashPayment />}
+                />
               </Route>
             </Routes>
           </Router>

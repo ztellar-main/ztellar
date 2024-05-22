@@ -32,7 +32,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
           {/* USER IMAGE CONTAINER */}
           <div className="h-[100px] w-[100px] border-[2px] border-white rounded-circle ">
             <CloudinaryImg
-              imageUrl="ztellar/ztellar/pzoz9wj3y3onkg62dcdx"
+              imageUrl={user?.avatar}
               className="w-100 h-100 border-[2px] border-blue-600 rounded-circle"
             />
           </div>
@@ -66,7 +66,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
         >
           Author Dashboard
         </button>
-        <button className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]">
+        <button onClick={() => navigate('/edit-profile')} className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]">
           Account settings
         </button>
 
