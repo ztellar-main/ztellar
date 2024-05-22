@@ -64,7 +64,7 @@ const ViewProduct = () => {
     return data?._id === user?._id;
   });
 
-  console.log(registered)
+  console.log(registered);
 
   return (
     <div className="w-100 ">
@@ -194,6 +194,20 @@ const ViewProduct = () => {
               </div>
             </div>
             {/* SPONSORS LOGO END */}
+
+            {/* SPONSOR POST */}
+            <div className="w-100 bg-blue-50 p-[10px] mt-[10px] rounded shadow border border-gray-300">
+              {/* TOP CONTAINER */}
+              <div className="w-100 bg-red-100 flex items-center">
+                <div className="w-[50px] h-[50px] ">
+                  <CloudinaryImg
+                    imageUrl="ztellar/LRC 2024 sponsrs/w2mr85nyjahi5mx8pxxc"
+                    className="w-100 h-100"
+                  />
+                </div>
+                <p className="bg-red-100 ml-[10px]">Company name</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -248,30 +262,30 @@ const ViewProduct = () => {
           {/* TOTAL RATINGS DETAILS END */}
 
           {registered !== undefined ? (
-              <button
-                onClick={() => {
-                  if (!token) {
-                    return navigate("/login");
-                  }
-                  navigate(`/owned/event/credentials?id=${productId}`);
-                }}
-                className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
-              >
-                View
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  if (!token) {
-                    return navigate("/login");
-                  }
-                  navigate(`/buy/product?id=${productId}`);
-                }}
-                className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
-              >
-                Register now
-              </button>
-            )}
+            <button
+              onClick={() => {
+                if (!token) {
+                  return navigate("/login");
+                }
+                navigate(`/owned/event/credentials?id=${productId}`);
+              }}
+              className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+            >
+              View
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                if (!token) {
+                  return navigate("/login");
+                }
+                navigate(`/buy/product?id=${productId}`);
+              }}
+              className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+            >
+              Register now
+            </button>
+          )}
 
           {/* AUTHOR CONTAINER */}
           <div className="w-100 p-[20px] rounded bg-blue-50 flex flex-col items-center shadow border border-gray-300 mb-[10px]">

@@ -81,6 +81,7 @@ const OwnedEventLive = () => {
         mode: ZegoUIKitPrebuilt.LiveStreaming,
         config: {
           role: ZegoUIKitPrebuilt.Audience,
+          liveStreamingMode: ZegoUIKitPrebuilt.LiveStreamingMode.RealTimeLive
         },
       },
       showPreJoinView: false,

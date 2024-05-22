@@ -78,6 +78,7 @@ const GoLiveEvent = () => {
         mode: ZegoUIKitPrebuilt.LiveStreaming,
         config: {
           role: ZegoUIKitPrebuilt.Host,
+          liveStreamingMode: ZegoUIKitPrebuilt.LiveStreamingMode.RealTimeLive
         },
       },
       showPreJoinView: false,
