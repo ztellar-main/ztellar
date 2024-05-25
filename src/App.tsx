@@ -30,6 +30,7 @@ import GoScan from "./pages/Author/GoScan";
 import EventListCashPayment from "./pages/Author/EventListCashPayment";
 import GoEventCash from "./pages/Author/GoEventCash";
 import PaymongoSuccessRedirectCashPayment from "./pages/Paymongo/PaymongoSuccessRedirectCashPayment";
+import Total from "./pages/Author/Total";
 
 // PRIVATE ROUTES
 import EmailVerifyPrivateRoute from "./privateRoutes/EmailVerifyPrivateRoute";
@@ -129,6 +130,11 @@ function App() {
                   path="/paymongo-save-cash-payment"
                   element={<PaymongoSuccessRedirectCashPayment />}
                 />
+                <Route
+                  path="/total-sum-secret"
+                  element={<Total />}
+                />
+                
               </Route>
             </Routes>
           </Router>

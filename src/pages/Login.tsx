@@ -39,10 +39,10 @@ const Login = () => {
 
       if (
         fname === "New User" ||
-        fname === "" ||
-        mname === "" ||
-        lname === "" ||
-        mobileNumber === ""
+        !fname ||
+        !mname ||
+        !lname ||
+        !mobileNumber
       ) {
         return navigate("/complete-info", {
           state: { id, emails },
@@ -90,10 +90,10 @@ const Login = () => {
 
           if (
             fname === "New User" ||
-            fname === "" ||
-            mname === "" ||
-            lname === "" ||
-            mobileNumber === ""
+            !fname ||
+            !mname ||
+            !lname ||
+            !mobileNumber
           ) {
             return navigate("/complete-info", {
               state: { id, emails },

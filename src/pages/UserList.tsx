@@ -33,7 +33,10 @@ const UserList = () => {
     }
   };
 
-  console.log(data);
+  const userData = data?.registered?.filter((udata: any) => {
+    console.log(udata);
+    return udata?.qr_code === inputValue;
+  });
 
   return (
     <div>
@@ -56,10 +59,12 @@ const UserList = () => {
             <th className="p-3 text-sm tracking-wide">ID</th>
             <th className="p-3 text-sm tracking-wide">Email</th>
             <th className="p-3 text-sm tracking-wide">owned #</th>
+            <th className="p-3 text-sm tracking-wide">fname</th>
+            <th className="p-3 text-sm tracking-wide">lname</th>
           </tr>
         </thead>
         <tbody>
-          {data?.map((uData: any, i: any) => {
+          {userData?.map((uData: any, i: any) => {
             return <UserListCard data={uData} key={i} index={i} />;
           })}
         </tbody>

@@ -7,26 +7,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { loginSuccess, token } from "../state/userSlice";
 import { useAppDispatch } from "../state/store";
+import { useQuery } from "@tanstack/react-query";
+import { CgSpinnerTwoAlt } from "react-icons/cg";
 
 const UpdateUserBeforeLoggingIn = () => {
-  // DATA VALUES
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [agreement, setAgreement] = useState(false);
-  const [mName, setMname] = useState("");
-
   const location = useLocation();
   const userData = location.state;
   const navigate = useNavigate();
   const userId = userData?.id;
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!userData?.id) {
-      return navigate("/login");
-    }
-  }, [userData, navigate]);
+  // DATA VALUES
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [agreement, setAgreement] = useState(false);
+  const [mName, setMname] = useState("");
 
   // ERROR HANDLERS
   const [fnameError, setFnameError] = useState({
@@ -48,6 +44,38 @@ const UpdateUserBeforeLoggingIn = () => {
     message: "",
     status: "start",
   });
+
+  useEffect(() => {
+    if (!userData?.id) {
+      return navigate("/login");
+    }
+  }, [userData, navigate]);
+
+  const { data: userQuery, isLoading } = useQuery({
+    queryKey: [""],
+    queryFn: async () => {
+      const res = await axios({
+        method: "get",
+        url: `/users/get-user-for-login?id=${userId}`,
+      });
+      setFname(res?.data?.fname);
+      setLname(res?.data?.lname);
+      setMobileNumber(res?.data?.mobile_number);
+      setMname(res?.data?.mname);
+
+      return res?.data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="w-[70px] h-[70px] ml-[50%] translate-x-[-50%] mt-[50%] translate-y-[-50%]">
+        <CgSpinnerTwoAlt className="animate-spin w-100 h-[100%] text-indigo-900" />
+      </div>
+    );
+  }
+
+  console.log(userQuery);
 
   // FNAME FUNCTION
   const fnameFunction = (e: any) => {
@@ -173,7 +201,7 @@ const UpdateUserBeforeLoggingIn = () => {
     // MIDDLE NAME FUNCTION
     const mNameFunction = () => {
       const regex = new RegExp(/[${}<>/]/g);
-      const m = mName.match(regex);
+      const m = mName?.match(regex);
 
       if (m) {
         return setMnameError({
@@ -218,7 +246,13 @@ const UpdateUserBeforeLoggingIn = () => {
 
     // MOBILE NUMBER FUNCTION
     const mobileNumberFunction = () => {
-      if (Number(mobileNumber.length) < 11) {
+      if (!mobileNumber) {
+        return setMobileNumberError({
+          message: "Please enter your mobile number.",
+          status: "failed",
+        });
+      }
+      if (Number(mobileNumber?.length) < 11) {
         return setMobileNumberError({
           message: "Invalid mobile number.",
           status: "failed",
@@ -297,6 +331,7 @@ const UpdateUserBeforeLoggingIn = () => {
           <div className="mb-[10px]">
             <p className="font-semibold">First name</p>
             <input
+              value={fname}
               onChange={fnameFunction}
               placeholder="Enter your first name"
               type="text"
@@ -326,6 +361,7 @@ const UpdateUserBeforeLoggingIn = () => {
           <div className="mb-[10px]">
             <p className="font-semibold">Middle name</p>
             <input
+              value={mName}
               onChange={mNameFunction}
               placeholder="Enter your middle name"
               type="text"
@@ -355,6 +391,7 @@ const UpdateUserBeforeLoggingIn = () => {
           <div className="mb-[10px]">
             <p className="font-semibold">Last name</p>
             <input
+              value={lname}
               onChange={lnameFunction}
               placeholder="Enter your last name"
               type="text"
@@ -383,6 +420,7 @@ const UpdateUserBeforeLoggingIn = () => {
           <div className="mb-[10px]">
             <p className="font-semibold">Mobile number</p>
             <input
+              value={mobileNumber}
               onChange={mobileNumberFunction}
               placeholder="Enter your mobile number"
               type="number"
