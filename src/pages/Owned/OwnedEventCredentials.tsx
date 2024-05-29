@@ -50,8 +50,7 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  console.log(eventdata?.userData?.fname);
-
+  // console.log(eventdata?.eventData?._id?.attendance);
   return (
     <div>
       <div className="flex">
@@ -105,7 +104,7 @@ const OwnedEventCredentials = () => {
               {eventdata?.eventData?.reg_type === "face_to_face" && (
                 <>
                   <p className="text-gray-400">
-                  This QR code serves as your Access ID
+                    This QR code serves as your Access ID
                   </p>
                   <div className="w-[70%] p-[20px] bg-white rounded mb-[5px]">
                     <QRCode
@@ -136,7 +135,8 @@ const OwnedEventCredentials = () => {
             </div>
 
             <p className="text-center mt-[10px]">
-            Official certificate with QR Code will be available after the conference. This download button is for certificate preview only.
+              Official certificate with QR Code will be available after the
+              conference. This download button is for certificate preview only.
             </p>
 
             <PDFDownloadLink
@@ -153,6 +153,77 @@ const OwnedEventCredentials = () => {
                 Download Certificate
               </button>
             </PDFDownloadLink>
+
+            <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
+              Attendance
+            </div>
+
+            {eventdata?.eventData?._id?.attendance?.map(
+              (attendanceData: any, i: any) => {
+                return (
+                  <div className="w-100 p-[10px] flex flex-col items-center mt-[10px]">
+                    <p className="text-center font-semibold">
+                      {attendanceData?.title}
+                    </p>
+                    <a href={attendanceData?.link} target="_blank">
+                      <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
+                        Day {i + 1}
+                      </button>
+                    </a>
+                  </div>
+                );
+              }
+            )}
+
+            <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
+              Quiz
+            </div>
+
+            {/* QUIZ */}
+
+            {eventdata?.eventData?._id?.quiz?.map((quizData: any, i: any) => {
+              return (
+                <div className="w-100 p-[10px] flex flex-col items-center mt-[10px] border-b border-gray-300">
+                  <p className="text-center font-semibold text-xl">
+                    {quizData?.title}
+                  </p>
+
+                  {quizData?.subtitle && (
+                    <p className="text-center font-semibold">
+                      TITLE: {quizData?.subtitle}
+                    </p>
+                  )}
+
+                  {quizData?.speaker && (
+                    <p className="text-center font-semibold">
+                      SPEAKER: {quizData?.speaker}
+                    </p>
+                  )}
+
+                  <a href={quizData?.link} target="_blank">
+                    <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
+                      Quiz {i + 1}
+                    </button>
+                  </a>
+                </div>
+              );
+            })}
+
+            {/* GENERAL */}
+            <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
+              General
+            </div>
+
+            {/* <div className="w-100 p-[10px] flex flex-col items-center mt-[10px]">
+              <p className="text-center font-semibold">
+                Evaluation form for all speakers
+              </p>
+              <a href="" target="_blank">
+                <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
+                  Go to link
+                </button>
+              </a>
+            </div> */}
           </div>
         </div>
       </div>

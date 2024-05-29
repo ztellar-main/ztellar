@@ -24,6 +24,8 @@ const UpdateUserBeforeLoggingIn = () => {
   const [agreement, setAgreement] = useState(false);
   const [mName, setMname] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   // ERROR HANDLERS
   const [fnameError, setFnameError] = useState({
     message: "",
@@ -51,6 +53,36 @@ const UpdateUserBeforeLoggingIn = () => {
     }
   }, [userData, navigate]);
 
+  useEffect(() => {
+    if (fname) {
+      setFnameError({
+        message: "success",
+        status: "success",
+      });
+    }
+
+    if (mName) {
+      setMnameError({
+        message: "success",
+        status: "success",
+      });
+    }
+
+    if (lname) {
+      setLnameError({
+        message: "success",
+        status: "success",
+      });
+    }
+
+    if (mobileNumber) {
+      setMobileNumberError({
+        message: "success",
+        status: "success",
+      });
+    }
+  }, [fname, lname, mName, mobileNumber]);
+
   const { data: userQuery, isLoading } = useQuery({
     queryKey: [""],
     queryFn: async () => {
@@ -62,7 +94,6 @@ const UpdateUserBeforeLoggingIn = () => {
       setLname(res?.data?.lname);
       setMobileNumber(res?.data?.mobile_number);
       setMname(res?.data?.mname);
-
       return res?.data;
     },
   });
@@ -279,6 +310,7 @@ const UpdateUserBeforeLoggingIn = () => {
     }
 
     // SAVE
+    setLoading(true);
 
     try {
       const res = await axios({
@@ -286,13 +318,14 @@ const UpdateUserBeforeLoggingIn = () => {
         url: "/users/update-user",
         data: { fname, lname, mobileNumber, mName, agreement, userId },
       });
-
-      window.history.replaceState({}, fname);
+      setLoading(false);
+      // window.history.replaceState({}, fname);
       dispatch(loginSuccess(res?.data?.data));
       dispatch(token(res?.data?.token));
       toas("You are successfully logged in.", "success");
       navigate("/");
     } catch (err) {
+      setLoading(false);
       if (err instanceof AxiosError) {
         const error =
           err?.response?.data?.message || err?.response?.data || err?.message;
@@ -470,9 +503,14 @@ const UpdateUserBeforeLoggingIn = () => {
           {/* SUBMIT BUTTON */}
           <button
             onClick={submitBUttonFunction}
-            className="w-100 p-[10px] text-white bg-blue-800 rounded mt-[20px]"
+            className="w-100 p-[10px] text-white bg-blue-800 rounded mt-[20px] relative"
           >
             SUBMIT
+            {loading && (
+              <div className="absolute top-[50%] translate-y-[-50%] right-[10px]">
+                <CgSpinnerTwoAlt className="animate-spin" />
+              </div>
+            )}
           </button>
         </div>
       </div>
