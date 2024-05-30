@@ -11,6 +11,7 @@ import QRCode from "react-qr-code";
 import { PiCertificateLight } from "react-icons/pi";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import EventPdfCertificate from "../../components/Owned/EventPdfCertificate";
+// import { PDFViewer } from "@react-pdf/renderer";
 
 const OwnedEventCredentials = () => {
   const token = useAppSelector((state) => state.user.token);
@@ -50,9 +51,15 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  // console.log(eventdata?.eventData?._id?.attendance);
   return (
     <div>
+      {/* <PDFViewer>
+        <EventPdfCertificate
+          fname={eventdata?.userData?.fname}
+          lname={eventdata?.userData?.lname}
+          mname={eventdata?.userData?.mname}
+        />
+      </PDFViewer> */}
       <div className="flex">
         <OwnedSEventSidebar
           setOpenSide={setOpenSide}
@@ -144,6 +151,7 @@ const OwnedEventCredentials = () => {
                 <EventPdfCertificate
                   fname={eventdata?.userData?.fname}
                   lname={eventdata?.userData?.lname}
+                  mname={eventdata?.userData?.mname}
                 />
               }
               fileName={eventdata?.eventData?._id?.title}

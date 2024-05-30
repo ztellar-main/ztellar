@@ -39,7 +39,7 @@ export default withMt({
       },
       borderRadius: {
         circle: "50%",
-      },
+      }
     },
   },
   plugins: [],

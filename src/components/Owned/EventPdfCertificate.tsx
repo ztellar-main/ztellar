@@ -10,8 +10,10 @@ import {
 type Props = {
   fname: any;
   lname: any;
+  mname: any;
 };
-const EventPdfCertificate = ({ fname, lname }: Props) => {
+const EventPdfCertificate = ({ fname, lname, mname }: Props) => {
+  // Register font
   const styles = StyleSheet.create({
     page: {
       flexDirection: "row",
@@ -32,15 +34,14 @@ const EventPdfCertificate = ({ fname, lname }: Props) => {
       height: "100%",
     },
     textView: {
-      width: "400px",
-      height: "70px",
-      // backgroundColor:'red',
+      width: "100%",
+      // height: "70px",
       position: "absolute",
-      top: "170px",
-      left: "400px",
-      display: "flex",
+      top: "355px",
+      // display: "flex",
       alignItems: "center",
-      justifyContent: "center",
+      // justifyContent: "center",
+      fontWeight: "semibold",
     },
     text: {
       fontSize: "28px",
@@ -48,18 +49,20 @@ const EventPdfCertificate = ({ fname, lname }: Props) => {
       textAlign: "center",
     },
   });
+
+  const mName = mname.charAt(0);
   return (
     <Document>
-      <Page orientation="landscape" size="A4" style={styles.page}>
+      <Page size="A4" orientation="portrait" style={styles.page}>
         <View style={styles.view}>
           <Image
             style={styles.image}
-            src="https://res.cloudinary.com/diblak4eh/image/upload/v1710654660/vmx8c8cnzirgmyfzgx8f.png"
+            src="https://res.cloudinary.com/dbagrkam0/image/upload/v1717102167/ztellar/yf9tcsjfpozq7jdqqt4y.jpg"
           />
           <View style={styles.textView}>
             <Text style={styles.text}>
               {/* {props.fname} {props.mname}. {props.lname} */}
-              {fname} {lname}
+              {fname} {mName}. {lname}
             </Text>
           </View>
         </View>
