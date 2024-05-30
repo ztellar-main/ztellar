@@ -173,7 +173,7 @@ const AddVideoToSubjectEvent = () => {
         formData.append("file", videoFile.slice(start, end));
         // formData.append("cloud_name", CLOUD_NAME);
         formData.append("upload_preset", preset_key);
-        formData.append("public_id", `/${user?._id}/${title}/${uuidv4()}`);
+        formData.append("public_id", `/${user?._id}/${uuidv4()}`);
         const contentRange = `bytes ${start}-${end - 1}/${videoFile.size}`;
 
         setVideoChunk(a);
