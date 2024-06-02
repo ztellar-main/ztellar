@@ -11,8 +11,25 @@ type Props = {
   fname: any;
   lname: any;
   mname: any;
+  imageSrc: any;
+  alignItems: any;
+  top: any;
+  width: any;
+  orientations: any;
+  size: any;
+  marginLeft: any;
 };
-const EventPdfCertificate = ({ fname, lname, mname }: Props) => {
+const EventPdfCertificate = ({
+  fname,
+  lname,
+  mname,
+  imageSrc,
+  alignItems,
+  top,
+  orientations,
+  size,
+  marginLeft,
+}: Props) => {
   // Register font
   const styles = StyleSheet.create({
     page: {
@@ -37,11 +54,12 @@ const EventPdfCertificate = ({ fname, lname, mname }: Props) => {
       width: "100%",
       // height: "70px",
       position: "absolute",
-      top: "355px",
+      top: top,
       // display: "flex",
-      alignItems: "center",
+      alignItems: alignItems,
       // justifyContent: "center",
       fontWeight: "semibold",
+      marginLeft: marginLeft,
     },
     text: {
       fontSize: "28px",
@@ -53,16 +71,12 @@ const EventPdfCertificate = ({ fname, lname, mname }: Props) => {
   const mName = mname.charAt(0);
   return (
     <Document>
-      <Page size="A4" orientation="portrait" style={styles.page}>
+      <Page size={size} orientation={orientations} style={styles.page}>
         <View style={styles.view}>
-          <Image
-            style={styles.image}
-            src="https://res.cloudinary.com/dbagrkam0/image/upload/v1717102167/ztellar/yf9tcsjfpozq7jdqqt4y.jpg"
-          />
+          <Image style={styles.image} src={imageSrc} />
           <View style={styles.textView}>
             <Text style={styles.text}>
-              {/* {props.fname} {props.mname}. {props.lname} */}
-              {fname} {mName}. {lname}
+              {fname.toUpperCase()} {mName.toUpperCase()}. {lname.toUpperCase()}
             </Text>
           </View>
         </View>

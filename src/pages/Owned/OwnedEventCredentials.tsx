@@ -11,7 +11,7 @@ import QRCode from "react-qr-code";
 import { PiCertificateLight } from "react-icons/pi";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import EventPdfCertificate from "../../components/Owned/EventPdfCertificate";
-// import { PDFViewer } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 
 const OwnedEventCredentials = () => {
   const token = useAppSelector((state) => state.user.token);
@@ -51,15 +51,28 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
+  console.log(eventdata?.eventData?._id?.certificate);
+
   return (
     <div>
-      {/* <PDFViewer>
-        <EventPdfCertificate
-          fname={eventdata?.userData?.fname}
-          lname={eventdata?.userData?.lname}
-          mname={eventdata?.userData?.mname}
-        />
-      </PDFViewer> */}
+      {eventdata?.eventData?._id?.certificate?.map((certData: any, i: any) => {
+        return (
+          <PDFViewer key={i}>
+            <EventPdfCertificate
+              fname={eventdata?.userData?.fname}
+              lname={eventdata?.userData?.lname}
+              mname={eventdata?.userData?.mname}
+              imageSrc={certData?.image_src}
+              alignItems={certData?.align_items}
+              top={certData?.top}
+              width={certData?.width}
+              orientations={certData?.orientation}
+              size={certData?.size}
+              marginLeft={certData?.margin_left}
+            />
+          </PDFViewer>
+        );
+      })}
       <div className="flex">
         <OwnedSEventSidebar
           setOpenSide={setOpenSide}
@@ -141,26 +154,42 @@ const OwnedEventCredentials = () => {
               </p>
             </div>
 
-            <p className="text-center mt-[10px]">
+            <p className="text-center mt-[10px] mb-[20px]">
               Official certificate with QR Code will be available after the
               conference. This download button is for certificate preview only.
             </p>
 
-            <PDFDownloadLink
-              document={
-                <EventPdfCertificate
-                  fname={eventdata?.userData?.fname}
-                  lname={eventdata?.userData?.lname}
-                  mname={eventdata?.userData?.mname}
-                />
+            {eventdata?.eventData?._id?.certificate?.map(
+              (certData: any, i: any) => {
+                return (
+                  <div key={i} className="mb-[15px]">
+                    <p className="text-center font-semibold text-lg">{certData?.certificate_name}</p>
+                    <PDFDownloadLink
+                      document={
+                        <EventPdfCertificate
+                          fname={eventdata?.userData?.fname}
+                          lname={eventdata?.userData?.lname}
+                          mname={eventdata?.userData?.mname}
+                          imageSrc={certData?.image_src}
+                          alignItems={certData?.align_items}
+                          top={certData?.top}
+                          width={certData?.width}
+                          orientations={certData?.orientation}
+                          size={certData?.size}
+                          marginLeft={certData?.margin_left}
+                        />
+                      }
+                      fileName={`${certData?.certificate_name}-${eventdata?.eventData?._id?.title}`}
+                    >
+                      <button className="ml-[50%] translate-x-[-50%] bg-blue-900 p-[10px] rounded text-white hover:opacity-[80%] active:opacity-[100%] flex items-center justify-center mobile:w-[80%]">
+                        <PiCertificateLight className="w-[25px] h-[25px] mr-[5px]" />
+                        Download Certificate
+                      </button>
+                    </PDFDownloadLink>
+                  </div>
+                );
               }
-              fileName={eventdata?.eventData?._id?.title}
-            >
-              <button className="ml-[50%] translate-x-[-50%] bg-blue-900 p-[10px] mt-[10px] rounded text-white hover:opacity-[80%] active:opacity-[100%] flex items-center justify-center mobile:w-[80%]">
-                <PiCertificateLight className="w-[25px] h-[25px] mr-[5px]" />
-                Download Certificate
-              </button>
-            </PDFDownloadLink>
+            )}
 
             <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
               Attendance
@@ -169,7 +198,10 @@ const OwnedEventCredentials = () => {
             {eventdata?.eventData?._id?.attendance?.map(
               (attendanceData: any, i: any) => {
                 return (
-                  <div className="w-100 p-[10px] flex flex-col items-center mt-[10px]">
+                  <div
+                    key={i}
+                    className="w-100 p-[10px] flex flex-col items-center mt-[10px]"
+                  >
                     <p className="text-center font-semibold">
                       {attendanceData?.title}
                     </p>
@@ -191,7 +223,10 @@ const OwnedEventCredentials = () => {
 
             {eventdata?.eventData?._id?.quiz?.map((quizData: any, i: any) => {
               return (
-                <div className="w-100 p-[10px] flex flex-col items-center mt-[10px] border-b border-gray-300">
+                <div
+                  key={i}
+                  className="w-100 p-[10px] flex flex-col items-center mt-[10px] border-b border-gray-300"
+                >
                   <p className="text-center font-semibold text-xl">
                     {quizData?.title}
                   </p>
