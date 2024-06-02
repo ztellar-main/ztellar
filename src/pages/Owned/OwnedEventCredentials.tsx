@@ -55,24 +55,6 @@ const OwnedEventCredentials = () => {
 
   return (
     <div>
-      {eventdata?.eventData?._id?.certificate?.map((certData: any, i: any) => {
-        return (
-          <PDFViewer key={i}>
-            <EventPdfCertificate
-              fname={eventdata?.userData?.fname}
-              lname={eventdata?.userData?.lname}
-              mname={eventdata?.userData?.mname}
-              imageSrc={certData?.image_src}
-              alignItems={certData?.align_items}
-              top={certData?.top}
-              width={certData?.width}
-              orientations={certData?.orientation}
-              size={certData?.size}
-              marginLeft={certData?.margin_left}
-            />
-          </PDFViewer>
-        );
-      })}
       <div className="flex">
         <OwnedSEventSidebar
           setOpenSide={setOpenSide}
@@ -163,7 +145,9 @@ const OwnedEventCredentials = () => {
               (certData: any, i: any) => {
                 return (
                   <div key={i} className="mb-[15px]">
-                    <p className="text-center font-semibold text-lg">{certData?.certificate_name}</p>
+                    <p className="text-center font-semibold text-lg">
+                      {certData?.certificate_name}
+                    </p>
                     <PDFDownloadLink
                       document={
                         <EventPdfCertificate
