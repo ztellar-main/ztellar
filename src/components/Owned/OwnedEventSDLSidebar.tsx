@@ -7,8 +7,7 @@ type Props = {
   openSDLSidebar: any;
   setOpenSDLSidebar: any;
   subjects: any;
-  setVideoDataPresent:any;
-
+  setVideoDataPresent: any;
 };
 
 const OwnedEventSDLSidebar = ({
@@ -43,12 +42,21 @@ const OwnedEventSDLSidebar = ({
         </div>
 
         {/* MAIN BODY START */}
-        <div className="p-[5px]">
-          {/* SUBJECT CARD */}
-          {subjects?.map((subjectData:any, i:any) => {
-            return <OwnedEventSubjectCard key={i} subjectData={subjectData} index={i} setVideoDataPresent={setVideoDataPresent} setOpenSDLSidebar={setOpenSDLSidebar} />
-          })}
-          
+        <div className=" w-100 h-[calc(100dvh-75px)] overflow-auto">
+          <div className="p-[5px]">
+            {/* SUBJECT CARD */}
+            {subjects?.map((subjectData: any, i: any) => {
+              return (
+                <OwnedEventSubjectCard
+                  key={i}
+                  subjectData={subjectData}
+                  index={i}
+                  setVideoDataPresent={setVideoDataPresent}
+                  setOpenSDLSidebar={setOpenSDLSidebar}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
       {openSDLSidebar && (

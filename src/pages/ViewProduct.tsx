@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useAppSelector } from "../state/store";
 import SponsorPostCard from "../components/SponsorPostCard";
 import { sponsor } from "../utils/psmeSponsers";
+import toas from "../utils/toas";
 
 const ViewProduct = () => {
   const navigate = useNavigate();
@@ -66,8 +67,6 @@ const ViewProduct = () => {
     return data?._id === user?._id;
   });
 
-  console.log(registered);
-
   return (
     <div className="w-100 ">
       <Navbar />
@@ -99,6 +98,9 @@ const ViewProduct = () => {
             ) : (
               <button
                 onClick={() => {
+                  if (new Date(eventData?.date_end) < new Date(Date.now())) {
+                    return toas("Event ended. Please check SDL equivalent in your dashboard", "error");
+                  }
                   if (!token) {
                     return navigate("/login");
                   }
@@ -106,7 +108,9 @@ const ViewProduct = () => {
                 }}
                 className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
               >
-                Register now
+                {new Date(eventData?.date_end) < new Date(Date.now())
+                  ? "Event ended"
+                  : " Register now"}
               </button>
             )}
           </div>
@@ -230,7 +234,9 @@ const ViewProduct = () => {
                   );
                 })}
               </div>
-              <p className="text-gray-600">({eventData?.feedback_count} feedbacks)</p>
+              <p className="text-gray-600">
+                ({eventData?.feedback_count} feedbacks)
+              </p>
             </div>
             {/* STARS CONTAINER END */}
 
@@ -267,6 +273,10 @@ const ViewProduct = () => {
           ) : (
             <button
               onClick={() => {
+                if (new Date(eventData?.date_end) < new Date(Date.now())) {
+                  return toas("Event ended. Please check SDL equivalent in your dashboard", "error");
+                }
+
                 if (!token) {
                   return navigate("/login");
                 }
@@ -274,7 +284,9 @@ const ViewProduct = () => {
               }}
               className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
             >
-              Register now
+              {new Date(eventData?.date_end) < new Date(Date.now())
+                ? "Event ended"
+                : " Register now"}
             </button>
           )}
 
