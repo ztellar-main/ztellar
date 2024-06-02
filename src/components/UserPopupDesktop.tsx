@@ -56,7 +56,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
           }}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
         >
-          Aquired courses and events{" "}
+          Acquired courses and events{" "}
         </button>
         <button
           onClick={() => {

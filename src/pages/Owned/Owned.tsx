@@ -50,7 +50,7 @@ const Owned = () => {
         <Navbar />
         {/* MAIN BODY */}
         <p className="w-100 p-[10px] bg-blue-800 text-white text-lg font-semibold shadow">
-          Aquired courses and events
+          Acquired courses and events
         </p>
         <div className="grid grid-cols-[repeat(auto-fill,270px)] p-[20px] bg-gray-50 gap-[10px] justify-around">
           {ownedData?.product_owned?.map((data: any, i: any) => {
