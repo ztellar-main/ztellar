@@ -13,9 +13,7 @@ import EventFeedbackPopup from "../components/EventFeedbackPopup";
 import { useState } from "react";
 import { useAppSelector } from "../state/store";
 import SponsorPostCard from "../components/SponsorPostCard";
-import {sponsor} from "../utils/psmeSponsers";
-
-
+import { sponsor } from "../utils/psmeSponsers";
 
 const ViewProduct = () => {
   const navigate = useNavigate();
@@ -211,7 +209,7 @@ const ViewProduct = () => {
             {/* STARS CONTAINER */}
             <div className="w-100 flex  ">
               <p className="mr-[5px]  font-semibold">
-                {eventData?.average_rating} (stars)
+                {parseFloat(eventData?.average_rating).toFixed(2)}
               </p>
               <div className="flex items-center">
                 {stars.map((_, index) => {
@@ -232,7 +230,7 @@ const ViewProduct = () => {
                   );
                 })}
               </div>
-              <p className="text-gray-600">({eventData?.feedback_count})</p>
+              <p className="text-gray-600">({eventData?.feedback_count} feedbacks)</p>
             </div>
             {/* STARS CONTAINER END */}
 
