@@ -11,6 +11,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import ResetPasswordPopup from "../components/ResetPasswordPopup";
+import Footer from "../components/Footer";
 
 const Login = () => {
   const [passwordSeen, setPasswordSeen] = useState("password");
@@ -234,6 +235,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

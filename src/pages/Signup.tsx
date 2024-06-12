@@ -10,6 +10,7 @@ import { MdOutlineCheckCircle } from "react-icons/md";
 import { PiWarningCircleFill } from "react-icons/pi";
 import TermsOfUse from "../components/TermsOfUse";
 import PrivacyPolicy from "../components/PrivacyPolicy";
+import Footer from "../components/Footer";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -573,6 +574,8 @@ const Signup = () => {
       {termsOfUseOpen && (
         <PrivacyPolicy setTermsOfUseOpen={setTermsOfUseOpen} />
       )}
+
+      <Footer />
     </>
   );
 };

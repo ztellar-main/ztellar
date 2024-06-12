@@ -6,7 +6,6 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { RiLiveLine } from "react-icons/ri";
 import { useAppSelector } from "../../state/store";
 
-
 const pages = [
   {
     title: "Dashboard",
@@ -40,8 +39,6 @@ const pages = [
   },
 ];
 
-
-
 type Props = {
   page: string;
   openSidebar: boolean;
@@ -49,12 +46,16 @@ type Props = {
 };
 
 const AuthorSidebar = ({ page, openSidebar, setOpenSide }: Props) => {
-  const user = useAppSelector(state => state.user.currentUser)
+  const user = useAppSelector((state) => state.user.currentUser);
   return (
     <>
       <div
         className={`w-[300px] mobile:w-100 h-[100vh] bg-indigo-900 sticky mobile:fixed top-0 tablet:fixed ease-in-out duration-300 z-[11] min-w-[300px]
-       ${openSidebar ? "tabletMin:ml-0 tabletMin:left-0:" : "tabletMin:ml-[-300px] tabletMin:left-[-300px]"}
+       ${
+         openSidebar
+           ? "tabletMin:ml-0 tabletMin:left-0:"
+           : "tabletMin:ml-[-300px] tabletMin:left-[-300px]"
+       }
        ${!openSidebar ? "tablet:left-0" : "tablet:left-[-100%]"}
        `}
       >

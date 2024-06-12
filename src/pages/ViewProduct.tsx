@@ -15,6 +15,7 @@ import { useAppSelector } from "../state/store";
 import SponsorPostCard from "../components/SponsorPostCard";
 import { sponsor } from "../utils/psmeSponsers";
 import toas from "../utils/toas";
+import Footer from "../components/Footer";
 
 const ViewProduct = () => {
   const navigate = useNavigate();
@@ -99,7 +100,10 @@ const ViewProduct = () => {
               <button
                 onClick={() => {
                   if (new Date(eventData?.date_end) < new Date(Date.now())) {
-                    return toas("Event ended. Please check SDL equivalent in your dashboard", "error");
+                    return toas(
+                      "Event ended. Please check SDL equivalent in your dashboard",
+                      "error"
+                    );
                   }
                   if (!token) {
                     return navigate("/login");
@@ -274,7 +278,10 @@ const ViewProduct = () => {
             <button
               onClick={() => {
                 if (new Date(eventData?.date_end) < new Date(Date.now())) {
-                  return toas("Event ended. Please check SDL equivalent in your dashboard", "error");
+                  return toas(
+                    "Event ended. Please check SDL equivalent in your dashboard",
+                    "error"
+                  );
                 }
 
                 if (!token) {
@@ -351,7 +358,7 @@ const ViewProduct = () => {
           </div>
         </div>
       </div>
-      <div className="w-100 h-[300px] bg-indigo-900 mt-[30px]"></div>
+      <Footer />
     </div>
   );
 };

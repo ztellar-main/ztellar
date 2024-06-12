@@ -3,12 +3,12 @@ import CloudinaryImg from "../components/CloudinaryImg";
 import FaqQuestion from "../components/FaqQuestion";
 import Navbar from "../components/Navbar";
 import { faqData } from "../utils/faqs";
+import Footer from "../components/Footer";
 
 const Home = () => {
+  console.log(import.meta.env);
 
-  console.log(import.meta.env)
-
-  console.log(import.meta.env.VITE_BASE_URL_API)
+  console.log(import.meta.env.VITE_BASE_URL_API);
   const navigate = useNavigate();
   return (
     <div className="bg-white">
@@ -137,7 +137,7 @@ const Home = () => {
       <hr className="w-[70%] ml-[15%] my-[30px]" />
 
       {/* FOOTER */}
-      <div className="w-100 h-[300px] bg-indigo-900"></div>
+      <Footer />
     </div>
   );
 };
