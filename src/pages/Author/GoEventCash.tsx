@@ -7,7 +7,6 @@ import { useAppSelector } from "../../state/store";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { useLocation } from "react-router-dom";
 import toas from "../../utils/toas";
-import PaymongoCashPaymentButton from "../../components/Paymongo/PaymongoCashPaymentButton";
 
 // COMPONENTS
 
@@ -82,6 +81,31 @@ const GoEventCash = () => {
     setIdValid(true);
   };
 
+
+
+                    console.log({regTypeFinal,priceFinal,eventID:eventData?._id,eventType:eventData?.type,authorId:eventData?.author_id,userId:uid})
+
+    const registerFunction = async() => {
+      if(!price){
+        return toas("Please choose registration","error");
+      }
+
+      try{
+        await axios({
+          method:"put",
+          url:"/payment/cash-payment",
+          data:{authorId:eventData?.author_id,productId:eventData?._id,productType:eventData?.type,regType:regTypeFinal,buyerId:uid,priceFinal},
+        })
+        toas("Successfully registered.","success");
+        window.location.reload();
+      }catch(err){
+        toas("Something went wrong, please try again.","error");
+        window.location.reload();
+      }
+
+
+  
+    }
   return (
     <>
       <div className="flex">
@@ -170,15 +194,17 @@ const GoEventCash = () => {
                       );
                     })}
                   </select>
-                  <PaymongoCashPaymentButton
-                    regType={regTypeFinal}
+                    {/* regType={regTypeFinal}
                     price={priceFinal}
                     productId={eventData?._id}
                     productType={eventData?.type}
                     title={eventData?.title}
                     authorId={eventData?.author_id}
-                    userId={uid}
-                  />
+                    userId={uid} */}
+                    <button onClick={registerFunction} className="w-100 p-[10px] bg-indigo-800 text-white rounded mt-[10px]">Register</button>
+
+                    
+                  
                 </div>
               )}
             </div>

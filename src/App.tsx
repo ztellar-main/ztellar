@@ -41,6 +41,7 @@ import Owned from "./pages/Owned/Owned";
 import OwnedEventLive from "./pages/Owned/OwnedEventLive";
 import OwnedEventSDL from "./pages/Owned/OwnedEventSDL";
 import OwnedEventCredentials from "./pages/Owned/OwnedEventCredentials";
+import OwnedQrCode from "./pages/Owned/OwnedQrCode";
 
 // PAYMONGO
 import PaymongoSuccessRedirect from "./pages/Paymongo/PaymongoSuccessRedirect";
@@ -81,6 +82,11 @@ function App() {
                 path="/owned/event/credentials"
                 element={<OwnedEventCredentials />}
               />
+              <Route
+                path="/owned/qr"
+                element={<OwnedQrCode />}
+              />
+              
 
               {/* EMAIL VERIFY */}
               <Route path="" element={<EmailVerifyPrivateRoute />}>
