@@ -38,7 +38,7 @@ const GoEventCash = () => {
   const eventId = query.get("id") || "";
 
   const { data: eventData, isLoading } = useQuery({
-    queryKey: ["golive"],
+    queryKey: ["gocash"],
     queryFn: async () => {
       const res = await axios({
         method: "get",
@@ -74,10 +74,21 @@ const GoEventCash = () => {
       return u?.qr_code === uid;
     });
 
+    try{
+      await axios({
+        method:"post",
+        url:"/users/user-exist",
+        data:{userId:uid}
+      })
+
+    }catch(err){
+      return toas("User id is invalid or not yet registered.","error")
+    }
+
     if (user) {
       return toas("User id is already registered on this event.", "error");
     }
-
+    
     setIdValid(true);
   };
 
@@ -151,7 +162,7 @@ const GoEventCash = () => {
               {eventData?.title}
             </p>
 
-            <div className="w-[60%] p-[10px] bg-red-100 laptop:w-[80%] mobile:w-[95%] ml-[50%] translate-x-[-50%]">
+            <div className="w-[60%] p-[10px] laptop:w-[80%] mobile:w-[95%] ml-[50%] translate-x-[-50%]">
               {idValid ? (
                 <p className="text-center">{uid}</p>
               ) : (
