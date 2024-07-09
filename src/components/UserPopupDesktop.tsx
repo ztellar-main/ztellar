@@ -76,6 +76,14 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
 
+        <button onClick={() => navigate('/owned/qr')} className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700">
+          Qr code
+        </button>
+
+        <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
+
+        
+
         <button
           onClick={logoutButtonFunction}
           className="bg-blue-600 text-white w-100 p-[10px] rounded laptop:text-sm hover:bg-blue-400"
