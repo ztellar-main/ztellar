@@ -37,15 +37,16 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-100 h-[65px] shadow flex sticky top-0 left-0 mobile:h-mobileHeaderHeight p-[5px] bg-blue-50 z-[20] laptop:h-[55px] tablet:justify-between">
+      <div className="w-100 h-[65px] shadow flex sticky top-0 left-0 p-[5px] bg-blue-50 z-[20] tablet:justify-between">
         {/* LEFT CONTAINER */}
         <div
           onClick={() => navigate("/")}
           className="w-[120px] h-100 flex items-center mobile:w-[100px]"
         >
-          <CloudinaryImg
-            imageUrl="ztellar/ztellar/luctbarw5pzfsk4bgkfl"
-            className="w-[auto] h-[45px] ml-[10px] mobile:h-[40px] laptop:h-[40px] mobile:ml-[0] cursor-pointer"
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar%2FGroup%207363.png?alt=media&token=4a7ac4cd-7d2a-4572-9ba9-d8fde4277650"
+            className="h-[50px]"
+            alt=""
           />
         </div>
 
@@ -83,10 +84,16 @@ const Navbar = () => {
             {/* USER IMAGE */}
             {token ? (
               <>
-                <div className=" h-[50px] w-[50px] rounded-circle border-[2px] border-blue-600 laptop:h-[45px]">
-                  <CloudinaryImg
+                <div className=" h-[50px] w-[50px] min-h-[50px] rounded-circle border-[2px] border-blue-600 laptop:h-[45px] box-border">
+                  {/* <CloudinaryImg
                     imageUrl={user?.avatar}
                     className="h-100 w-100 bg-blue-900 rounded-circle object-cover"
+                  /> */}
+
+                  <img
+                    src={user?.avatar}
+                    className="w-100 h-[100%] rounded-circle object-cover box-border"
+                    alt=""
                   />
                 </div>
 
@@ -149,9 +156,10 @@ const Navbar = () => {
               {/* USER ICON */}
               <div onClick={() => setIsOpen(true)} className="">
                 <div className="w-[35px] h-[35px] bg-blue-800 rounded-circle border-[2px] border-blue-800 ">
-                  <CloudinaryImg
-                    imageUrl={user?.avatar}
-                    className="h-100 w-100 border border-blue-900 bg-blue-900 rounded-circle mr-[5px]"
+                  <img
+                    src={user?.avatar}
+                    className="w-100 h-[100%] rounded-circle object-cover box-border"
+                    alt=""
                   />
                 </div>
               </div>

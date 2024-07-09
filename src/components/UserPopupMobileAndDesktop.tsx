@@ -3,6 +3,7 @@ import { useAppDispatch } from "../state/store";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../state/userSlice";
 import { useAppSelector } from "../state/store";
+
 type Props = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;

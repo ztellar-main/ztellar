@@ -31,10 +31,11 @@ const ProductSearchCard = ({ data }: Props) => {
         className="shadow rounded p-[10px] border cursor-pointer hover:opacity-[80%] bg-blue-50 border-gray-300"
       >
         {/* IMAGE */}
-        <div className="w-100">
-          <CloudinaryImg
-            imageUrl={data?.image_url}
-            className="w-100 h-[135px] object-cover rounded"
+        <div className="w-100 h-[150px]">
+          <img
+            src={data?.image_url}
+            alt=""
+            className="w-100 h-[100%] object-cover rounded"
           />
         </div>
 
@@ -66,7 +67,6 @@ const ProductSearchCard = ({ data }: Props) => {
               );
             })}
           </div>
-          
         </div>
         <p className="text-gray-600">({data?.feedback_count} feedbacks)</p>
 

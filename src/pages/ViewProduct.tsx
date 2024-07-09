@@ -1,6 +1,6 @@
 // COMPONENTS
 import Navbar from "../components/Navbar";
-import CloudinaryVideoNormal from "../components/CloudinaryVideoNormal";
+
 import { GoStarFill } from "react-icons/go";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +43,6 @@ const ViewProduct = () => {
         method: "get",
         url: `/product/get-view-event-product?id=${productId}`,
       });
-
       return res?.data;
     },
   });
@@ -79,8 +78,18 @@ const ViewProduct = () => {
         {/* LEFT */}
         <div className="grow ">
           {/* VIDEO CONTAINER */}
-          <div className="w-100 h-[400px] ">
-            <CloudinaryVideoNormal videoUrl={eventData?.video_url} />
+          <div className="w-100 h-[400px] bg-black flex justify-center ">
+            {/* <CloudinaryVideoNormal videoUrl={} /> */}
+
+            {/* <ReactPlayer
+              url={eventData?.video_url}
+              className="h-100 w-100"
+              controls
+            /> */}
+
+            <video className="h-[400px] w-100" autoPlay controls>
+              <source src={eventData?.video_url} />
+            </video>
           </div>
           {/* REG BUTTON TOP */}
           <div className="w-100 p-[10px] pb-0 tabletMin:hidden">

@@ -10,6 +10,8 @@ import { FiUploadCloud } from "react-icons/fi";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { useAppSelector } from "../../state/store";
 import { v4 as uuidv4 } from "uuid";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
 
 // COMPONENTS
 import OnPropImageInput from "../../components/Author/OnPropImageInput";
@@ -71,7 +73,7 @@ const CreateEvent = () => {
   ]);
   const [place, setPlace] = useState("");
   const [liveId, setLiveId] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [videoIntro, setVideoIntro] = useState<File | null>(null);
 
   // ERROR HANDLERS
@@ -387,7 +389,7 @@ const CreateEvent = () => {
 
     // THUMBNAIL FUNCTION START
     const thumbnailFunction = () => {
-      if (thumbnail.length <= 0)
+      if (!thumbnail)
         return setImageErrorHandler({
           message: "Please choose your event thumbnail.",
           status: "failed",
@@ -451,155 +453,128 @@ const CreateEvent = () => {
     ) {
       setUploadDisplay(true);
 
-      // UPLOAD IMAGE FUNCTION START
-      const uploadImageFunction = async () => {
-        setUploadImageState("start");
-        const formData = new FormData();
-        formData.append("file", thumbnail);
-        formData.append("upload_preset", preset_key);
-        formData.append("public_id", `/${user?._id}/${title}/${uuidv4()}`);
-        try {
-          const res = await axios({
-            method: "post",
-            url: "https://api.cloudinary.com/v1_1/dbagrkam0/image/upload",
-            data: formData,
-            onUploadProgress: (e: any) => {
-              const progress = Math.round(
-                (100 * e.loaded) / e.total
-              ).toString();
-              setImageUploadProgress(progress);
-            },
-          });
-          setUploadImageState("success");
-          return res?.data?.public_id;
-        } catch (err) {
-          toas(
-            "There is something wrong. Please check your internet connection.",
-            "error"
-          );
-          setUploadDisplay(false);
-          console.log(err);
-        }
-      };
-
-      // UPLOAD IMAGE FUNCTION END
-
       // UPLOAD VIDEO FUNCTION START
       const generateUniqueUploadId = () => {
         return `uqid-${Date.now()}`;
       };
       const uploadVideo = async () => {
         if (!videoIntro) {
-          console.error("Please select a file.");
+          console.error("Please select a intro video.");
+          return;
+        }
+
+        if (!thumbnail) {
+          console.error("Please select a thumbnail.");
           return;
         }
         setUploadVideoState("start");
 
-        const uniqueUploadId = generateUniqueUploadId();
-        const chunkSize = 5 * 1024 * 1024;
-        const totalChunks = Math.ceil(videoIntro.size / chunkSize);
-        let currentChunk = 0;
-        let a = 0;
-        setVideoChunkCount(Math.round(videoIntro.size / chunkSize));
+        // UPLOAD VIDEO INTRO
+        const fileRef = ref(storage, `videos/${uuidv4()}${videoIntro?.name}`);
+        const uploadTask = uploadBytesResumable(fileRef, videoIntro);
 
-        const uploadChunk = async (start: any, end: any) => {
-          const formData = new FormData();
-          formData.append("file", videoIntro.slice(start, end));
-          // formData.append("cloud_name", CLOUD_NAME);
-          formData.append("upload_preset", "zh6pbgqx");
-          formData.append("public_id", `/${user?._id}/${title}/${uuidv4()}`);
-          const contentRange = `bytes ${start}-${end - 1}/${videoIntro.size}`;
-
-          setVideoChunk(a);
-
-          try {
-            const response: any = await axios(
-              `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
-              {
-                method: "POST",
-                data: formData,
-
-                headers: {
-                  "X-Unique-Upload-Id": uniqueUploadId,
-                  "Content-Range": contentRange,
-                },
-                onUploadProgress: (e: any) => {
-                  const progress = Math.round(
-                    (100 * e.loaded) / e.total
-                  ).toString();
-                  setVideoUploadProgress(progress);
-                },
-              }
-            );
-
-            currentChunk++;
-            a++;
-
-            if (currentChunk < totalChunks) {
-              const nextStart = currentChunk * chunkSize;
-              const nextEnd = Math.min(nextStart + chunkSize, videoIntro.size);
-              uploadChunk(nextStart, nextEnd);
-            } else {
-              const q = await response;
-
-              setUploadVideoState("success");
-
-              const imageUrl = await uploadImageFunction();
-              const videoUrl = q?.data?.public_id;
-
-              if (
-                imageUrl !== "" &&
-                titleErrorHandler?.status === "success" &&
-                descriptionErrorHandler?.status === "success" &&
-                priceErrorHandler?.status === "success" &&
-                placeErrorHandler?.status === "success" &&
-                liveIdErrorHandler?.status === "success"
-              ) {
-                try {
-                  setUploadDataState("start");
-                  await axios({
-                    method: "POST",
-                    url: "/product/create-product",
-                    data: {
-                      title,
-                      description,
-                      prices,
-                      place,
-                      liveId,
-                      imageUrl,
-                      videoUrl,
-                    },
-                    headers: {
-                      authorization: `Token ${token}`,
-                    },
-                  });
-
-                  setUploadDataState("success");
-                  toas("Successfully uploaded.", "success");
-                  navigate("/author/add-event");
-                } catch (err) {
-                  toas(
-                    "There is something wrong. Please check your internet connection.",
-                    "error"
-                  );
-                  setUploadDisplay(false);
-                  console.log(err);
-                }
-              }
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
             }
-          } catch (error) {
-            toas(
-              "There is something wrong. Please check your internet connection.",
-              "error"
-            );
-            setUploadDisplay(false);
-            console.error("Error uploading chunk:", error);
-          }
-        };
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+          },
+          async () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            await getDownloadURL(uploadTask.snapshot.ref).then((video) => {
+              const videoUrl = video;
+              const fileRef = ref(
+                storage,
+                `images/${uuidv4()}${thumbnail?.name}`
+              );
+              const uploadTask = uploadBytesResumable(fileRef, thumbnail);
+              uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                  // Observe state change events such as progress, pause, and resume
+                  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                  const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  console.log("Upload is " + progress + "% done");
+                  switch (snapshot.state) {
+                    case "paused":
+                      console.log("Upload is paused");
+                      break;
+                    case "running":
+                      console.log("Upload is running");
+                      break;
+                  }
+                },
+                (error) => {
+                  // Handle unsuccessful uploads
+                },
+                async () => {
+                  // Handle successful uploads on complete
+                  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                  await getDownloadURL(uploadTask.snapshot.ref).then(
+                    async(image) => {
+                      const imageUrl = image;
 
-        const start = 0;
-        const end = Math.min(chunkSize, videoIntro.size);
-        return await uploadChunk(start, end);
+                      if (
+                        videoUrl !== "" &&
+                        imageUrl !== "" &&
+                        titleErrorHandler?.status === "success" &&
+                        descriptionErrorHandler?.status === "success" &&
+                        priceErrorHandler?.status === "success" &&
+                        placeErrorHandler?.status === "success" &&
+                        liveIdErrorHandler?.status === "success"
+                      ) {
+                        try {
+                          setUploadDataState("start");
+                          await axios({
+                            method: "POST",
+                            url: "/product/create-product",
+                            data: {
+                              title,
+                              description,
+                              prices,
+                              place,
+                              liveId,
+                              imageUrl,
+                              videoUrl,
+                            },
+                            headers: {
+                              authorization: `Token ${token}`,
+                            },
+                          });
+
+                          setUploadDataState("success");
+                          toas("Successfully uploaded.", "success");
+                          navigate("/author/add-event");
+                        } catch (err) {}
+                      } else {
+                        toas(
+                          "There is something wrong in your information.",
+                          "error"
+                        );
+                      }
+                    }
+                  );
+                }
+              );
+            });
+          }
+        );
       };
       uploadVideo();
       // UPLOAD VIDEO FUNCTION END
