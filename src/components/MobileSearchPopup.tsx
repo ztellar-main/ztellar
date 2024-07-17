@@ -11,19 +11,19 @@ type Props = {
 const MobileSearchPopup = ({
   searchIsOpen,
   setSearchIsOpen,
-  setSearchValue,
-  searchValue,
+  // setSearchValue,
+  // searchValue,
 }: Props) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const searchEnterFunction = (e: any) => {
-    const title = e.target.value;
-    // e.preventDefault()
-    if (e.key === "Enter") {
-      navigate(`/search?query=${title}`);
-      setSearchIsOpen(false);
-    }
-  };
+  // const searchEnterFunction = (e: any) => {
+  //   const title = e.target.value;
+  //   // e.preventDefault()
+  //   if (e.key === "Enter") {
+  //     navigate(`/search?query=${title}`);
+  //     setSearchIsOpen(false);
+  //   }
+  // };
   return (
     // MAIN CONTAINER
     <div
