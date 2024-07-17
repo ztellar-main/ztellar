@@ -40,7 +40,7 @@ const Search = () => {
         <div className="bg-blue-800 p-[10px] text-white text-lg font-semibold">
           Search courses and events
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,270px)] p-[20px] gap-[10px] justify-around">
+        <div className="grid grid-cols-[repeat(auto-fill,300px)] p-[20px] gap-[10px] justify-around">
           {productData?.map((data: any, i: any) => {
             return <ProductSearchCard key={i} data={data} />;
           })}

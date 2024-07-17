@@ -25,7 +25,7 @@ const ProductSearchCards = ({ data }: Props) => {
   return (
     <div
       onClick={cardOnClickFunction}
-      className="w-[300px] border border-gray-400 p-[5px] rounded-[5px] cursor-pointer hover:bg-blue-50 duration-300 shadow-sm shadow-gray-400"
+      className="border border-gray-400 p-[5px] rounded-[5px] cursor-pointer hover:bg-blue-50 duration-300 shadow-sm shadow-gray-400"
     >
       <div className="w-full h-[160px] border border-gray-300 rounded bg-gray-100">
         <img
