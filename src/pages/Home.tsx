@@ -34,7 +34,7 @@ const Homepage: React.FC = () => {
               className="w-100 h-[100%] object-cover"
             />
           </div>
-          <div className="absolute left-0 top-0 text-6xl font-bold tablet:hidden"> 
+          <div className="absolute left-0 top-0 text-6xl font-bold tablet:hidden">
             <p className="">
               <span className="text-[#1A66CC]">Connecting </span>
               minds
@@ -66,8 +66,8 @@ const Homepage: React.FC = () => {
         </div>
 
         {/* HR LINE */}
-        <div className="w-[1280px] my-[50px] mx-auto ">
-          <hr className="border border-blue-200 max-w-[1270px] mx-auto" />
+        <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%]">
+          <hr className=" w-100 border-top border-blue-600" />
         </div>
 
         {/* WHAT'S IN IT CONTAINER */}
@@ -85,8 +85,8 @@ const Homepage: React.FC = () => {
         </div>
 
         {/* HR LINE */}
-        <div className="w-[1280px] my-[50px] mx-auto ">
-          <hr className="border border-blue-200 max-w-[1270px] mx-auto" />
+        <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%] ">
+          <hr className=" w-100 border-top border-blue-600" />
         </div>
 
         {/* BLUE TITLE CONTAINER UPCOMING EVENT */}
@@ -107,8 +107,8 @@ const Homepage: React.FC = () => {
         </>
 
         {/* HR LINE */}
-        <div className="w-[1280px] my-[50px] mx-auto ">
-          <hr className="border border-blue-200 max-w-[1270px] mx-auto" />
+        <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%] ">
+          <hr className=" w-100 border-top border-blue-600" />
         </div>
 
         {/* BLUE TITLE CONTAINER LATEST EVENT */}
@@ -129,8 +129,8 @@ const Homepage: React.FC = () => {
         </>
 
         {/* HR LINE */}
-        <div className="w-[1280px] my-[50px] mx-auto ">
-          <hr className="border border-blue-200 max-w-[1270px] mx-auto" />
+        <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%] ">
+          <hr className=" w-100 border-top border-blue-600" />
         </div>
 
         {/* BLUE TITLE CONTAINER FREQUENTLY ASKED QUESTIONS */}
@@ -146,8 +146,8 @@ const Homepage: React.FC = () => {
         </>
 
         {/* HR LINE */}
-        <div className="w-[1280px] my-[50px] mx-auto ">
-          <hr className="border border-blue-200 max-w-[1270px] mx-auto" />
+        <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%] ">
+          <hr className=" w-100 border-top border-blue-600" />
         </div>
       </div>
 
