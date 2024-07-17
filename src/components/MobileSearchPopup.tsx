@@ -1,6 +1,6 @@
 import { CiSearch } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   searchIsOpen: boolean;
@@ -11,19 +11,19 @@ type Props = {
 const MobileSearchPopup = ({
   searchIsOpen,
   setSearchIsOpen,
-  // setSearchValue,
-  // searchValue,
+  setSearchValue,
+  searchValue,
 }: Props) => {
   // const navigate = useNavigate();
 
-  // const searchEnterFunction = (e: any) => {
-  //   const title = e.target.value;
-  //   // e.preventDefault()
-  //   if (e.key === "Enter") {
-  //     navigate(`/search?query=${title}`);
-  //     setSearchIsOpen(false);
-  //   }
-  // };
+  const searchEnterFunction = (e: any) => {
+    const title = e.target.value;
+    // e.preventDefault()
+    if (e.key === "Enter") {
+      navigate(`/search?query=${title}`);
+      setSearchIsOpen(false);
+    }
+  };
   return (
     // MAIN CONTAINER
     <div
@@ -37,15 +37,15 @@ const MobileSearchPopup = ({
       <div className="flex items-center w-100">
         <div className="grow  relative mr-[10px]">
           <CiSearch className="absolute top-[50%] translate-y-[-50%] w-[25px] h-[25px] invert-[10%] left-[10px] " />
-          {/* <input
+          <input
             type="text"
             className="w-100 p-[10px] rounded-[30px] text-base mr-[10px] border border-blue-600 outline-blue-600 pl-[40px]"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={searchEnterFunction}
             enterKeyHint="search"
-            autoFocus
-          /> */}
+            // autoFocus
+          />
         </div>
         <IoCloseOutline
           onClick={() => setSearchIsOpen(false)}
