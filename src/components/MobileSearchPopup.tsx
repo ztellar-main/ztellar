@@ -37,7 +37,7 @@ const MobileSearchPopup = ({
       <div className="flex items-center w-100">
         <div className="grow  relative mr-[10px]">
           <CiSearch className="absolute top-[50%] translate-y-[-50%] w-[25px] h-[25px] invert-[10%] left-[10px] " />
-          <input
+          {/* <input
             type="text"
             className="w-100 p-[10px] rounded-[30px] text-base mr-[10px] border border-blue-600 outline-blue-600 pl-[40px]"
             value={searchValue}
@@ -45,7 +45,7 @@ const MobileSearchPopup = ({
             onKeyDown={searchEnterFunction}
             enterKeyHint="search"
             autoFocus
-          />
+          /> */}
         </div>
         <IoCloseOutline
           onClick={() => setSearchIsOpen(false)}
