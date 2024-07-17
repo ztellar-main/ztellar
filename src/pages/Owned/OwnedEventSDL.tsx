@@ -16,8 +16,6 @@ const OwnedEventSDL = () => {
   const query = new URLSearchParams(location.search);
   const productId = query.get("id") || "";
 
-  console.log(productId)
-
   const [openSidebar, setOpenSide] = useState(true);
   const [openSDLSidebar, setOpenSDLSidebar] = useState(false);
 
@@ -28,8 +26,6 @@ const OwnedEventSDL = () => {
     video_index: 0,
     subject_link: null,
   });
-
-  // console.log(videoDataPresent)
 
   const {
     data: eventData,
@@ -45,7 +41,6 @@ const OwnedEventSDL = () => {
           Authorization: `Token ${token}`,
         },
       });
-
 
       setVideoDataPresent({
         title: res?.data?.eventData?._id?.subjects[0]?.videos[0]?._id?.title,
@@ -73,7 +68,7 @@ const OwnedEventSDL = () => {
 
   // console.log(videoDataPresent)
 
-  console.log(eventData)
+  console.log(eventData);
 
   return (
     <div>
@@ -135,7 +130,7 @@ const OwnedEventSDL = () => {
               key={videoDataPresent?.video_url}
               className="w-100 h-[400px] bg-black flex items-center justify-center"
             >
-              <VideoPrivate videoId={videoDataPresent?.video_url} />
+              <VideoPrivate videoUrl={videoDataPresent?.video_url} />
               {/* <CloudinaryVideoNormal videoUrl={videoDataPresent?.video_url} /> */}
             </div>
             <div className="w-100 p-[10px] bg-indigo-900 text-white">
