@@ -14,7 +14,7 @@ const MobileSearchPopup = ({
   setSearchValue,
   searchValue,
 }: Props) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const searchEnterFunction = (e: any) => {
     const title = e.target.value;
