@@ -44,7 +44,7 @@ const MobileSearchPopup = ({
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={searchEnterFunction}
             enterKeyHint="search"
-            // autoFocus
+            autoFocus={true}
           />
         </div>
         <IoCloseOutline
