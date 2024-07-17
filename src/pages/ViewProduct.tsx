@@ -73,7 +73,7 @@ const ViewProduct = () => {
         {/* LEFT */}
         <div className="grow ">
           {/* VIDEO CONTAINER */}
-          <div className="w-100 h-[400px] bg-black flex justify-center ">
+          <div key={eventData?.video_url} className="w-100 h-[400px] bg-black flex justify-center ">
             <video className="h-[400px] w-100" autoPlay controls>
               <source src={eventData?.video_url} />
             </video>
