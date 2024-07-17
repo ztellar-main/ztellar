@@ -51,8 +51,6 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  console.log(eventdata?.eventData?._id?.certificate);
-
   return (
     <div>
       <div className="flex">

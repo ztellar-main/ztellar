@@ -1,19 +1,16 @@
 // COMPONENTS
 import Navbar from "../components/Navbar";
-
 import { GoStarFill } from "react-icons/go";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import CloudinaryImg from "../components/CloudinaryImg";
+
 import EventViewSubjectCard from "../components/EventViewSubjectCard";
 import ProductViewReviewCard from "../components/ProductViewReviewCard";
 import EventFeedbackPopup from "../components/EventFeedbackPopup";
 import { useState } from "react";
 import { useAppSelector } from "../state/store";
-import SponsorPostCard from "../components/SponsorPostCard";
-import { sponsor } from "../utils/psmeSponsers";
 import toas from "../utils/toas";
 import Footer from "../components/Footer";
 
@@ -59,8 +56,6 @@ const ViewProduct = () => {
     return <Navigate to="/" />;
   }
 
-  // console.log(eventData?.registered);
-
   const date = new window.Date(eventData?.createdAt);
 
   const registered = eventData?.registered?.find((data: any) => {
@@ -79,14 +74,6 @@ const ViewProduct = () => {
         <div className="grow ">
           {/* VIDEO CONTAINER */}
           <div className="w-100 h-[400px] bg-black flex justify-center ">
-            {/* <CloudinaryVideoNormal videoUrl={} /> */}
-
-            {/* <ReactPlayer
-              url={eventData?.video_url}
-              className="h-100 w-100"
-              controls
-            /> */}
-
             <video className="h-[400px] w-100" autoPlay controls>
               <source src={eventData?.video_url} />
             </video>
@@ -145,77 +132,6 @@ const ViewProduct = () => {
                 );
               })}
             </div>
-            {/* OUTLINE END */}
-
-            {/* SPONSORS LOGO START */}
-            <div className="w-100 p-[10px] bg-blue-50 rounded shadow border border-gray-300">
-              <div className="text-blue-800 text-xl font-semibold mb-[10px] mobile:text-center">
-                Partners
-              </div>
-              <div className="grid grid-cols-[repeat(auto-fill,150px)] mobile:grid-cols-[repeat(auto-fill,100px)] p-[20px] gap-[20px] justify-around items-center">
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/b0hha96nzppytqolrmc0"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/cyyu0glhampjuvbiueci"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/fkybpesfj1hvibsiqphv"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/gilvtb4rqz60gwfmfxyx"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/vvzvrftdx1ydqnfnjwba"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/ualfh1v40jhv1wlrf5hi"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/gbp5t11adhenoqczpzw4"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/w2mr85nyjahi5mx8pxxc"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-
-                <div className="">
-                  <CloudinaryImg
-                    imageUrl="ztellar/LRC 2024 sponsrs/leki2i9awhp7wxjgew5t"
-                    className="w-100 h-[auto]"
-                  />
-                </div>
-              </div>
-            </div>
-            {/* SPONSORS LOGO END */}
-            {sponsor?.map((sponsorData: any, i: any) => {
-              return <SponsorPostCard data={sponsorData} key={i} />;
-            })}
           </div>
         </div>
 
@@ -309,8 +225,9 @@ const ViewProduct = () => {
           {/* AUTHOR CONTAINER */}
           <div className="w-100 p-[20px] rounded bg-blue-50 flex flex-col items-center shadow border border-gray-300 mb-[10px]">
             <div className="w-[120px] h-[120px] bg-blue-800 rounded-circle mb-[5px]">
-              <CloudinaryImg
-                imageUrl="ztellar/ztellar/pzoz9wj3y3onkg62dcdx"
+              <img
+                src={eventData?.author_id?.avatar}
+                alt=""
                 className="h-100 w-100 border-[4px] border-blue-800 rounded-circle "
               />
             </div>
@@ -326,11 +243,10 @@ const ViewProduct = () => {
             </p>
 
             {/* REVIEW CARD */}
-            {/* {eventData?.feedback?.map((reviewData:any,i:any) => {
-              return <ProductViewReviewCard key={i} data={reviewData}  />
-            })} */}
 
-            <p className="text-center my-[10px]">No feedback yet.</p>
+            {eventData?.feedback?.length === 0 && (
+              <p className="text-center my-[10px]">No feedback yet.</p>
+            )}
 
             {eventData?.feedback[0] && (
               <ProductViewReviewCard data={eventData?.feedback[0]} />

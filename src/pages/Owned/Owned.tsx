@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { dataTagSymbol, useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/Navbar";
 import OwnedCard from "../../components/Owned/OwnedCard";
 import axios from "axios";
@@ -16,7 +16,7 @@ const Owned = () => {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["owned-products",referesher],
+    queryKey: ["owned-products", referesher],
     queryFn: async () => {
       const res = await axios({
         method: "get",
@@ -44,6 +44,7 @@ const Owned = () => {
     }
   };
 
+
   return (
     <>
       <div>
@@ -54,7 +55,9 @@ const Owned = () => {
         </p>
         <div className="grid grid-cols-[repeat(auto-fill,270px)] p-[20px] bg-gray-50 gap-[10px] justify-around">
           {ownedData?.product_owned?.map((data: any, i: any) => {
-            return <OwnedCard setRefresher={setRefresher} key={i} data={data} />;
+            return (
+              <OwnedCard setRefresher={setRefresher} key={i} data={data} />
+            );
           })}
         </div>
         <Loading />

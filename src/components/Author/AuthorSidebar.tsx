@@ -1,4 +1,3 @@
-import CloudinaryImg from "../CloudinaryImg";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -76,10 +75,11 @@ const AuthorSidebar = ({ page, openSidebar, setOpenSide }: Props) => {
 
           {/* USER CONTAINER START */}
           <div className="flex p-[10px] items-center bg-indigo-700 rounded">
-            <div className="border-[2px] border-white rounded-circle">
-              <CloudinaryImg
-                imageUrl="ztellar/ztellar/pzoz9wj3y3onkg62dcdx"
-                className="w-[auto] h-[45px] cursor-pointer border-[2px] border-indigo-900 rounded-circle"
+            <div className="border-[2px] border-white rounded-circle w-[45px] h-[45px]">
+              <img
+                src={user?.avatar}
+                alt=""
+                className="border-[2px] border-indigo-900 rounded-circle w-100 h-[100%]"
               />
             </div>
 

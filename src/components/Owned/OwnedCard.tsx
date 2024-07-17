@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import CloudinaryImg from "../CloudinaryImg";
 import LeaveRating from "./LeaveRating";
 import { useState } from "react";
 import { useAppSelector } from "../../state/store";
@@ -55,12 +54,7 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
             navigate(`/owned/event/credentials?id=${data?._id?._id}`)
           }
           className="w-100"
-        >
-          <CloudinaryImg
-            imageUrl="ztellar/ztellar/asdasdasd"
-            className="w-100 h-[135px] object-cover rounded"
-          />
-        </div>
+        ></div>
 
         {/* TITLE */}
         <div className="w-100 line-clamp-2 mt-[5px] font-semibold">

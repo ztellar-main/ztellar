@@ -1,4 +1,4 @@
-import CloudinaryImg from "./CloudinaryImg";
+
 import { useAppDispatch } from "../state/store";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../state/userSlice";
@@ -32,9 +32,10 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         <div className="bg-blue-600 w-100 rounded flex flex-col items-center py-[10px]">
           {/* USER IMAGE CONTAINER */}
           <div className="h-[100px] w-[100px] border-[2px] border-white rounded-circle ">
-            <CloudinaryImg
-              imageUrl={user?.avatar}
-              className="w-100 h-100 border-[2px] border-blue-600 rounded-circle"
+            <img
+              src={user?.avatar}
+              alt=""
+              className="w-100 h-100 border-[2px] border-blue-600 rounded-circle object-cover"
             />
           </div>
 
@@ -70,19 +71,23 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         >
           Author Dashboard{" "}
         </button>
-        <button onClick={() => navigate('/edit-profile')} className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700">
+        <button
+          onClick={() => navigate("/edit-profile")}
+          className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
+        >
           Account settings
         </button>
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
 
-        <button onClick={() => navigate('/owned/qr')} className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700">
+        <button
+          onClick={() => navigate("/owned/qr")}
+          className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
+        >
           Qr code
         </button>
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
-
-        
 
         <button
           onClick={logoutButtonFunction}
@@ -100,8 +105,6 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         ></div>
       )}
     </>
-
-    
   );
 }
 

@@ -22,10 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   // const navigate = useNavigate();
-  const preset_key = "zh6pbgqx";
-  const CLOUD_NAME = "dbagrkam0";
   const token = useAppSelector((state) => state.user.token);
-  const user = useAppSelector((state) => state.user.currentUser);
 
   // FOR RESPONSIVE PAGE DESIGN
   useEffect(() => {
@@ -48,17 +45,14 @@ const CreateEvent = () => {
   const [uploadDisplay, setUploadDisplay] = useState(false);
 
   // UPLOAD STATE
-  const [uploadImageState, setUploadImageState] = useState("");
   const [uploadVideoState, setUploadVideoState] = useState("");
   const [uploadDataState, setUploadDataState] = useState("");
 
+  console.log(uploadVideoState);
+
   // CHUNK
-  const [videoChunk, setVideoChunk] = useState(0);
-  const [videoChunkCount, setVideoChunkCount] = useState(0);
 
   // PROGRESS
-  const [imageUploadProgress, setImageUploadProgress] = useState("0");
-  const [videoUploadProgress, setVideoUploadProgress] = useState("0");
 
   // INPUT VALUES
   const [title, setTitle] = useState("");
@@ -454,9 +448,6 @@ const CreateEvent = () => {
       setUploadDisplay(true);
 
       // UPLOAD VIDEO FUNCTION START
-      const generateUniqueUploadId = () => {
-        return `uqid-${Date.now()}`;
-      };
       const uploadVideo = async () => {
         if (!videoIntro) {
           console.error("Please select a intro video.");
@@ -492,6 +483,7 @@ const CreateEvent = () => {
           },
           (error) => {
             // Handle unsuccessful uploads
+            console.log(error);
           },
           async () => {
             // Handle successful uploads on complete
@@ -522,12 +514,13 @@ const CreateEvent = () => {
                 },
                 (error) => {
                   // Handle unsuccessful uploads
+                  console.log(error);
                 },
                 async () => {
                   // Handle successful uploads on complete
                   // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                   await getDownloadURL(uploadTask.snapshot.ref).then(
-                    async(image) => {
+                    async (image) => {
                       const imageUrl = image;
 
                       if (
@@ -943,32 +936,6 @@ const CreateEvent = () => {
                 <p className="text-center font-semibold text-2xl text-indigo-800 mb-[20px]">
                   Uploading files and data please wait.
                 </p>
-
-                <div
-                  className={`flex items-center text-lg tracking-widest mb-[20px] 
-              ${!uploadVideoState && "text-gray-700"}
-              ${uploadVideoState === "start" && "text-blue-700"}
-              ${uploadVideoState === "success" && "text-green-600"}`}
-                >
-                  Uploading video : ({videoChunk} / {videoChunkCount}){" "}
-                  {videoUploadProgress}%
-                  {uploadVideoState === "start" && (
-                    <CgSpinnerTwoAlt className="ml-[20px] animate-spin" />
-                  )}
-                </div>
-
-                <div
-                  className={`flex items-center text-lg tracking-widest mb-[20px]
-              ${!uploadImageState && "text-gray-700"}
-              ${uploadImageState === "start" && "text-blue-700"}
-              ${uploadImageState === "success" && "text-green-600"}
-              `}
-                >
-                  Uploading image : {imageUploadProgress}%{" "}
-                  {uploadImageState === "start" && (
-                    <CgSpinnerTwoAlt className="ml-[20px] animate-spin" />
-                  )}
-                </div>
 
                 <div
                   className={`flex items-center text-lg tracking-widest mb-[20px]

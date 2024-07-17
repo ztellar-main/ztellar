@@ -5,7 +5,7 @@ import axios from "axios";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
-import CloudinaryImg from "../components/CloudinaryImg";
+
 import { useState } from "react";
 import PaymongoButton from "../components/Paymongo/PaymongoButton";
 
@@ -68,10 +68,13 @@ const BuyProduct = () => {
       {/* MAIN BODY */}
       <div className="p-[10px]">
         <div className="w-[50%] tablet:w-100 ml-[50%] translate-x-[-50%] shadow bg-blue-50 p-[10px] rounded border border-black mt-[20px]">
-          <CloudinaryImg
-            imageUrl={data?.image_url}
-            className="rounded border border-black"
-          />
+          <div className="w-100 h-[auto] rounded">
+            <img
+              src={data?.image_url}
+              alt=""
+              className="w-100 h-[100%] object-cover"
+            />
+          </div>
 
           <div className="p-[5px]">
             <div className="w-100 text-lg font-semibold text-gray-800">

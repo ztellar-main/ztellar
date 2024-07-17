@@ -36,6 +36,8 @@ const LeaveRating = ({ productId, setLeaveRatingOpen, setRefresher }: Props) => 
     setHoverValue(value);
   };
 
+  console.log(productId)
+
   const submitFeedbackButtonFunction = async () => {
     try {
       await axios({

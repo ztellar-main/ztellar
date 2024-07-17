@@ -1,5 +1,4 @@
 import { GoStarFill } from "react-icons/go";
-import CloudinaryImg from "./CloudinaryImg";
 
 const colors = {
   orange: "#FFD600",
@@ -11,7 +10,6 @@ type Props = {
 };
 
 const ProductViewReviewCard = ({ data }: Props) => {
-
   const date = new window.Date(data?.createdAt);
   const stars = Array(5).fill(0);
   return (
@@ -22,9 +20,10 @@ const ProductViewReviewCard = ({ data }: Props) => {
         <div className="w-100 flex">
           {/* USER ICON */}
           <div className="w-[50px] h-[50px] bg-blue-900 rounded-circle">
-            <CloudinaryImg
-              imageUrl={data?.user?.avatar}
-              className="w-100 h-100 border-[2px] border-blue-800 rounded-circle"
+            <img
+              src={data?.user?.avatar}
+              alt=""
+              className="w-100 h-100 border-[2px] object-cover border-blue-800 rounded-circle"
             />
           </div>
           {/*  */}

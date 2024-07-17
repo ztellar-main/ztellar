@@ -1,4 +1,4 @@
-import CloudinaryImg from "./CloudinaryImg";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -27,9 +27,6 @@ const Navbar = () => {
   const searchEnterFunction = (e: any) => {
     const title = e.target.value;
     if (e.key === "Enter") {
-      // if (!title) {
-      //   return;
-      // }
       navigate(`/search?query=${title}`);
       setSearchValue(title);
     }

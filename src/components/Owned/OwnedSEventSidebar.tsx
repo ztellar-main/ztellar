@@ -1,5 +1,4 @@
 import { FaArrowLeftLong } from "react-icons/fa6";
-import CloudinaryImg from "../CloudinaryImg";
 // import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { FaBookOpen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -73,8 +72,9 @@ const OwnedSEventSidebar = ({
           {/* USER DETAILS */}
           <div className="w-100 p-[10px] bg-indigo-400 rounded flex items-center">
             <div className="w-[50px] h-[50px] bg-white rounded-circle ">
-              <CloudinaryImg
-                imageUrl="ztellar/ztellar/pzoz9wj3y3onkg62dcdx"
+              <img
+                src={user?.avatar}
+                alt=""
                 className="h-100 w-100 border border-blue-900 bg-blue-900 rounded-circle mr-[5px]"
               />
             </div>

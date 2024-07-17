@@ -82,11 +82,7 @@ function App() {
                 path="/owned/event/credentials"
                 element={<OwnedEventCredentials />}
               />
-              <Route
-                path="/owned/qr"
-                element={<OwnedQrCode />}
-              />
-              
+              <Route path="/owned/qr" element={<OwnedQrCode />} />
 
               {/* EMAIL VERIFY */}
               <Route path="" element={<EmailVerifyPrivateRoute />}>
@@ -136,11 +132,7 @@ function App() {
                   path="/paymongo-save-cash-payment"
                   element={<PaymongoSuccessRedirectCashPayment />}
                 />
-                <Route
-                  path="/total-sum-secret"
-                  element={<Total />}
-                />
-                
+                <Route path="/total-sum-secret" element={<Total />} />
               </Route>
             </Routes>
           </Router>
