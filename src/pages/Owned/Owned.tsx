@@ -1,4 +1,4 @@
-import { dataTagSymbol, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/Navbar";
 import OwnedCard from "../../components/Owned/OwnedCard";
 import axios from "axios";
