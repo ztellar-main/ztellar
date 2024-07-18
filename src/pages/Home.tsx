@@ -27,14 +27,16 @@ const Homepage: React.FC = () => {
           </p>
           <p className="text-[#1A66CC]">Collaboration</p>
         </div>
-        <div className="mx-auto relative  ">
-          <div className="max-w-[1280px] mb-[10px]  h-[300px] bg-gray-50 tablet:h-[200px] w-[1280px]">
+        <div className="relative w-100 max-w-[1280px] mb-[10px]  h-[300px] bg-gray-200 tablet:h-[200px] ml-[50%] translate-x-[-50%] ">
+
             <img
               src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar%2Fimgpsh_fullsize_anim.png?alt=media&token=e460fc58-7dc1-4c39-a3be-edb043b293b6"
-              className="w-100 h-[100%] object-cover"
-            />
-          </div>
-          <div className="absolute left-0 top-0 text-6xl font-bold tablet:hidden">
+              className="w-100 h-[100%] object-cover" />
+ 
+          {/* <div className="w-[1280px] h-[300px] bg-red-100"></div> */}
+          <div
+            className={`absolute left-0 top-0 text-6xl font-bold w-100 tablet:hidden`}
+          >
             <p className="">
               <span className="text-[#1A66CC]">Connecting </span>
               minds

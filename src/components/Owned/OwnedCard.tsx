@@ -56,6 +56,10 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
           className="w-100"
         ></div>
 
+        <div className="w-100 h-[130px] bg-gray-50 rounded">
+          <img src={data?._id?.image_url} alt="" />
+        </div>
+
         {/* TITLE */}
         <div className="w-100 line-clamp-2 mt-[5px] font-semibold">
           {data?._id?.title}
