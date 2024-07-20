@@ -10,7 +10,17 @@ const VideoPrivate = ({ videoUrl }: Props) => {
       {/* <video className="w-100" controls>
         <source src={videoUrl} />
       </video> */}
-      <ReactPlayer controls width="100%" height="100%" url={videoUrl} />
+      <ReactPlayer
+        controls
+        width="100%"
+        height="100%"
+        url={videoUrl}
+        config={{
+          file:{
+      
+          }
+        }}
+      />
     </div>
   );
 };
