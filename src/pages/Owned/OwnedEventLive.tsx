@@ -102,7 +102,7 @@ const OwnedEventLive = () => {
         />
 
         <div className={`grow bg-gray-100 `}>
-          <div className="bg-indigo-900 h-[30px] w-100 sticky top-0 left-0 z-[10] flex items-center justify-center hidden">
+          <div className="bg-indigo-900 h-[30px] w-100 sticky top-0 left-0 z-[10] flex items-center justify-center">
             <p className="text-white text-center">Aquired event dashboard</p>
           </div>
           <div className="w-100 bg-gray-200 flex items-center justify-between h-[40px]">
