@@ -29,6 +29,8 @@ const PaymongoSuccessRedirect = () => {
 
       const result = res?.data;
 
+      console.log(result?.data);
+
       const paymentStatus =
         result?.data?.attributes?.payment_intent?.attributes.status;
 
@@ -48,10 +50,17 @@ const PaymongoSuccessRedirect = () => {
       const amountLessFee = amount - transactionFee;
       const last = amountLessFee.toString();
 
+      const tString = transactionFee.toString();
+
+      const T = tString.slice(0, -2) + "." + tString.slice(-2);
+
+
+
       // VALUE START
       const lessAmount: any = last.slice(0, -2) + "." + last.slice(-2);
-      const baseAmount =
+      const baseAmount: any =
         amountString.slice(0, -2) + "." + amountString.slice(-2);
+
       const paymentMode =
         result?.data?.attributes?.payment_intent?.attributes?.payments[0]
           .attributes.source.type;
@@ -61,10 +70,13 @@ const PaymongoSuccessRedirect = () => {
       const productType = description.split("/")[2];
       const regType = description.split("/")[3];
 
-      const authorPayment = Number(lessAmount * 0.928);
-      const ztellarFee = Number(lessAmount * 0.072);
+      const authorPayment = Number(baseAmount * 0.9);
+
+      const ztellarFee = Number(baseAmount * 0.1) - Number(T);
 
       const buyerId = description.split("/")[4];
+
+      console.log(authorPayment)
 
       try {
         const res = await axios({

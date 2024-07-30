@@ -53,7 +53,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
           onClick={() => navigate("/owned")}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
-          Acquired courses and events
+          Acquired Courses and Events
         </button>
         <button
           onClick={() => {
@@ -71,7 +71,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
           onClick={() => navigate("/edit-profile")}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
-          Account settings
+          Account Settings
         </button>
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
@@ -79,7 +79,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
           onClick={() => navigate("/owned/qr")}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
-          Qr code
+          QR Code
         </button>
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />

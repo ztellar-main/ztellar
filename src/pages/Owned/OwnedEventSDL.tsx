@@ -82,7 +82,7 @@ const OwnedEventSDL = () => {
 
         <div className={`grow bg-gray-100 `}>
           <div className="bg-indigo-900 h-[30px] w-100 sticky top-0 left-0 z-[10] flex items-center justify-center">
-            <p className="text-white text-center">Aquired event dashboard</p>
+            <p className="text-white text-center">Aquired Event Dashboard</p>
           </div>
           <div className="w-100 bg-gray-200 flex items-center justify-between h-[40px] sticky top-[30px] left-0 z-[10]">
             {openSidebar ? (
@@ -134,7 +134,7 @@ const OwnedEventSDL = () => {
               {/* <CloudinaryVideoNormal videoUrl={videoDataPresent?.video_url} /> */}
             </div>
             <div className="w-100 p-[10px] bg-indigo-900 text-white">
-              Subecjt {videoDataPresent?.subject_index + 1} / Part{" "}
+              Subject {videoDataPresent?.subject_index + 1} / Part{" "}
               {videoDataPresent?.video_index + 1}: {videoDataPresent?.title}
             </div>
 

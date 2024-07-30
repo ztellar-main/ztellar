@@ -42,6 +42,7 @@ import OwnedEventLive from "./pages/Owned/OwnedEventLive";
 import OwnedEventSDL from "./pages/Owned/OwnedEventSDL";
 import OwnedEventCredentials from "./pages/Owned/OwnedEventCredentials";
 import OwnedQrCode from "./pages/Owned/OwnedQrCode";
+import OwnedEventQuiz from "./pages/Owned/OwnedEventQuiz";
 
 // PAYMONGO
 import PaymongoSuccessRedirect from "./pages/Paymongo/PaymongoSuccessRedirect";
@@ -78,6 +79,8 @@ function App() {
               <Route path="/owned" element={<Owned />} />
               <Route path="/owned/event/live" element={<OwnedEventLive />} />
               <Route path="/owned/event/sdl" element={<OwnedEventSDL />} />
+              <Route path="/owned/event/quiz" element={<OwnedEventQuiz />} />
+              
               <Route
                 path="/owned/event/credentials"
                 element={<OwnedEventCredentials />}

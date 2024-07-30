@@ -24,7 +24,7 @@ const OwnedSEventSidebar = ({
   const navigate = useNavigate();
   const buttonLinskDetails = [
     {
-      name: "credentials",
+      name: "Credentials",
       icon: (
         <PiIdentificationCardFill className="h-[20px] w-[auto] mr-[10px]" />
       ),
@@ -34,6 +34,11 @@ const OwnedSEventSidebar = ({
       name: "S D L",
       icon: <FaBookOpen className="h-[20px] w-[auto] mr-[10px]" />,
       route: `/owned/event/sdl?id=${productId}`,
+    },
+    {
+      name: "Quiz",
+      icon: <FaBookOpen className="h-[20px] w-[auto] mr-[10px]" />,
+      route: `/owned/event/quiz?id=${productId}`,
     },
     {
       name: "Live",
@@ -114,7 +119,7 @@ const OwnedSEventSidebar = ({
             className={`w-100 p-[10px] flex items-center text-white rounded hover:bg-white hover:text-gray-900 active:bg-white active:text-gray-900   mb-[10px] tracking-widest`}
           >
             <TiHome className="h-[20px] w-[auto] mr-[10px]" />
-            Go back to Home
+            Back to Home Page
           </button>
         </div>
       </div>

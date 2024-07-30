@@ -54,17 +54,15 @@ const PaymongoSuccessRedirectCashPayment = () => {
       const lessAmount: any = last.slice(0, -2) + "." + last.slice(-2);
       const baseAmount =
         amountString.slice(0, -2) + "." + amountString.slice(-2);
-      const paymentMode =
-        result?.data?.attributes?.payment_intent?.attributes?.payments[0]
-          .attributes.source.type;
-      const paymentSource = "paymongo";
+      const paymentMode = "cash";
+      const paymentSource = "ztellar";
       const authorId = description.split("/")[1];
       const productId = description.split("/")[0];
       const productType = description.split("/")[2];
       const regType = description.split("/")[3];
 
-      const authorPayment = Number(lessAmount * 0.928);
-      const ztellarFee = Number(lessAmount * 0.072);
+      const authorPayment = Number(lessAmount * 0.9);
+      const ztellarFee = Number(lessAmount * 0.1);
 
       const buyerId = description.split("/")[4];
 

@@ -19,6 +19,8 @@ const OwnedEventCredentials = () => {
   const query = new URLSearchParams(location.search);
   const productId = query.get("id") || "";
 
+
+
   const [openSidebar, setOpenSide] = useState(true);
 
   const {
@@ -51,6 +53,9 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
+
+  // console.log(object)
+
   return (
     <div>
       <div className="flex">
@@ -63,7 +68,7 @@ const OwnedEventCredentials = () => {
 
         <div className={`grow bg-gray-100 `}>
           <div className="bg-indigo-900 h-[30px] w-100 sticky top-0 left-0 z-[10] flex items-center justify-center">
-            <p className="text-white text-center">Aquired event dashboard</p>
+            <p className="text-white text-center">Aquired Event Dashboard</p>
           </div>
           <div className="w-100 bg-gray-200 flex items-center justify-between h-[40px] sticky top-[30px] left-0 z-[10]">
             {openSidebar ? (
