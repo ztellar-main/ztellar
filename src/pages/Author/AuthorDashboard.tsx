@@ -5,7 +5,7 @@ import { Card, Typography } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAppSelector } from "../../state/store";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const AuthorDashboard = () => {
   const [openSidebar, setOpenSide] = useState(true);
