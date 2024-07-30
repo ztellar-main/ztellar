@@ -5,10 +5,12 @@ import { Card, Typography } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAppSelector } from "../../state/store";
+import { useNavigate } from "react-router-dom";
 
 const AuthorDashboard = () => {
   const [openSidebar, setOpenSide] = useState(true);
   const user = useAppSelector((e) => e.user.currentUser);
+  const navigate = useNavigate();
 
   const TABLE_HEAD = [
     "Title",
@@ -29,6 +31,10 @@ const AuthorDashboard = () => {
       return res?.data;
     },
   });
+
+  if (isError) {
+    return navigate("/");
+  }
 
   // Function to format a number to Philippine Peso (PHP)
   function formatToPHP(amount: any) {
