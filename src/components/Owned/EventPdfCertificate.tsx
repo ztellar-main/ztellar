@@ -73,7 +73,7 @@ const EventPdfCertificate = ({
     <Document>
       <Page size={size} orientation={orientations} style={styles.page}>
         <View style={styles.view}>
-          <Image style={styles.image} src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/images%2Fcpd%20cert.jpg?alt=media&token=0bfa545c-acd4-4dbf-b335-3d846950a26f" />
+          <Image style={styles.image} src={imageSrc} />
           <View style={styles.textView}>
             <Text style={styles.text}>
               {fname.toUpperCase()} {mName.toUpperCase()}. {lname.toUpperCase()}
