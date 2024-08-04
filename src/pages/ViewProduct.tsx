@@ -73,7 +73,10 @@ const ViewProduct = () => {
         {/* LEFT */}
         <div className="grow ">
           {/* VIDEO CONTAINER */}
-          <div key={eventData?.video_url} className="w-100 h-[400px] bg-black flex justify-center ">
+          <div
+            key={eventData?.video_url}
+            className="w-100 h-[400px] bg-black flex justify-center "
+          >
             <video className="h-[400px] w-100" autoPlay controls>
               <source src={eventData?.video_url} />
             </video>
@@ -132,10 +135,78 @@ const ViewProduct = () => {
                 );
               })}
             </div>
+
+            {/* SPONSORS LOGO */}
+            <div className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300">
+              <p className="text-blue-800 font-semibold text-lg">Partners</p>
+              <div className="grid grid-cols-[repeat(auto-fill,250px)] p-[10px] pl-[0] gap-[10px] justify-around ">
+                {eventData?.sponsors_logo?.map((sponsor: any, i: any) => {
+                  return (
+                    <div key={i} className="flex items-center justify-center">
+                      <img
+                        key={i}
+                        src={sponsor?.url}
+                        alt="Partner's Logo"
+                        className="rounded w-[200px] h-[auto] mb-[20px]"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* SPONSORS VIDEOS AND POSTERS */}
+            {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
+              return (
+                <div key={i} className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300">
+                  <div className="w-100 bg-blue-50 rounded">
+                    <div className="class">
+                      <div className="flex items-center justify-center mobile:flex-col">
+                        <img
+                          src={sponsorsData?.logo}
+                          alt=""
+                          className="h-[50px] w-[auto] mr-[10px] mobile:mr-[0]"
+                        />
+                        <p className="text-center font-semibold text-2xl text-blue-800">
+                          {sponsorsData?.name}
+                        </p>
+                      </div>
+
+                      <div className="w-100 flex justify-center items-center flex-col">
+                        {sponsorsData?.post_data?.map(
+                          (postData: any, i: any) => {
+                            return (
+                              <div key={i}>
+                                {postData?.file_type === "video" && (
+                                  <video
+                                    className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
+                                    controls
+                                  >
+                                    <source src={postData?.url} />
+                                  </video>
+                                )}
+
+                                {postData?.file_type === "image" && (
+                                  <img
+                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
+                                    src={postData?.url}
+                                    alt=""
+                                  />
+                                )}
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT START */}
         <div className="w-[350px]  min-w-[350px] p-[10px] tablet:w-100">
           {/* TOTAL RATINGS */}
           <div className="p-[10px] bg-blue-50 shadow rounded items-center border border-gray-300 tablet:mb-[10px]">
@@ -273,7 +344,6 @@ const ViewProduct = () => {
                 />
               </>
             )}
-
             <button
               onClick={() => setReviewPopupOpen(true)}
               className="bg-blue-800 text-sm p-[10px] rounded-[20px] px-[20px] text-white ml-[50%] translate-x-[-50%] hover:opacity-[80%] active:opacity-[60%]"
