@@ -142,12 +142,12 @@ const ViewProduct = () => {
               <div className="grid grid-cols-[repeat(auto-fill,250px)] p-[10px] pl-[0] gap-[10px] justify-around ">
                 {eventData?.sponsors_logo?.map((sponsor: any, i: any) => {
                   return (
-                    <div key={i} className="flex items-center justify-center">
+                    <div className="flex items-center justify-center">
                       <img
                         key={i}
                         src={sponsor?.url}
                         alt="Partner's Logo"
-                        className="rounded w-[200px] h-[auto] mb-[20px]"
+                        className="rounded w-[200px] h-[auto] mobile:mb-[20px]"
                       />
                     </div>
                   );
@@ -176,9 +176,9 @@ const ViewProduct = () => {
                         {sponsorsData?.post_data?.map(
                           (postData: any, i: any) => {
                             return (
-                              <div key={i}>
+                              <>
                                 {postData?.file_type === "video" && (
-                                  <video
+                                  <video key={i}
                                     className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
                                     controls
                                   >
@@ -187,13 +187,13 @@ const ViewProduct = () => {
                                 )}
 
                                 {postData?.file_type === "image" && (
-                                  <img
+                                  <img key={i}
                                     className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
                                     src={postData?.url}
                                     alt=""
                                   />
                                 )}
-                              </div>
+                              </>
                             );
                           }
                         )}
