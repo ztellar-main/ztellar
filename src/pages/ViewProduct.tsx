@@ -9,10 +9,13 @@ import { CgSpinnerTwoAlt } from "react-icons/cg";
 import EventViewSubjectCard from "../components/EventViewSubjectCard";
 import ProductViewReviewCard from "../components/ProductViewReviewCard";
 import EventFeedbackPopup from "../components/EventFeedbackPopup";
-import { useState } from "react";
+
 import { useAppSelector } from "../state/store";
 import toas from "../utils/toas";
 import Footer from "../components/Footer";
+import { useState } from "react";
+
+import Carousels from "../components/Carousel";
 
 const ViewProduct = () => {
   const navigate = useNavigate();
@@ -69,9 +72,9 @@ const ViewProduct = () => {
         {eventData?.title}
       </div>
       {/* MAIN BODY */}
-      <div className="w-100 bg-white flex tablet:flex-col">
+      <div className="w-100 bg-white flex flex-col">
         {/* LEFT */}
-        <div className="grow ">
+        <div className="grow">
           {/* VIDEO CONTAINER */}
           <div
             key={eventData?.video_url}
@@ -82,7 +85,7 @@ const ViewProduct = () => {
             </video>
           </div>
           {/* REG BUTTON TOP */}
-          <div className="w-100 p-[10px] pb-0 tabletMin:hidden">
+          <div className="w-100 p-[10px] pb-0">
             {registered !== undefined ? (
               <button
                 onClick={() => {
@@ -119,7 +122,7 @@ const ViewProduct = () => {
           </div>
 
           {/* DETAILS CONTAINER */}
-          <div className="pl-[10px] tablet:pr-[10px]">
+          <div className="px-[10px]">
             {/* OUTLINE */}
             <div className="w-100 bg-blue-50 mt-[10px] rounded shadow border border-gray-300 p-[10px] mb-[10px]">
               {/* outline title */}
@@ -139,12 +142,11 @@ const ViewProduct = () => {
             {/* SPONSORS LOGO */}
             <div className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300">
               <p className="text-blue-800 font-semibold text-lg">Partners</p>
-              <div className="grid grid-cols-[repeat(auto-fill,250px)] p-[10px] pl-[0] gap-[10px] justify-around ">
+              {/* <div className="grid grid-cols-[repeat(auto-fill,250px)] p-[10px] pl-[0] gap-[10px] justify-around ">
                 {eventData?.sponsors_logo?.map((sponsor: any, i: any) => {
                   return (
-                    <div className="flex items-center justify-center">
+                    <div key={i} className="flex items-center justify-center">
                       <img
-                        key={i}
                         src={sponsor?.url}
                         alt="Partner's Logo"
                         className="rounded w-[200px] h-[auto] mobile:mb-[20px]"
@@ -152,13 +154,22 @@ const ViewProduct = () => {
                     </div>
                   );
                 })}
+              </div> */}
+
+              <div className="w-100 my-[20px]">
+                <Carousels data={eventData?.sponsors_logo} />
               </div>
             </div>
+
+            {/* CAROUSEL */}
 
             {/* SPONSORS VIDEOS AND POSTERS */}
             {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
               return (
-                <div key={i} className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300">
+                <div
+                  key={i}
+                  className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300"
+                >
                   <div className="w-100 bg-blue-50 rounded">
                     <div className="class">
                       <div className="flex items-center justify-center mobile:flex-col">
@@ -178,7 +189,8 @@ const ViewProduct = () => {
                             return (
                               <>
                                 {postData?.file_type === "video" && (
-                                  <video key={i}
+                                  <video
+                                    key={i}
                                     className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
                                     controls
                                   >
@@ -187,7 +199,8 @@ const ViewProduct = () => {
                                 )}
 
                                 {postData?.file_type === "image" && (
-                                  <img key={i}
+                                  <img
+                                    key={i}
                                     className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
                                     src={postData?.url}
                                     alt=""
@@ -207,11 +220,11 @@ const ViewProduct = () => {
         </div>
 
         {/* RIGHT START */}
-        <div className="w-[350px]  min-w-[350px] p-[10px] tablet:w-100">
+        <div className="w-[100%]  min-w-[350px] p-[10px] tablet:w-100">
           {/* TOTAL RATINGS */}
-          <div className="p-[10px] bg-blue-50 shadow rounded items-center border border-gray-300 tablet:mb-[10px]">
+          <div className="p-[10px] bg-blue-50 shadow rounded items-center border border-gray-300 tablet:mb-[10px] mb-[10px]">
             {/* STARS CONTAINER */}
-            <div className="w-100 flex  ">
+            <div className="w-100 flex ">
               <p className="mr-[5px]  font-semibold">
                 {parseFloat(eventData?.average_rating).toFixed(2)}
               </p>
@@ -258,7 +271,7 @@ const ViewProduct = () => {
           </div>
           {/* TOTAL RATINGS DETAILS END */}
 
-          {registered !== undefined ? (
+          {/* {registered !== undefined ? (
             <button
               onClick={() => {
                 if (!token) {
@@ -291,7 +304,7 @@ const ViewProduct = () => {
                 ? "Event ended"
                 : " Register now"}
             </button>
-          )}
+          )} */}
 
           {/* AUTHOR CONTAINER */}
           <div className="w-100 p-[20px] rounded bg-blue-50 flex flex-col items-center shadow border border-gray-300 mb-[10px]">
