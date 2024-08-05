@@ -5,11 +5,9 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-
 import EventViewSubjectCard from "../components/EventViewSubjectCard";
 import ProductViewReviewCard from "../components/ProductViewReviewCard";
 import EventFeedbackPopup from "../components/EventFeedbackPopup";
-
 import { useAppSelector } from "../state/store";
 import toas from "../utils/toas";
 import Footer from "../components/Footer";
@@ -162,6 +160,60 @@ const ViewProduct = () => {
             </div>
 
             {/* CAROUSEL */}
+
+            {/* SPONSORS VIDEO */}
+            {eventData?.sponsors_videos?.map((sponsorsData: any, i: any) => {
+              return (
+                <div
+                  key={i}
+                  className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300"
+                >
+                  <div className="w-100 bg-blue-50 rounded">
+                    <div className="class">
+                      <div className="flex items-center justify-center mobile:flex-col">
+                        <img
+                          src={sponsorsData?.logo}
+                          alt=""
+                          className="h-[50px] w-[auto] mr-[10px] mobile:mr-[0]"
+                        />
+                        <p className="text-center font-semibold text-2xl text-blue-800">
+                          {sponsorsData?.name}
+                        </p>
+                      </div>
+
+                      <div className="w-100 flex justify-center items-center flex-col">
+                        {sponsorsData?.post_data?.map(
+                          (postData: any, i: any) => {
+                            return (
+                              <>
+                                {postData?.file_type === "video" && (
+                                  <video
+                                    key={i}
+                                    className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
+                                    controls
+                                  >
+                                    <source src={postData?.url} />
+                                  </video>
+                                )}
+
+                                {postData?.file_type === "image" && (
+                                  <img
+                                    key={i}
+                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
+                                    src={postData?.url}
+                                    alt=""
+                                  />
+                                )}
+                              </>
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
 
             {/* SPONSORS VIDEOS AND POSTERS */}
             {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
