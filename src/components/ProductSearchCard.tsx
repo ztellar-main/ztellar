@@ -15,6 +15,12 @@ const ProductSearchCards = ({ data }: Props) => {
 
   const date = new window.Date(data?.createdAt);
 
+  const dateStart = new window.Date(data?.date_start);
+
+  const dateEnd = new window.Date(data?.date_end);
+
+
+
   const cardOnClickFunction = async () => {
     if (data?.type === "event") {
       navigate(`/view/event?id=${data?._id}`);
@@ -73,6 +79,20 @@ const ProductSearchCards = ({ data }: Props) => {
             </p>
             <p className="text-gray-800 font-bold">Rating</p>
           </div>
+        </div>
+
+        <div>
+          <p className="text-[#64748B]">
+            Place:
+            <span className="text-black ml-[5px]">{data?.place}</span>
+          </p>
+        </div>
+
+        <div>
+          <p className="text-[#64748B]">
+            Date:
+            <span className="text-black ml-[5px]">{dateStart.toLocaleDateString("en-US")} - {dateEnd.toLocaleDateString("en-US")}</span>
+          </p>
         </div>
 
         <div>
