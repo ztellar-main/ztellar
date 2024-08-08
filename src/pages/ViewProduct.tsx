@@ -161,8 +161,8 @@ const ViewProduct = () => {
 
             {/* CAROUSEL */}
 
-            {/* SPONSORS POSTERS */}
-            {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
+            {/* SPONSORS VIDEO */}
+            {eventData?.sponsors_videos?.map((sponsorsData: any, i: any) => {
               return (
                 <div
                   key={i}
@@ -215,8 +215,8 @@ const ViewProduct = () => {
               );
             })}
 
-            {/* SPONSORS VIDEO */}
-            {eventData?.sponsors_videos?.map((sponsorsData: any, i: any) => {
+            {/* SPONSORS POSTERS */}
+            {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
               return (
                 <div
                   key={i}
