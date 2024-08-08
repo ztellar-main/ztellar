@@ -239,15 +239,6 @@ const ViewProduct = () => {
                                     <source src={postData?.url} />
                                   </video>
                                 )}
-
-                                {postData?.file_type === "image" && (
-                                  <img
-                                    key={i}
-                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
-                                    src={postData?.url}
-                                    alt=""
-                                  />
-                                )}
                               </>
                             );
                           }
