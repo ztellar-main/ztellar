@@ -90,7 +90,7 @@ const ProductSearchCards = ({ data }: Props) => {
 
         <div>
           <p className="text-[#64748B]">
-            Date:
+            Event date:
             <span className="text-black ml-[5px]">{dateStart.toLocaleDateString("en-US")} - {dateEnd.toLocaleDateString("en-US")}</span>
           </p>
         </div>
@@ -104,7 +104,7 @@ const ProductSearchCards = ({ data }: Props) => {
 
         <div>
           <p className="text-[#64748B]">
-            Created at:
+            Created on:
             <span className="text-black ml-[5px]">
               {date.toLocaleDateString("en-US")}
             </span>
