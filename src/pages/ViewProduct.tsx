@@ -186,6 +186,16 @@ const ViewProduct = () => {
                           (postData: any, i: any) => {
                             return (
                               <>
+                                {postData?.file_type === "video" && (
+                                  <video
+                                    key={i}
+                                    className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
+                                    controls
+                                  >
+                                    <source src={postData?.url} />
+                                  </video>
+                                )}
+
                                 {postData?.file_type === "image" && (
                                   <img
                                     key={i}
@@ -238,6 +248,15 @@ const ViewProduct = () => {
                                   >
                                     <source src={postData?.url} />
                                   </video>
+                                )}
+
+                                {postData?.file_type === "image" && (
+                                  <img
+                                    key={i}
+                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
+                                    src={postData?.url}
+                                    alt=""
+                                  />
                                 )}
                               </>
                             );
