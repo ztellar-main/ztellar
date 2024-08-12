@@ -20,9 +20,7 @@ const ProductSearchCards = ({ data }: Props) => {
   const dateEnd = new window.Date(data?.date_end);
 
   const cardOnClickFunction = async () => {
-    if (data?.type === "event") {
-      navigate(`/view/event?id=${data?._id}`);
-    }
+    navigate(`/view/event?id=${data?._id}`);
   };
 
   return (
