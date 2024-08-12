@@ -92,7 +92,7 @@ const ViewProduct = () => {
                   }
                   navigate(`/owned/event/credentials?id=${productId}`);
                 }}
-                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold mb-[10px]"
               >
                 View
               </button>
@@ -110,13 +110,15 @@ const ViewProduct = () => {
                   }
                   navigate(`/buy/product?id=${productId}`);
                 }}
-                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold mb-[10px]"
               >
                 {new Date(eventData?.date_end) < new Date(Date.now())
                   ? "Event ended"
                   : " Register now"}
               </button>
             )}
+
+            <button className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold">Sponsor now</button>
           </div>
 
           {/* DETAILS CONTAINER */}

@@ -38,13 +38,7 @@ const Login = () => {
 
       const emails = res?.data?.data?.email;
 
-      if (
-        fname === "New User" ||
-        !fname ||
-        !mname ||
-        !lname ||
-        !mobileNumber
-      ) {
+      if (fname === "New User" || !fname || !mname || !lname || !mobileNumber) {
         return navigate("/complete-info", {
           state: { id, emails },
         });
@@ -86,25 +80,33 @@ const Login = () => {
           const mname = loginRes?.data?.data?.mname;
           const lname = loginRes?.data?.data?.lname;
           const mobileNumber = loginRes?.data?.data?.mobile_number;
+          const role = loginRes?.data?.data?.role;
 
           const emails = loginRes?.data?.data?.email;
 
-          if (
-            fname === "New User" ||
-            !fname ||
-            !mname ||
-            !lname ||
-            !mobileNumber
-          ) {
-            return navigate("/complete-info", {
-              state: { id, emails },
-            });
-          }
+          if (role === "company") {
+            dispatch(loginSuccess(loginRes?.data?.data));
+            dispatch(token(loginRes?.data?.token));
+            setGoogleLoading(false);
+            toas("You are successfully logged in.", "success");
+          } else {
+            if (
+              fname === "New User" ||
+              !fname ||
+              !mname ||
+              !lname ||
+              !mobileNumber
+            ) {
+              return navigate("/complete-info", {
+                state: { id, emails },
+              });
+            }
 
-          dispatch(loginSuccess(loginRes?.data?.data));
-          dispatch(token(loginRes?.data?.token));
-          setGoogleLoading(false);
-          toas("You are successfully logged in.", "success");
+            dispatch(loginSuccess(loginRes?.data?.data));
+            dispatch(token(loginRes?.data?.token));
+            setGoogleLoading(false);
+            toas("You are successfully logged in.", "success");
+          }
         } catch (err) {
           setGoogleLoading(false);
           if (err instanceof AxiosError) {

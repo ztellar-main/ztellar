@@ -19,8 +19,6 @@ const ProductSearchCards = ({ data }: Props) => {
 
   const dateEnd = new window.Date(data?.date_end);
 
-
-
   const cardOnClickFunction = async () => {
     if (data?.type === "event") {
       navigate(`/view/event?id=${data?._id}`);
@@ -81,19 +79,26 @@ const ProductSearchCards = ({ data }: Props) => {
           </div>
         </div>
 
-        <div>
-          <p className="text-[#64748B]">
-            Place:
-            <span className="text-black ml-[5px]">{data?.place}</span>
-          </p>
-        </div>
+        {data?.type === "event" && (
+          <>
+            <div>
+              <p className="text-[#64748B]">
+                Place:
+                <span className="text-black ml-[5px]">{data?.place}</span>
+              </p>
+            </div>
 
-        <div>
-          <p className="text-[#64748B]">
-            Event date:
-            <span className="text-black ml-[5px]">{dateStart.toLocaleDateString("en-US")} - {dateEnd.toLocaleDateString("en-US")}</span>
-          </p>
-        </div>
+            <div>
+              <p className="text-[#64748B]">
+                Event date:
+                <span className="text-black ml-[5px]">
+                  {dateStart.toLocaleDateString("en-US")} -{" "}
+                  {dateEnd.toLocaleDateString("en-US")}
+                </span>
+              </p>
+            </div>
+          </>
+        )}
 
         <div>
           <p className="text-[#64748B]">

@@ -319,7 +319,7 @@ const Signup = () => {
         {/* CARD CONTAINER */}
         <div className="w-[600px] bg-white shadow ml-[50%] translate-x-[-50%] rounded tablet:w-[90%] mobile:w-[95%] ">
           <div className="bg-blue-600 w-100 p-[5px] text-white rounded-t font-semibold text-base">
-            Create your account
+            Create member account
           </div>
 
           {/* BOTTOM CARD CONTAINER */}
@@ -328,6 +328,13 @@ const Signup = () => {
               Please enter your real information. If ever you want to change
               something on your account information, please contact our tech
               support team.
+            </p>
+
+            <p
+              onClick={() => navigate("/company-signup")}
+              className="text-sm mb-[10px] ml-[5px] text-blue-600 underline hover:cursor-pointer hover:text-blue-400"
+            >
+              Create company account
             </p>
             {/* EMAIL */}
             <p className="text-sm text-gray-600 mb-[2px] ml-[2px] laptop:text-xs mobile:text-sm font-semibold">

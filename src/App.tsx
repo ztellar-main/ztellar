@@ -14,6 +14,9 @@ import UpdateUserBeforeLoggingIn from "./pages/UpdateUserBeforeLoggingIn";
 import ResetPassword from "./pages/ResetPassword";
 import UserList from "./pages/UserList";
 import EditProfile from "./pages/EditProfile";
+import SponsorNowEvent from "./pages/SponsorNowEvent";
+import CompanySignup from "./pages/CompanySignup";
+import CompanyEmailVerify from "./pages/CompanyEmailVerify";
 
 // AUTHOR
 import AuthorDashboard from "./pages/Author/AuthorDashboard";
@@ -68,6 +71,12 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/thisisasampleuserlist" element={<UserList />} />
               <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/event/sponsor-now" element={<SponsorNowEvent />} />
+              <Route path="/company-signup" element={<CompanySignup />} />
+              <Route
+                path="/company-email-verify"
+                element={<CompanyEmailVerify />}
+              />
 
               {/* PAYMONGO */}
               <Route
@@ -80,7 +89,7 @@ function App() {
               <Route path="/owned/event/live" element={<OwnedEventLive />} />
               <Route path="/owned/event/sdl" element={<OwnedEventSDL />} />
               <Route path="/owned/event/quiz" element={<OwnedEventQuiz />} />
-              
+
               <Route
                 path="/owned/event/credentials"
                 element={<OwnedEventCredentials />}

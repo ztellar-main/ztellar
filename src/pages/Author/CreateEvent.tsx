@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   // const navigate = useNavigate();
-  const token = useAppSelector((state) => state.user.token);
+  const token = useAppSelector((state:any) => state.user.token);
 
   // FOR RESPONSIVE PAGE DESIGN
   useEffect(() => {

@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -95,9 +94,12 @@ const Navbar = () => {
                 </div>
 
                 <div className="h-100 ml-[15px] flex flex-col">
-                  <p className="break-keep font-semibold mt-[5px] ">
-                    {user?.fname}
-                  </p>
+                  {user?.role === "company" && (
+                    <p className="break-keep font-semibold mt-[5px] ">
+                      {user?.company_name}
+                    </p>
+                  )}
+
                   <p className="break-keep text-xs mt-[2px]">{user?.role}</p>
                 </div>
 
