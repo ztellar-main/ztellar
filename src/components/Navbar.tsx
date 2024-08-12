@@ -100,7 +100,7 @@ const Navbar = () => {
                     </p>
                   )}
 
-                  {user?.role === "member" && (
+                  {user?.role !== "company" && (
                     <p className="break-keep font-semibold mt-[5px] ">
                       {user?.fname}
                     </p>
