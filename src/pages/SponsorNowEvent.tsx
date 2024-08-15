@@ -119,7 +119,7 @@ const SponsorNowEvent = () => {
     );
   };
 
-  const TABLE_HEAD = ["Boot number", "Options to pay", "Status", "Action"];
+  const TABLE_HEAD = ["Boot number", "Status", "Action"];
   return (
     <>
       <div>
