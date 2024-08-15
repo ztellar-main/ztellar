@@ -9,10 +9,11 @@ import toas from "../utils/toas";
 import { loginSuccess } from "../state/userSlice";
 import { useNavigate } from "react-router-dom";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../firebase";
 
 const EditProfile = () => {
-  const preset_key = "zh6pbgqx";
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const user = useAppSelector((state) => state.user.currentUser);
   const token = useAppSelector((state) => state.user.token);
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const EditProfile = () => {
     status: "start",
   });
 
-  const [imageUploadProgress, setImageUploadProgress] = useState("");
+  const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [uploadImageState, setUploadImageState] = useState("start");
   const [uploadDisplay, setUploadDisplay] = useState(false);
   const [uploadDBState, setUploadDBState] = useState("");
@@ -31,67 +32,103 @@ const EditProfile = () => {
   console.log({ imageUploadProgress, uploadImageState, uploadDisplay });
 
   const submitButtonFunction = async () => {
-    setUploadImageState("start");
-
-    const imageA = async () => {
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("upload_preset", preset_key);
-      formData.append("public_id", `/${user?._id}/profilepic/${uuidv4()}`);
-      setUploadDisplay(true);
-      try {
-        const res = await axios({
-          method: "post",
-          url: "https://api.cloudinary.com/v1_1/dbagrkam0/image/upload",
-          data: formData,
-          onUploadProgress: (e: any) => {
-            const progress = Math.round((100 * e.loaded) / e.total).toString();
-            setImageUploadProgress(progress);
-          },
-        });
-        setUploadImageState("success");
-        return res?.data?.public_id;
-      } catch (err) {
-        setUploadDisplay(false);
-        toas(
-          "There is something wrong. Please check your internet connection.",
-          "error"
-        );
-        setUploadDisplay(false);
-        console.log(err);
-      }
-    };
-
-    const saveToDb = async () => {
-      setUploadDisplay(true);
-      const image_url = await imageA();
-      try {
-        setUploadDBState("start");
-        const res = await axios({
-          method: "put",
-          url: "users/change-profile-pic",
-          data: { imageUrl: image_url },
-          headers: {
-            authorization: `Token ${token}`,
-          },
-        });
-        toas("Successfully updated profile picture", "success");
-        dispatch(loginSuccess(res?.data));
-        navigate("/");
-        setUploadDBState("success");
-        console.log(res?.data);
-      } catch (err) {
-        setUploadDisplay(false);
-        console.log(err);
-        if (err instanceof AxiosError) {
-          const error =
-            err?.response?.data?.message || err?.response?.data || err?.message;
-
-          toas(error, "error");
+    const imageFunction = async () => {
+      return new Promise((resolve, reject) => {
+        let profileName = "";
+        if (user?.role === "company") {
+          profileName = `profile_pics/${user?.company_name}/${uuidv4()}${
+            image?.name
+          }`;
         }
-      }
+        if (user?.role === "member" || user?.role === "superAuthorUser") {
+          profileName = `profile_pics/${user?.fname} ${
+            user?.lname
+          }/${uuidv4()}${image?.name}`;
+        }
+
+        console.log(profileName);
+
+        const fileRef = ref(storage, profileName);
+
+        if (!image) {
+          return;
+        }
+
+        const uploadTask = uploadBytesResumable(fileRef, image);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setImageUploadProgress(progress);
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+            console.log(error);
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then(
+              async (imageUlr: any) => {
+                resolve(imageUlr);
+              }
+            );
+          }
+        );
+      });
     };
-    saveToDb();
+
+    if (!image) {
+      return toas("Please select image", "error");
+    }
+
+    const image_url = await imageFunction();
+
+    if (image_url === undefined || image_url === "undefined") {
+      return toas("Please select image", "error");
+    }
+
+    try {
+      setUploadDisplay(true);
+      setUploadImageState("start");
+      setUploadDBState("start");
+      const res = await axios({
+        method: "put",
+        url: "users/change-profile-pic",
+        data: { imageUrl: image_url },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      toas("Successfully updated profile picture", "success");
+      dispatch(loginSuccess(res?.data));
+      navigate("/");
+      setUploadDBState("success");
+      console.log(res?.data);
+    } catch (err) {
+      setUploadDisplay(false);
+      console.log(err);
+      if (err instanceof AxiosError) {
+        const error =
+          err?.response?.data?.message || err?.response?.data || err?.message;
+
+        toas(error, "error");
+      }
+    }
   };
   return (
     <div>

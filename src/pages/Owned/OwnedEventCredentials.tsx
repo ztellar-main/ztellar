@@ -12,14 +12,11 @@ import { PiCertificateLight } from "react-icons/pi";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import EventPdfCertificate from "../../components/Owned/EventPdfCertificate";
 
-
 const OwnedEventCredentials = () => {
   const token = useAppSelector((state) => state.user.token);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const productId = query.get("id") || "";
-
-
 
   const [openSidebar, setOpenSide] = useState(true);
 
@@ -27,6 +24,7 @@ const OwnedEventCredentials = () => {
     data: eventdata,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ["credentials"],
     queryFn: async () => {
@@ -50,9 +48,9 @@ const OwnedEventCredentials = () => {
   }
 
   if (isError) {
+    console.log(error);
     return <Navigate to="/owned" />;
   }
-
 
   // console.log(object)
 
