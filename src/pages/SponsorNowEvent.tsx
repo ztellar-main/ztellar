@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SponsorNowReserve from "../components/SponsorNowReserve";
 import { useState } from "react";
+import toas from "../utils/toas";
 
 const SponsorNowEvent = () => {
   const query = new URLSearchParams(location.search);
@@ -95,7 +96,15 @@ const SponsorNowEvent = () => {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
                 className="bg-blue-800"
-                onClick={() => setOpenForm(true)}
+                onClick={() => {
+                  if (data?.status !== "Available") {
+                    return toas(
+                      `This boot is already ${data?.status}`,
+                      "error"
+                    );
+                  }
+                  setOpenForm(true);
+                }}
               >
                 Open Form
               </Button>
