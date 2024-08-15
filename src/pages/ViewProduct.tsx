@@ -118,7 +118,12 @@ const ViewProduct = () => {
               </button>
             )}
 
-            <button className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold">Sponsor now</button>
+            <button
+              onClick={() => navigate(`/event/sponsor-now?id=${productId}`)}
+              className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+            >
+              Sponsor now
+            </button>
           </div>
 
           {/* DETAILS CONTAINER */}

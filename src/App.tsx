@@ -83,30 +83,25 @@ function App() {
                 path="/paymongo-save"
                 element={<PaymongoSuccessRedirect />}
               />
-
               {/* OWNED */}
               <Route path="/owned" element={<Owned />} />
               <Route path="/owned/event/live" element={<OwnedEventLive />} />
               <Route path="/owned/event/sdl" element={<OwnedEventSDL />} />
               <Route path="/owned/event/quiz" element={<OwnedEventQuiz />} />
-
               <Route
                 path="/owned/event/credentials"
                 element={<OwnedEventCredentials />}
               />
               <Route path="/owned/qr" element={<OwnedQrCode />} />
-
               {/* EMAIL VERIFY */}
               <Route path="" element={<EmailVerifyPrivateRoute />}>
                 <Route path="/email-verify" element={<EmailVerify />} />
               </Route>
-
               {/* LOGIN AND SIGNUP */}
               <Route path="" element={<LoginAndSignupPrivateRoute />}>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
               </Route>
-
               {/* AUTHOR */}
               <Route path="">
                 <Route path="/author/dashboard" element={<AuthorDashboard />} />
