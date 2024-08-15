@@ -12,7 +12,8 @@ type Props = {
   fileUrl: string;
   setOpenForm: any;
   productId: string;
-  bootId: string
+  bootId: string;
+  setRefresh: any;
 };
 
 const SponsorNowReserve = ({
@@ -22,7 +23,8 @@ const SponsorNowReserve = ({
   prices,
   setOpenForm,
   productId,
-  bootId
+  bootId,
+  setRefresh,
 }: Props) => {
   const [priceData, setPriceData] = useState({
     priceName: "",
@@ -48,11 +50,12 @@ const SponsorNowReserve = ({
           bootNumber,
           sponsorType,
           sponsorPrice,
-          bootId
+          bootId,
         },
       });
       window.location.href = fileUrl;
       toas("Successfully reserved", "success");
+      setRefresh((data: any) => !data);
       setOpenForm(false);
     } catch (err) {
       console.log(err);

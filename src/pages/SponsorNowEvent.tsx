@@ -10,9 +10,10 @@ import toas from "../utils/toas";
 const SponsorNowEvent = () => {
   const query = new URLSearchParams(location.search);
   const productId = query.get("id") || "";
+  const [refresh, setRefresh] = useState(false);
 
   const { data: sponsorsBootData, isLoading } = useQuery({
-    queryKey: ["sponsors-boot"],
+    queryKey: ["sponsors-boot",refresh],
     queryFn: async () => {
       const res = await axios({
         method: "get",
@@ -47,6 +48,7 @@ const SponsorNowEvent = () => {
               setOpenForm={setOpenForm}
               productId={productId}
               bootId={data?._id}
+              setRefresh={setRefresh}
             />
           </>
         )}
@@ -76,7 +78,6 @@ const SponsorNowEvent = () => {
               ${data?.status === "Reserved" && "text-blue-600"}
               ${data?.status === "Sold" && "text-red-600"}
               `}
-              
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
