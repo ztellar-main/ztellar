@@ -71,8 +71,12 @@ const SponsorNowEvent = () => {
             <Typography
               variant="small"
               className={`font-semibold ${
-                data?.status === "Available" ? "text-green-600" : "text-red-600"
-              }`}
+                data?.status === "Available" && "text-green-600"
+              }
+              ${data?.status === "Reserved" && "text-blue-600"}
+              ${data?.status === "Sold" && "text-red-600"}
+              `}
+              
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
