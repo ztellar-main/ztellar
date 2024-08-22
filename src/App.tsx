@@ -50,6 +50,10 @@ import OwnedEventQuiz from "./pages/Owned/OwnedEventQuiz";
 // PAYMONGO
 import PaymongoSuccessRedirect from "./pages/Paymongo/PaymongoSuccessRedirect";
 
+// AUTHOR NEW
+import AuthorAddCourse from "./pages/AuthorDashboard/AddCourse";
+
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -101,7 +105,11 @@ function App() {
               <Route path="" element={<LoginAndSignupPrivateRoute />}>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-              </Route>
+              </Route> 
+
+              
+              <Route path="/author-dashboard" element={<AuthorAddCourse />} />
+
               {/* AUTHOR */}
               <Route path="">
                 <Route path="/author/dashboard" element={<AuthorDashboard />} />

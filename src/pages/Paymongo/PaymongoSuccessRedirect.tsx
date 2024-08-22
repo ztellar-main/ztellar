@@ -70,9 +70,9 @@ const PaymongoSuccessRedirect = () => {
       const productType = description.split("/")[2];
       const regType = description.split("/")[3];
 
-      const authorPayment = Number(baseAmount * 0.9);
+      const authorPayment = Number(baseAmount * 0.6);
 
-      const ztellarFee = Number(baseAmount * 0.1) - Number(T);
+      const ztellarFee = Number(baseAmount * 0.4) - Number(T);
 
       const buyerId = description.split("/")[4];
 
