@@ -12,7 +12,7 @@ const DashboardNewAuthor = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const socket = io('http://localhost:4001');
+      const socket = io('https://ztellar-api-backend.onrender.com');
       socket.emit('join_room', `3000`);
       socket.on('received_message', (data: any) => {
         console.log(data);
