@@ -19,9 +19,9 @@ const ViewProduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+  const productId = query.get("id") || "";
   const token = useAppSelector((state) => state.user.token);
   const user = useAppSelector((state) => state.user.currentUser);
-  const productId = query.get("id") || "";
   const stars = Array(5).fill(0);
   const colors = {
     orange: "#FFD600",

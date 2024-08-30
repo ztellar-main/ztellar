@@ -52,7 +52,8 @@ import PaymongoSuccessRedirect from "./pages/Paymongo/PaymongoSuccessRedirect";
 
 // AUTHOR NEW
 import AuthorAddCourse from "./pages/AuthorDashboard/AddCourse";
-
+import DashboardNewAuthor from "./pages/AuthorDashboard/DashboardNewAuthor";
+import CreateCourse from "./pages/AuthorDashboard/CreateCourse";
 
 const queryClient = new QueryClient();
 
@@ -105,10 +106,21 @@ function App() {
               <Route path="" element={<LoginAndSignupPrivateRoute />}>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-              </Route> 
+              </Route>
 
-              
-              <Route path="/author-dashboard" element={<AuthorAddCourse />} />
+              {/* COURSE AUTHOR */}
+              <Route
+                path="/author-dashboard/dashboard"
+                element={<DashboardNewAuthor />}
+              />
+              <Route
+                path="/author-dashboard/add-course"
+                element={<AuthorAddCourse />}
+              />
+              <Route
+                path="/author-dashboard/create-course"
+                element={<CreateCourse />}
+              />
 
               {/* AUTHOR */}
               <Route path="">
