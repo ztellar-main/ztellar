@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { MdErrorOutline } from 'react-icons/md';
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const VideoInput = ({ valueSetter, errorSetter, error, label }: Props) => {
-  const [videoPreview, setVideoPreview] = useState('');
+  // const [videoPreview, setVideoPreview] = useState('');
 
   const onDrop = useCallback((acceptedFiles: any) => {
     if (!acceptedFiles[0]) return;
