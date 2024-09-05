@@ -6,8 +6,8 @@ import SubHeader from '../../components/AdminDashboard/SubHeader';
 const AddVideo = () => {
   const [openSidebar, setopenSidebar] = useState(true);
   const query = new URLSearchParams(location.search);
-  const courseId = query.get('courseId') || '';
-  const subjectId = query.get('subjectId') || '';
+  // const courseId = query.get('courseId') || '';
+  // const subjectId = query.get('subjectId') || '';
   const subjectTitle = query.get('title') || '';
 
   return (
