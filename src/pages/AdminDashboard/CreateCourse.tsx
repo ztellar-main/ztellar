@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import Header from '../../components/AuthorDashboard/Header';
-import Sidebar from '../../components/AuthorDashboard/Sidebar';
-import SubHeader from '../../components/AuthorDashboard/SubHeader';
-import ImageInput from '../../components/AuthorDashboard/ImageInput';
-import { MdErrorOutline } from 'react-icons/md';
+import Header from '../../components/AdminDashboard/Header';
+import Sidebar from '../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../components/AdminDashboard/SubHeader';
+import ImageInput from '../../components/AdminDashboard/ImageInput';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
 import toas from '../../utils/toas';
-import VideoInput from '../../components/AuthorDashboard/VideoInput';
 import { v4 as uuidv4 } from 'uuid';
 import { firebaseUpload } from '../../utils/firebaseUpload';
 import { inputTitleErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/inputTitleErrorHandlerFunction';
@@ -15,89 +13,14 @@ import { descriptionErrorHandlerFunction } from '../../utils/formsErrorHandlerFu
 import { priceErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/priceErrorHandlerFunction';
 import { liveIdErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/liveIdErrorHandlerFunction';
 import { fileErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/fileErrorHandlerFunction';
-
-type TextAreaProps = {
-  setter: any;
-  error: any;
-};
-
-const TextArea = ({ setter, error }: TextAreaProps) => {
-  return (
-    <div className="w-100 mb-[10px]">
-      {/* label */}
-      <p className="text-sm font-bold text-gray-900 ml-[5px] mb-[5px]">
-        Description
-      </p>
-      {/* input */}
-      <textarea
-        placeholder="Enter your course decription"
-        className="w-100 border border-gray-600 rounded h-[70px] p-[10px]"
-        onChange={(e: any) => setter(e.target.value)}
-      ></textarea>
-      {/* error handler output */}
-      {error?.status !== 'start' && (
-        <div
-          className={`flex items-center pl-[5px] text-sm mt-[5px]
-            ${error?.status === 'error' && 'text-red-600'}
-            ${error?.status === 'success' && 'text-green-600'}
-          `}
-        >
-          <MdErrorOutline className="mr-[5px]" />
-          {error?.message}
-        </div>
-      )}
-    </div>
-  );
-};
-
-type InputProps = {
-  name: string;
-  type: string;
-  placeholder: string;
-  setter: any;
-  error: any;
-};
-
-const InputComponent = ({
-  name,
-  type,
-  placeholder,
-  setter,
-  error,
-}: InputProps) => {
-  return (
-    <>
-      <div className="w-100 mb-[10px]">
-        {/* label */}
-        <p className="text-sm font-bold text-gray-900 ml-[5px] mb-[5px]">
-          {name}
-        </p>
-        {/* input */}
-        <input
-          type={type}
-          placeholder={placeholder}
-          className="w-100 p-[10px]  rounded border border-gray-600"
-          onChange={(e: any) => setter(e.target.value)}
-        />
-        {/* error handler output */}
-        {error?.status !== 'start' && (
-          <div
-            className={`flex items-center pl-[5px] text-sm mt-[5px]
-            ${error?.status === 'error' && 'text-red-600'}
-            ${error?.status === 'success' && 'text-green-600'}
-          `}
-          >
-            <MdErrorOutline className="mr-[5px]" />
-            {error?.message}
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
+import TextArea from '../../components/AdminDashboard/TextArea';
+import InputComponent from '../../components/AdminDashboard/InputComponent';
 
 const CreateCourse = () => {
   const token = useAppSelector((e: any) => e.user.token);
+  const navigate = useNavigate();
 
   const [openSidebar, setopenSidebar] = useState(true);
 
@@ -107,7 +30,7 @@ const CreateCourse = () => {
   const [price, setPrice] = useState('');
   const [liveId, setLiveId] = useState('');
   const [image, setImage] = useState<File | null>(null);
-  const [video, setVideo] = useState<File | null>(null);
+  const [authorId, setAuthorId] = useState('');
 
   // ERROR HANDLER STATES
   const [titleErrorHandler, setTitleErrorHandler] = useState({
@@ -130,10 +53,13 @@ const CreateCourse = () => {
     message: '',
     status: 'start',
   });
-  const [videoErrorHandler, setVideoErrorHandler] = useState({
+  const [authorIdErrorHandler, setAuthorIdErrorHandler] = useState({
     message: '',
     status: 'start',
   });
+
+  // OTHER STATES
+  const [uploading, setUploading] = useState(false);
 
   // UPLOAD BUTTON FUNCTION
   const uploadButtonFunction = async () => {
@@ -162,10 +88,23 @@ const CreateCourse = () => {
       image,
       setImageErrorHandler
     );
-    const videoHandler = await fileErrorHandlerFunction(
-      video,
-      setVideoErrorHandler
-    );
+
+    const authorErrorHandler = (data: any) => {
+      if (!data) {
+        setAuthorIdErrorHandler({
+          message: 'Please enter author id',
+          status: 'error',
+        });
+        return 'error';
+      }
+      setAuthorIdErrorHandler({
+        message: 'success',
+        status: 'success',
+      });
+      return 'success';
+    };
+
+    const authorHandler = authorErrorHandler(authorId);
 
     if (
       titleHandler === 'error' ||
@@ -173,26 +112,20 @@ const CreateCourse = () => {
       priceHandler === 'error' ||
       liveIdHandler === 'error' ||
       imageHandler === 'error' ||
-      videoHandler === 'error'
+      authorHandler === 'error'
     ) {
       return toas('There is something wrong in your information', 'error');
     }
 
     // START UPLOADING
+    setUploading(true);
 
     // upload video function
+    const imagePath = `course/cover-photo/${title}-${uuidv4()}.${
+      image?.type.split('/')[1]
+    }`;
     try {
-      const videoUrl = await firebaseUpload(
-        video,
-        `course/videos/not-converted/intro/${title}-${uuidv4()}.${
-          video?.type.split('/')[1]
-        }`
-      );
-
-      const imageUrl = await firebaseUpload(
-        image,
-        `course/cover-photo/${title}-${uuidv4()}.${video?.type.split('/')[1]}`
-      );
+      const imageUrl = await firebaseUpload(image, imagePath);
       // upload course
       const res = await axios({
         method: 'POST',
@@ -202,26 +135,18 @@ const CreateCourse = () => {
           description,
           price,
           liveId,
-          videoUrl,
           imageUrl,
-          socketId: uuidv4(),
+          authorId,
+          imagePath,
         },
         headers: {
           Authorization: `Token ${token}`,
         },
       });
       const newCourse = res?.data;
-      const filePath = `course/converted/${newCourse?._id}/video_intro/${
-        newCourse?.title
-      }-${uuidv4()}`;
-      const fileName = `${newCourse?.title}-${uuidv4()}`;
-      await axios({
-        method: 'POST',
-        url: '/video/video-convert',
-        data: { videoUrl: newCourse?.video_url, filePath, fileName },
-      });
+      const filePath = `course/${newCourse?._id}/intro_video/adaptive.m3u8`;
 
-      const updatedCourse = await axios({
+      await axios({
         method: 'PUT',
         url: '/course/update-course-intro-video-after-convertion',
         data: { videoPath: filePath, courseId: newCourse?._id },
@@ -229,13 +154,13 @@ const CreateCourse = () => {
           authorization: `Token ${token}`,
         },
       });
-
-      console.log(updatedCourse?.data);
+      setUploading(true);
+      toas('Course successfully uploaded', 'success');
+      navigate('/admin-dashboard/course');
+      // navigate("/")
     } catch (err) {
-      console.log(err);
+      setUploading(false);
     }
-
-    return toas('success', 'success');
   };
 
   return (
@@ -244,7 +169,7 @@ const CreateCourse = () => {
         <Sidebar
           setopenSidebar={setopenSidebar}
           openSidebar={openSidebar}
-          page="Create Course"
+          page="Course"
         />
         <div className="w-100">
           <Header />
@@ -270,9 +195,23 @@ const CreateCourse = () => {
               type="text"
               setter={setTitle}
               error={titleErrorHandler}
+              value={title}
             />
             {/* DESCRIPTION */}
-            <TextArea setter={setDescription} error={descriptionErrorHandler} />
+            <TextArea
+              setter={setDescription}
+              error={descriptionErrorHandler}
+              value={description}
+            />
+            {/* Author */}
+            <InputComponent
+              placeholder="Enter author id"
+              name="Author id"
+              type="text"
+              setter={setAuthorId}
+              error={authorIdErrorHandler}
+              value={authorId}
+            />
             {/* PRICE */}
             <InputComponent
               placeholder="Enter your course price"
@@ -280,6 +219,7 @@ const CreateCourse = () => {
               type="number"
               setter={setPrice}
               error={priceErrorHandler}
+              value={price}
             />
             {/* LIVE ID */}
             <InputComponent
@@ -288,6 +228,7 @@ const CreateCourse = () => {
               type="number"
               setter={setLiveId}
               error={liveIdErrorHandler}
+              value={liveId}
             />
 
             {/* COVER PHOTO */}
@@ -299,19 +240,25 @@ const CreateCourse = () => {
             />
 
             {/* INTRODUCTION VIDEO */}
-            <VideoInput
-              valueSetter={setVideo}
-              errorSetter={setVideoErrorHandler}
-              error={videoErrorHandler}
-              label="Introduction Video"
-            />
 
             {/* SUBMIT BUTTON */}
             <button
-              onClick={uploadButtonFunction}
-              className="bg-blue-600 text-white text-base w-100 p-[10px] rounded cursor-pointer hover:bg-blue-400"
+              onClick={() => {
+                if (uploading) {
+                  return;
+                }
+                uploadButtonFunction();
+              }}
+              className={`bg-blue-600 relative text-white text-base w-100 p-[10px] rounded cursor-pointer hover:bg-blue-900 ${
+                uploading && 'bg-blue-900'
+              }`}
             >
-              Upload
+              {uploading ? 'Uploading' : 'Upload'}
+              {uploading && (
+                <div className="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] ml-[50px]">
+                  <CgSpinnerTwoAlt className="text-white animate-spin" />
+                </div>
+              )}
             </button>
           </div>
 

@@ -27,18 +27,18 @@ const VideoInput = ({ valueSetter, errorSetter, error, label }: Props) => {
       return;
     }
 
-    valueSetter(acceptedFiles[0]);
+    valueSetter(acceptedFiles);
     errorSetter({
       message: 'success',
       status: 'success',
     });
 
-    const reader = new FileReader();
-    reader.readAsDataURL(acceptedFiles[0]);
-    reader.onload = () => {
-      const result: any = reader?.result;
-      setVideoPreview(result);
-    };
+    // const reader = new FileReader();
+    // reader.readAsDataURL(acceptedFiles[0]);
+    // reader.onload = () => {
+    //   const result: any = reader?.result;
+    //   setVideoPreview(result);
+    // };
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -63,7 +63,7 @@ const VideoInput = ({ valueSetter, errorSetter, error, label }: Props) => {
           <div className={`w-100   p-[10px] rounded`}>
             {/* DOTTED CONTAINER */}
             <div className="border-[3px] border-dotted border-gray-500 p-[10px] rounded">
-              {videoPreview && (
+              {/* {videoPreview && (
                 <div className="w-100 mb-[10px]">
                   <video
                     src={videoPreview}
@@ -71,7 +71,7 @@ const VideoInput = ({ valueSetter, errorSetter, error, label }: Props) => {
                     className="w-100 h-[auto] rounded"
                   />
                 </div>
-              )}
+              )} */}
               <IoCloudUploadOutline className="w-[70px] h-[auto] ml-[50%] translate-x-[-50%] text-blue-600 mobile:hidden" />
               <p className="text-center text-sm mobile:hidden">
                 Drag and drop your video here

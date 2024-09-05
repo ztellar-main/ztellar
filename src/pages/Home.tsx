@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 // COMPONENT IMPORT
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { FAQ } from "../components/HomeFaq";
-import { useNavigate } from "react-router-dom";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { FAQ } from '../components/HomeFaq';
+import { useNavigate } from 'react-router-dom';
 
 const Homepage: React.FC = () => {
   const navigate = useNavigate();
@@ -14,44 +14,29 @@ const Homepage: React.FC = () => {
       <Navbar />
 
       {/* HOMEPAGE BODY */}
-      <div className="mt-[65px] flex flex-col w-full  tablet:mt-[30px]">
+      <div className=" flex flex-col w-full">
         {/* BANNER */}
-        <div className="text-2xl font-bold text-center tabletMin:hidden">
-          <p className="">
-            <span className="text-[#1A66CC]">Connecting </span>
-            minds
-          </p>
-          <p className="class">
-            <span className="text-[#1A66CC]">Redefining </span>
-            Learning and
-          </p>
-          <p className="text-[#1A66CC]">Collaboration</p>
-        </div>
-        <div className="relative w-100 max-w-[1280px] mb-[10px]  h-[300px] bg-gray-200 tablet:h-[200px] ml-[50%] translate-x-[-50%] ">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar%2Fimgpsh_fullsize_anim.png?alt=media&token=e460fc58-7dc1-4c39-a3be-edb043b293b6"
-            className="w-100 h-[100%] object-cover"
-          />
+        <video
+          autoPlay
+          loop
+          muted
+          className="mb-[20px] mt-[50px] mobile:hidden"
+        >
+          <source src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/videos%2F1920x500.mp4?alt=media&token=bd92cf93-195c-4b25-9668-cb685fc782e5" />
+        </video>
 
-          {/* <div className="w-[1280px] h-[300px] bg-red-100"></div> */}
-          <div
-            className={`absolute left-0 top-0 text-6xl font-bold w-100 tablet:hidden`}
-          >
-            <p className="">
-              <span className="text-[#1A66CC]">Connecting </span>
-              minds
-            </p>
-            <p className="class">
-              <span className="text-[#1A66CC]">Redefining </span>
-              Learning and
-            </p>
-            <p className="text-[#1A66CC]">Collaboration</p>
-          </div>
-        </div>
+        <video
+          autoPlay
+          loop
+          muted
+          className="mb-[20px] mt-[20px] mobileMin:hidden"
+        >
+          <source src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/videos%2F400%20x%20500%20new.mp4?alt=media&token=e972cc51-b887-4799-a6d1-56d2a58de85f" />
+        </video>
 
         <div className="w-full bg-white p-1 flex justify-center items-center flex-col">
           <button
-            onClick={() => navigate("/search?")}
+            onClick={() => navigate('/search?')}
             className="w-[200px] mobile:w-[150px] mobile:py-[8px] bg-[#1A66CC] text-white py-[10px] rounded-[10px] mb-[20px] hover:bg-[#1e40af] duration-300 "
           >
             Get Started
@@ -112,8 +97,6 @@ const Homepage: React.FC = () => {
         <div className="w-100 max-w-[1200px] border-top my-[50px] px-[10px] ml-[50%] translate-x-[-50%] ">
           <hr className=" w-100 border-top border-blue-600" />
         </div>
-
-
 
         {/* BLUE TITLE CONTAINER LATEST EVENT */}
         <>

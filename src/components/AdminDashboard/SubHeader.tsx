@@ -9,7 +9,7 @@ type Props = {
 const SubHeader = ({ setopenSidebar, openSidebar, page }: Props) => {
   return (
     <>
-      <div className="w-100 h-[40px] flex items-center justify-between bg-gray-200 sticky top-[40px] z-[5]">
+      <div className="w-100 h-[40px] flex items-center justify-between bg-blue-gray-50 sticky top-[40px] z-[5]">
         {openSidebar ? (
           <div className="bg-red-100 mobile:hidden tablet:hidden"></div>
         ) : (

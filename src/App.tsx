@@ -1,59 +1,64 @@
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // PAGES IMPORTS
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import EmailVerify from "./pages/EmailVerify";
-import Login from "./pages/Login";
-import Search from "./pages/Search";
-import ViewProduct from "./pages/ViewProduct";
-import BuyProduct from "./pages/BuyProduct";
-import UpdateUserBeforeLoggingIn from "./pages/UpdateUserBeforeLoggingIn";
-import ResetPassword from "./pages/ResetPassword";
-import UserList from "./pages/UserList";
-import EditProfile from "./pages/EditProfile";
-import SponsorNowEvent from "./pages/SponsorNowEvent";
-import CompanySignup from "./pages/CompanySignup";
-import CompanyEmailVerify from "./pages/CompanyEmailVerify";
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import EmailVerify from './pages/EmailVerify';
+import Login from './pages/Login';
+import Search from './pages/Search';
+import ViewProduct from './pages/ViewProduct';
+import BuyProduct from './pages/BuyProduct';
+import UpdateUserBeforeLoggingIn from './pages/UpdateUserBeforeLoggingIn';
+import ResetPassword from './pages/ResetPassword';
+import UserList from './pages/UserList';
+import EditProfile from './pages/EditProfile';
+import SponsorNowEvent from './pages/SponsorNowEvent';
+import CompanySignup from './pages/CompanySignup';
+import CompanyEmailVerify from './pages/CompanyEmailVerify';
 
 // AUTHOR
-import AuthorDashboard from "./pages/Author/AuthorDashboard";
-import AddCourse from "./pages/Author/AddCourse";
-import AddEvent from "./pages/Author/AddEvent";
-import CreateEvent from "./pages/Author/CreateEvent";
-import EventSetup from "./pages/Author/EventSetup";
-import AddVideoToSubjectEvent from "./pages/Author/AddVideoToSubjectEvent";
-import LiveEvent from "./pages/Author/LiveEvent";
-import LiveEventsList from "./pages/Author/LiveEventsList";
-import GoLiveEvent from "./pages/Author/GoLiveEvent";
-import ScanQrCode from "./pages/Author/ScanQrCode";
-import GoScan from "./pages/Author/GoScan";
-import EventListCashPayment from "./pages/Author/EventListCashPayment";
-import GoEventCash from "./pages/Author/GoEventCash";
-import PaymongoSuccessRedirectCashPayment from "./pages/Paymongo/PaymongoSuccessRedirectCashPayment";
-import Total from "./pages/Author/Total";
+import AuthorDashboard from './pages/Author/AuthorDashboard';
+import AddCourse from './pages/Author/AddCourse';
+import AddEvent from './pages/Author/AddEvent';
+import CreateEvent from './pages/Author/CreateEvent';
+import EventSetup from './pages/Author/EventSetup';
+import AddVideoToSubjectEvent from './pages/Author/AddVideoToSubjectEvent';
+import LiveEvent from './pages/Author/LiveEvent';
+import LiveEventsList from './pages/Author/LiveEventsList';
+import GoLiveEvent from './pages/Author/GoLiveEvent';
+import ScanQrCode from './pages/Author/ScanQrCode';
+import GoScan from './pages/Author/GoScan';
+import EventListCashPayment from './pages/Author/EventListCashPayment';
+import GoEventCash from './pages/Author/GoEventCash';
+import PaymongoSuccessRedirectCashPayment from './pages/Paymongo/PaymongoSuccessRedirectCashPayment';
+import Total from './pages/Author/Total';
 
 // PRIVATE ROUTES
-import EmailVerifyPrivateRoute from "./privateRoutes/EmailVerifyPrivateRoute";
-import LoginAndSignupPrivateRoute from "./privateRoutes/LoginAndSignupPrivateRoute";
+import EmailVerifyPrivateRoute from './privateRoutes/EmailVerifyPrivateRoute';
+import LoginAndSignupPrivateRoute from './privateRoutes/LoginAndSignupPrivateRoute';
 
 // OWNED
-import Owned from "./pages/Owned/Owned";
-import OwnedEventLive from "./pages/Owned/OwnedEventLive";
-import OwnedEventSDL from "./pages/Owned/OwnedEventSDL";
-import OwnedEventCredentials from "./pages/Owned/OwnedEventCredentials";
-import OwnedQrCode from "./pages/Owned/OwnedQrCode";
-import OwnedEventQuiz from "./pages/Owned/OwnedEventQuiz";
+import Owned from './pages/Owned/Owned';
+import OwnedEventLive from './pages/Owned/OwnedEventLive';
+import OwnedEventSDL from './pages/Owned/OwnedEventSDL';
+import OwnedEventCredentials from './pages/Owned/OwnedEventCredentials';
+import OwnedQrCode from './pages/Owned/OwnedQrCode';
+import OwnedEventQuiz from './pages/Owned/OwnedEventQuiz';
 
 // PAYMONGO
-import PaymongoSuccessRedirect from "./pages/Paymongo/PaymongoSuccessRedirect";
+import PaymongoSuccessRedirect from './pages/Paymongo/PaymongoSuccessRedirect';
 
-// AUTHOR NEW
-import AuthorAddCourse from "./pages/AuthorDashboard/AddCourse";
-import DashboardNewAuthor from "./pages/AuthorDashboard/DashboardNewAuthor";
-import CreateCourse from "./pages/AuthorDashboard/CreateCourse";
+// ADMIN
+import AdminAddCourse from './pages/AdminDashboard/Course';
+import DashboardNewAuthor from './pages/AdminDashboard/AdminDashboard';
+import CreateCourse from './pages/AdminDashboard/CreateCourse';
+import EditCourse from './pages/AdminDashboard/EditCourse';
+import EditCourseImage from './pages/AdminDashboard/EditCourseImage';
+import SetupCourse from './pages/AdminDashboard/SetupCourse';
+import AddSubject from './pages/AdminDashboard/AddSubject';
+import AddVideo from './pages/AdminDashboard/AddVideo';
 
 const queryClient = new QueryClient();
 
@@ -82,7 +87,6 @@ function App() {
                 path="/company-email-verify"
                 element={<CompanyEmailVerify />}
               />
-
               {/* PAYMONGO */}
               <Route
                 path="/paymongo-save"
@@ -107,19 +111,38 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
               </Route>
-
               {/* COURSE AUTHOR */}
               <Route
-                path="/author-dashboard/dashboard"
+                path="/admin-dashboard/dashboard"
                 element={<DashboardNewAuthor />}
               />
               <Route
-                path="/author-dashboard/add-course"
-                element={<AuthorAddCourse />}
+                path="/admin-dashboard/course"
+                element={<AdminAddCourse />}
               />
               <Route
-                path="/author-dashboard/create-course"
+                path="/admin-dashboard/create-course"
                 element={<CreateCourse />}
+              />
+              <Route
+                path="/admin-dashboard/course/edit"
+                element={<EditCourse />}
+              />
+              <Route
+                path="/admin-dashboard/course/edit-image"
+                element={<EditCourseImage />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup"
+                element={<SetupCourse />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/add-subject"
+                element={<AddSubject />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/add-video"
+                element={<AddVideo />}
               />
 
               {/* AUTHOR */}

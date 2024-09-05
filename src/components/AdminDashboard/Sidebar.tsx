@@ -1,8 +1,8 @@
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { Tooltip } from "@material-tailwind/react";
-import { IoCreateOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { RxDashboard } from "react-icons/rx";
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { Tooltip } from '@material-tailwind/react';
+import { IoCreateOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { RxDashboard } from 'react-icons/rx';
 
 type Props = {
   setopenSidebar: any;
@@ -12,14 +12,14 @@ type Props = {
 
 const buttonMap = [
   {
-    name: "Dashboard",
+    name: 'Dashboard',
     icon: <RxDashboard className="text-xl mr-[8px]" />,
-    path: "/author-dashboard/dashboard",
+    path: '/admin-dashboard/dashboard',
   },
   {
-    name: "Create Course",
+    name: 'Course',
     icon: <IoCreateOutline className="text-xl mr-[8px]" />,
-    path: "/author-dashboard/add-course",
+    path: '/admin-dashboard/course',
   },
 ];
 
@@ -31,10 +31,10 @@ const Sidebar = ({ setopenSidebar, openSidebar, page }: Props) => {
         className={`w-[300px] h-[100vh] bg-blue-900 sticky tablet:fixed mobile:fixed mobile:w-100 top-0 ease-in-out duration-300 min-w-[300px] z-10
         ${
           openSidebar
-            ? "tabletMin:ml-0 tabletMin:left-0:"
-            : "tabletMin:ml-[-300px] tabletMin:left-[-300px]"
+            ? 'tabletMin:ml-0 tabletMin:left-0:'
+            : 'tabletMin:ml-[-300px] tabletMin:left-[-300px]'
         }
-          ${!openSidebar ? "tablet:left-0" : "tablet:left-[-100%]"}`}
+          ${!openSidebar ? 'tablet:left-0' : 'tablet:left-[-100%]'}`}
       >
         {/* SECTION 1 - close container */}
         <div className="w-100 h-[40px] flex items-center justify-end pr-[10px]">
@@ -58,7 +58,7 @@ const Sidebar = ({ setopenSidebar, openSidebar, page }: Props) => {
             </div>
 
             <div className="line-clamp-1 ml-[15px] font-semibold text-white text-lg">
-              Juan Dela Cruz
+              Ztellar
             </div>
           </div>
 
@@ -73,8 +73,8 @@ const Sidebar = ({ setopenSidebar, openSidebar, page }: Props) => {
                 onClick={() => navigate(buttonData?.path)}
                 key={i}
                 className={`flex items-center w-100   p-[10px] text-lg rounded text-white mb-[5px]
-                ${page === buttonData?.name && "bg-blue-800 border"}
-                ${page !== buttonData?.name && "hover:text-gray-400"}
+                ${page === buttonData?.name && 'bg-blue-800 border'}
+                ${page !== buttonData?.name && 'hover:text-gray-400'}
                 `}
               >
                 {buttonData?.icon}
