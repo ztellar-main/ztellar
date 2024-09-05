@@ -9,7 +9,6 @@ const AddVideo = () => {
   // const courseId = query.get('courseId') || '';
   // const subjectId = query.get('subjectId') || '';
   const subjectTitle = query.get('title') || '';
-
   return (
     <div className="bg-gray-50 flex">
       <Sidebar

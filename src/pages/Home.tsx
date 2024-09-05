@@ -29,7 +29,7 @@ const Homepage: React.FC = () => {
           autoPlay
           loop
           muted
-          className="mb-[20px] mt-[20px] mobileMin:hidden"
+          className="mb-[20px] mt-[40px] mobileMin:hidden"
         >
           <source src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/videos%2F400%20x%20500%20new.mp4?alt=media&token=e972cc51-b887-4799-a6d1-56d2a58de85f" />
         </video>
