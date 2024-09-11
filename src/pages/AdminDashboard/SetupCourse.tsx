@@ -10,15 +10,99 @@ import { useAppSelector } from '../../state/store';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { Select, Option } from '@material-tailwind/react';
 import { FaAngleDown } from 'react-icons/fa6';
+import toas from '../../utils/toas';
 
+type VideoCardProps = {
+  data: any;
+  subjectIndex: any;
+  videoIndex: any;
+};
+
+const VideoCard = ({ data, subjectIndex, videoIndex }: VideoCardProps) => {
+  const navigate = useNavigate();
+  const token = useAppSelector((e: any) => e.user.token);
+
+  const videoId = data?.data?._id;
+  const videoState = data?.data?.status;
+
+  const [videoStatusState, setVideoStatusState] = useState(videoState);
+
+  const activateVideoFunction = async (videoId: any, videoState: any) => {
+    try {
+      await axios({
+        method: 'put',
+        url: '/course/activate-or-deactivate-video',
+        data: { videoId, videoState },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      setVideoStatusState((e: any) => !e);
+    } catch (err) {
+      toas('Something went wrong please try again', 'error');
+    }
+  };
+  return (
+    <>
+      <div className="w-100 bg-blue-gray-50 border-b border-gray-300 flex text-gray-800">
+        <div className="min-w-[70px] p-[10px] flex items-center  mobile:hidden">
+          {subjectIndex + 1}.{videoIndex + 1}
+        </div>
+        <div
+          // onClick={() => setOpenVideos((i) => !i)}
+          className=" p-[10px]  grow flex items-center justify-between min-w-[100px] cursor-pointer"
+        >
+          <div className="line-clamp-1"> {data?.data?.title}</div>
+          {/* <FaAngleDown className="mr-[10px]" /> */}
+          <div
+            className={`w-[10px] h-[10px] rounded-[50%] mr-[10px] ${
+              videoStatusState === false ? 'bg-red-600' : 'bg-green-600'
+            }`}
+          />
+        </div>
+        <div className="w-[220px] min-w-[220px] p-[10px] ">
+          <Select
+            label="Select Action"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          >
+            <Option
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/course/setup/edit-video-title?videoId=${data?.data?._id}&videoTitle=${data?.data?.title}&subjectId=${data?.data?.subject_id}&courseId=${data?.data?.product_id}`
+                )
+              }
+            >
+              Edit Title
+            </Option>
+            <Option onClick={() => activateVideoFunction(videoId, videoState)}>
+              {videoStatusState === false ? 'Activate' : 'Deactivate'}
+            </Option>
+            <Option>Video Path</Option>
+            <Option>Preview Video</Option>
+            <Option>Delete</Option>
+          </Select>
+        </div>
+      </div>
+    </>
+  );
+};
+
+// SUBJECT CARD START
 type SubjectProps = {
   subjectData: any;
   index: any;
   courseData: any;
 };
+
 const SubjectCard = ({ subjectData, index, courseData }: SubjectProps) => {
   const [openVideos, setOpenVideos] = useState(false);
+
+  console.log(openVideos);
+
   const navigate = useNavigate();
+
   return (
     <>
       <div className={`flex border-b text-gray-800`}>
@@ -29,7 +113,7 @@ const SubjectCard = ({ subjectData, index, courseData }: SubjectProps) => {
           onClick={() => setOpenVideos((i) => !i)}
           className=" p-[10px]  grow flex items-center justify-between min-w-[100px] cursor-pointer"
         >
-          <div className="line-clamp-1"> {subjectData?.title}</div>
+          <div className="line-clamp-1"> {subjectData?.data?.title}</div>
 
           <FaAngleDown className="mr-[10px]" />
         </div>
@@ -43,22 +127,49 @@ const SubjectCard = ({ subjectData, index, courseData }: SubjectProps) => {
             <Option
               onClick={() =>
                 navigate(
-                  `/admin-dashboard/course/setup/add-video?courseId=${courseData?._id}&subjectId=${subjectData?._id}&title=${subjectData?.title}`
+                  `/admin-dashboard/course/setup/add-video?courseId=${courseData?._id}&subjectId=${subjectData?.data?._id}&title=${subjectData?.data?.title}`
                 )
               }
             >
               Add Video
             </Option>
             <Option>Setup Questionnaire</Option>
-            <Option>Edit</Option>
+            <Option
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/course/setup/edit-subject-title?subjectId=${subjectData?.data?._id}&subjectTitle=${subjectData?.data?.title}&courseId=${courseData?._id}`
+                )
+              }
+            >
+              Edit Title
+            </Option>
+            <Option
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/course/setup/edit-video-order?subjectId=${subjectData?._id}&courseId=${courseData?._id}`
+                )
+              }
+            >
+              Edit Video Order
+            </Option>
             <Option>Delete</Option>
           </Select>
         </div>
       </div>
-      {openVideos && <div className="w-100 p-[10px] bg-red-100"></div>}
+      {subjectData?.videos?.map((videoData: any, i: any) => {
+        return (
+          <VideoCard
+            key={i}
+            data={videoData}
+            subjectIndex={index}
+            videoIndex={i}
+          />
+        );
+      })}
     </>
   );
 };
+// SUBJECT CARD END
 
 const SetupCourse = () => {
   const [openSidebar, setopenSidebar] = useState(true);
@@ -134,9 +245,25 @@ const SetupCourse = () => {
                 placeholder={undefined}
                 onPointerEnterCapture
                 onPointerLeaveCapture
-                className="bg-blue-900"
+                className="bg-blue-900 mr-[10px]"
               >
                 Add Subject
+              </Button>
+            </Tooltip>
+            {/* edit subject order */}
+            <Tooltip content="Click to organize subject order">
+              <Button
+                onClick={() =>
+                  navigate(
+                    `/admin-dashboard/course/setup/edit-subject-order?id=${courseId}`
+                  )
+                }
+                placeholder={undefined}
+                onPointerEnterCapture
+                onPointerLeaveCapture
+                className="bg-blue-900"
+              >
+                Edit Subject Order
               </Button>
             </Tooltip>
           </div>
@@ -165,7 +292,7 @@ const SetupCourse = () => {
                 return (
                   <SubjectCard
                     key={i}
-                    subjectData={subjectsDataMap?._id}
+                    subjectData={subjectsDataMap}
                     index={i}
                     courseData={courseData}
                   />

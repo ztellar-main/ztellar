@@ -59,6 +59,10 @@ import EditCourseImage from './pages/AdminDashboard/EditCourseImage';
 import SetupCourse from './pages/AdminDashboard/SetupCourse';
 import AddSubject from './pages/AdminDashboard/AddSubject';
 import AddVideo from './pages/AdminDashboard/AddVideo';
+import EditSubjectOrder from './pages/AdminDashboard/EditCourseSubjectOrder';
+import EditCourseSubjectTitle from './pages/AdminDashboard/EditCourseSubjectTitle';
+import EditCourseVideoTitle from './pages/AdminDashboard/EditCourseVideoTitle';
+import EditCourseVideoOrder from './pages/AdminDashboard/EditCourseVideoOrder';
 
 const queryClient = new QueryClient();
 
@@ -143,6 +147,22 @@ function App() {
               <Route
                 path="/admin-dashboard/course/setup/add-video"
                 element={<AddVideo />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/edit-subject-order"
+                element={<EditSubjectOrder />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/edit-subject-title"
+                element={<EditCourseSubjectTitle />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/edit-video-title"
+                element={<EditCourseVideoTitle />}
+              />
+              <Route
+                path="/admin-dashboard/course/setup/edit-video-order"
+                element={<EditCourseVideoOrder />}
               />
 
               {/* AUTHOR */}
