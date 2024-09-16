@@ -11,6 +11,35 @@ import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { Select, Option } from '@material-tailwind/react';
 import { FaAngleDown } from 'react-icons/fa6';
 import toas from '../../utils/toas';
+import { IoIosClose } from 'react-icons/io';
+
+type VideoPathProps = {
+  url: any;
+  setPopupOpen: any;
+  title: any;
+};
+
+const VideoPathComponent = ({ url, setPopupOpen, title }: VideoPathProps) => {
+  return (
+    <>
+      <div className="w-100 h-[100vh] bg-black opacity-[60%] fixed top-0 left-0 z-[10]" />
+      <div className="  fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[11] rounded ">
+        {/* HEADER */}
+        <div className="w-100 p-[10px] bg-blue-800 text-white rounded-t flex items-center justify-between">
+          Video Path
+          <IoIosClose
+            onClick={() => setPopupOpen(false)}
+            className="w-[25px] h-[25px] cursor-pointer hover:bg-blue-600 rounded-[50%] "
+          />
+        </div>
+        <div className="w-100 p-[10px] bg-white rounded-b text-gray-800">
+          <p className="text-blue-gray-900">Title : {title}</p>
+          <p className="text-blue-gray-900">Path : {url}</p>
+        </div>
+      </div>
+    </>
+  );
+};
 
 type VideoCardProps = {
   data: any;
@@ -19,6 +48,7 @@ type VideoCardProps = {
 };
 
 const VideoCard = ({ data, subjectIndex, videoIndex }: VideoCardProps) => {
+  const [popupOpen, setPopupOpen] = useState(false);
   const navigate = useNavigate();
   const token = useAppSelector((e: any) => e.user.token);
 
@@ -26,6 +56,8 @@ const VideoCard = ({ data, subjectIndex, videoIndex }: VideoCardProps) => {
   const videoState = data?.data?.status;
 
   const [videoStatusState, setVideoStatusState] = useState(videoState);
+
+  const index = `${subjectIndex + 1}.${videoIndex + 1}`;
 
   const activateVideoFunction = async (videoId: any, videoState: any) => {
     try {
@@ -79,12 +111,27 @@ const VideoCard = ({ data, subjectIndex, videoIndex }: VideoCardProps) => {
             <Option onClick={() => activateVideoFunction(videoId, videoState)}>
               {videoStatusState === false ? 'Activate' : 'Deactivate'}
             </Option>
-            <Option>Video Path</Option>
-            <Option>Preview Video</Option>
+            <Option onClick={() => setPopupOpen(true)}>Video Path</Option>
+            <Option
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/course/setup/preview-course-video?id=${data?.data?._id}&index=${index}`
+                )
+              }
+            >
+              Preview Video
+            </Option>
             <Option>Delete</Option>
           </Select>
         </div>
       </div>
+      {popupOpen && (
+        <VideoPathComponent
+          url={data?.data?.video_url_converted}
+          title={data?.data?.title}
+          setPopupOpen={setPopupOpen}
+        />
+      )}
     </>
   );
 };

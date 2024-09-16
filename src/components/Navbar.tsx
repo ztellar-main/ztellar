@@ -53,7 +53,7 @@ const Navbar = () => {
             placeholder="Search course or events"
             onChange={(e) => setSearchValue(e.target.value)}
             type="text"
-            className="p-[10px] text-gray-800 border w-100 rounded-[30px] border-blue-600 outline-blue-600 pl-[50px] laptop:p-[8px] laptop:pl-[40px]"
+            className="p-[10px] text-gray-800 border w-100 rounded-[30px] border-blue-gray-300 outline-none pl-[50px] laptop:p-[8px] laptop:pl-[40px]"
             onKeyDown={searchEnterFunction}
             value={searchValue}
           />
@@ -65,7 +65,7 @@ const Navbar = () => {
           <div className="h-100 flex items-center px-[20px]">
             <p
               onClick={() => navigate("/")}
-              className="mr-[20px] cursor-pointer text-blue-600 font-semibold transition-all"
+              className="mr-[20px] cursor-pointer text-blue-600 transition-all"
             >
               Home
             </p>

@@ -51,6 +51,7 @@ import OwnedEventQuiz from './pages/Owned/OwnedEventQuiz';
 import PaymongoSuccessRedirect from './pages/Paymongo/PaymongoSuccessRedirect';
 
 // ADMIN
+// course
 import AdminAddCourse from './pages/AdminDashboard/Course';
 import DashboardNewAuthor from './pages/AdminDashboard/AdminDashboard';
 import CreateCourse from './pages/AdminDashboard/CreateCourse';
@@ -63,6 +64,10 @@ import EditSubjectOrder from './pages/AdminDashboard/EditCourseSubjectOrder';
 import EditCourseSubjectTitle from './pages/AdminDashboard/EditCourseSubjectTitle';
 import EditCourseVideoTitle from './pages/AdminDashboard/EditCourseVideoTitle';
 import EditCourseVideoOrder from './pages/AdminDashboard/EditCourseVideoOrder';
+import PreviewCourseVideo from './pages/AdminDashboard/PreviewCourseVideo';
+
+// COURSE PUBLIC
+import CoursePreviewPublic from './pages/CoursePublic/CoursePreviewPublic';
 
 const queryClient = new QueryClient();
 
@@ -115,7 +120,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
               </Route>
-              {/* COURSE AUTHOR */}
+              {/* ADMIN COURSE */}
               <Route
                 path="/admin-dashboard/dashboard"
                 element={<DashboardNewAuthor />}
@@ -164,6 +169,12 @@ function App() {
                 path="/admin-dashboard/course/setup/edit-video-order"
                 element={<EditCourseVideoOrder />}
               />
+              <Route
+                path="/admin-dashboard/course/setup/preview-course-video"
+                element={<PreviewCourseVideo />}
+              />
+              {/* COURSE PUBLIC */}
+              <Route path="/view/course" element={<CoursePreviewPublic />} />
 
               {/* AUTHOR */}
               <Route path="">
