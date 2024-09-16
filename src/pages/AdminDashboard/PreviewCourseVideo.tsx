@@ -66,7 +66,7 @@ const PreviewCourseVideo = () => {
           <div className="w-100 bg-black flex items-center justify-center">
             {isFetched && (
               <ShakaPlayerWithUI
-                src={`http://localhost:4000/api/video/${videoUrl}`}
+                src={`https://ztellar-api-backend.onrender.com/api/video/${videoUrl}`}
                 setVideoState={setVideoState}
               />
             )}
