@@ -1,5 +1,12 @@
 import Navbar from '../../components/Navbar';
+import { FaStar } from 'react-icons/fa';
+
 const CoursePreviewPublic = () => {
+  const stars = Array(5).fill(0);
+  const colors = {
+    orange: '#ffcc32',
+    gray: 'blue-gray-50',
+  };
   return (
     <div>
       <Navbar />
@@ -28,14 +35,36 @@ const CoursePreviewPublic = () => {
 
         <hr className="m-[20px]" />
         {/* author */}
-        <div className="flex my-[10px]">
-          <div className="w-[50px] h-[50px] bg-blue-gray-100 rounded-[50%] mr-[10px]"></div>
+        <div className="bg-blue-gray-100 p-[10px]">
+          <div className="flex my-[10px]">
+            <div className="w-[50px] h-[50px] bg-blue-gray-300 rounded-[50%] mr-[10px]"></div>
 
-          <div className="flex flex-col justify-center">
-            <p className="font-semibold text-blue-gray-900 mb-[2px]">
-              Juan Dela Cruz
-            </p>
-            <p className="text-xs">Author</p>
+            <div className="flex flex-col justify-center">
+              <p className="font-semibold text-blue-gray-900 mb-[2px]">
+                Juan Dela Cruz
+              </p>
+              <p className="text-xs">Author</p>
+            </div>
+          </div>
+          {/* rating */}
+          <div className="flex items-center">
+            <p className="text-lg mr-[5px] text-blue-gray-800">0.00</p>
+            <div className="flex">
+              {stars.map((_, index) => {
+                return (
+                  <FaStar
+                    key={index}
+                    size="18"
+                    style={{
+                      marginRight: '10',
+                      cursor: 'pointer',
+                    }}
+                    color={1 > index ? colors.orange : colors.gray}
+                  />
+                );
+              })}
+            </div>
+            <p className="text-lg mr-[5px] text-blue-gray-800">(100)</p>
           </div>
         </div>
       </div>
