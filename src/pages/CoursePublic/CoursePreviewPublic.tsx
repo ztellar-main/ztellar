@@ -36,8 +36,8 @@ const CoursePreviewPublic = () => {
         <hr className="m-[20px]" />
         {/* author */}
         <div className="bg-blue-gray-100 p-[10px]">
-          <div className="flex my-[10px]">
-            <div className="w-[50px] h-[50px] bg-blue-gray-300 rounded-[50%] mr-[10px]"></div>
+          <div className="flex mb-[10px]">
+            <div className="w-[50px] h-[50px] bg-blue-gray-900 rounded-[50%] mr-[10px]"></div>
 
             <div className="flex flex-col justify-center">
               <p className="font-semibold text-blue-gray-900 mb-[2px]">
