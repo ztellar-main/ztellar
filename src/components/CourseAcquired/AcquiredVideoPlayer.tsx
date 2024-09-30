@@ -9,7 +9,7 @@ interface ShakaPlayerWithUIProps {
 
 const AcquiredVideoPlayer: React.FC<ShakaPlayerWithUIProps> = ({
   src,
-  setVideoState,
+  // setVideoState,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const uiContainerRef = useRef<HTMLDivElement | null>(null);

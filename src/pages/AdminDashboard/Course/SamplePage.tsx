@@ -24,9 +24,9 @@ const SamplePage = () => {
 
     _prices[index][e.target.name] = e.target.value;
 
-    const priceFirst = prices[0].price;
-    const priceNameFirst = prices[0].priceName;
-    const priceTypeFirst = prices[0].priceType;
+    // const priceFirst = prices[0].price;
+    // const priceNameFirst = prices[0].priceName;
+    // const priceTypeFirst = prices[0].priceType;
 
     // if (!priceFirst || !priceNameFirst || !priceTypeFirst) {
     //   return setPriceErrorHandler({
