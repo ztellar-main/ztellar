@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 
 const DashboardNewAuthor = () => {
   const [openSidebar, setopenSidebar] = useState(true);
@@ -22,7 +22,7 @@ const DashboardNewAuthor = () => {
         />
 
         {/* MAIN BODY */}
-        <div className="w-100 p-[10px]">asdasd</div>
+        <div className="w-100 p-[10px]"></div>
       </div>
     </div>
   );

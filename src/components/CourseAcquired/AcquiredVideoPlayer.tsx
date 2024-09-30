@@ -7,7 +7,7 @@ interface ShakaPlayerWithUIProps {
   setVideoState: any;
 }
 
-const ShakaPlayerWithUI: React.FC<ShakaPlayerWithUIProps> = ({
+const AcquiredVideoPlayer: React.FC<ShakaPlayerWithUIProps> = ({
   src,
   setVideoState,
 }) => {
@@ -74,23 +74,22 @@ const ShakaPlayerWithUI: React.FC<ShakaPlayerWithUIProps> = ({
 
       // Load the video
       try {
-        player.load(src);
-
-        setVideoState({
-          message: 'The video is already uploaded and functioning properly',
-          status: 'success',
-        });
+        await player.load(src);
+        // setVideoState({
+        //   message: 'The video is already uploaded and functioning properly',
+        //   status: 'success',
+        // });
       } catch (err) {
-        setVideoState({
-          message: "The video hasn't been uploaded yet",
-          status: 'error',
-        });
+        // setVideoState({
+        //   message: "The video hasn't been uploaded yet",
+        //   status: 'error',
+        // });
         console.log('Something went wrong');
         // Cleanup on unmount
-        // return () => {
-        //   ui.destroy();
-        //   player.destroy();
-        // };
+        return () => {
+          ui.destroy();
+          player.destroy();
+        };
       }
 
       // Cleanup on unmount
@@ -113,4 +112,4 @@ const ShakaPlayerWithUI: React.FC<ShakaPlayerWithUIProps> = ({
   );
 };
 
-export default ShakaPlayerWithUI;
+export default AcquiredVideoPlayer;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
-import InputComponent from '../../components/AdminDashboard/InputComponent';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
+import InputComponent from '../../../components/AdminDashboard/InputComponent';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import axios from 'axios';
-import { useAppSelector } from '../../state/store';
-import toas from '../../utils/toas';
-import { axiosError } from '../../utils/axiosError';
+import { useAppSelector } from '../../../state/store';
+import toas from '../../../utils/toas';
+import { axiosError } from '../../../utils/axiosError';
 import { useNavigate } from 'react-router-dom';
 
 const AddVideo = () => {

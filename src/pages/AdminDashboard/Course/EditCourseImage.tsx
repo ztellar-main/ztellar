@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { useAppSelector } from '../../state/store';
+import { useAppSelector } from '../../../state/store';
 import { Navigate, useNavigate } from 'react-router-dom';
-import ImageInput from '../../components/AdminDashboard/ImageInput';
-import { fileErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/fileErrorHandlerFunction';
-import toas from '../../utils/toas';
+import ImageInput from '../../../components/AdminDashboard/ImageInput';
+import { fileErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/fileErrorHandlerFunction';
+import toas from '../../../utils/toas';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { firebaseUpload } from '../../utils/firebaseUpload';
+import { firebaseUpload } from '../../../utils/firebaseUpload';
 
 const EditCourseImage = () => {
   const [openSidebar, setopenSidebar] = useState(true);

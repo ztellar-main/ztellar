@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import Navbar from "../../components/Navbar";
-import OwnedCard from "../../components/Owned/OwnedCard";
-import axios from "axios";
-import { useAppSelector } from "../../state/store";
-import { Navigate } from "react-router-dom";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import { useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import Navbar from '../../components/Navbar';
+import OwnedCard from '../../components/Owned/OwnedCard';
+import axios from 'axios';
+import { useAppSelector } from '../../state/store';
+import { Navigate } from 'react-router-dom';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { useState } from 'react';
 
 const Owned = () => {
   const token = useAppSelector((e) => e.user.token);
@@ -16,11 +16,11 @@ const Owned = () => {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["owned-products", referesher],
+    queryKey: ['owned-products', referesher],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
-        url: "/product/get-owned-products",
+        method: 'get',
+        url: '/product/get-owned-products',
         headers: {
           authorization: `Token ${token}`,
         },
@@ -43,7 +43,6 @@ const Owned = () => {
       );
     }
   };
-
 
   return (
     <>

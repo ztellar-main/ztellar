@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import LeaveRating from "./LeaveRating";
-import { useState } from "react";
-import { useAppSelector } from "../../state/store";
-import ViewRating from "./ViewRating";
+import { useNavigate } from 'react-router-dom';
+import LeaveRating from './LeaveRating';
+import { useState } from 'react';
+import { useAppSelector } from '../../state/store';
+import ViewRating from './ViewRating';
 
 type Props = {
   data: any;

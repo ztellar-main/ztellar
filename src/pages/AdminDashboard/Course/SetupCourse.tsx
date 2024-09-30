@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 import { Button, Tooltip } from '@material-tailwind/react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { useAppSelector } from '../../state/store';
+import { useAppSelector } from '../../../state/store';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { Select, Option } from '@material-tailwind/react';
 import { FaAngleDown } from 'react-icons/fa6';
-import toas from '../../utils/toas';
+import toas from '../../../utils/toas';
 import { IoIosClose } from 'react-icons/io';
 
 type VideoPathProps = {

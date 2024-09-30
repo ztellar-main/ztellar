@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useAppSelector } from '../../state/store';
-import ShakaPlayerWithUI from '../../components/VideoPlayers/ShakaPlayer';
+import { useAppSelector } from '../../../state/store';
+import ShakaPlayerWithUI from '../../../components/VideoPlayers/ShakaPlayer';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const PreviewCourseVideo = () => {
@@ -66,6 +66,7 @@ const PreviewCourseVideo = () => {
           <div className="w-100 bg-black flex items-center justify-center">
             {isFetched && (
               <ShakaPlayerWithUI
+                key={videoUrl}
                 src={`http://localhost:4000/api/video/${videoUrl}`}
                 setVideoState={setVideoState}
               />

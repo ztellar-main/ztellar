@@ -49,25 +49,35 @@ import OwnedEventQuiz from './pages/Owned/OwnedEventQuiz';
 
 // PAYMONGO
 import PaymongoSuccessRedirect from './pages/Paymongo/PaymongoSuccessRedirect';
+import CoursePaymongoSuccessRedirect from './pages/Paymongo/CoursePaymongoSuccessRedirect';
 
 // ADMIN
 // course
-import AdminAddCourse from './pages/AdminDashboard/Course';
-import DashboardNewAuthor from './pages/AdminDashboard/AdminDashboard';
-import CreateCourse from './pages/AdminDashboard/CreateCourse';
-import EditCourse from './pages/AdminDashboard/EditCourse';
-import EditCourseImage from './pages/AdminDashboard/EditCourseImage';
-import SetupCourse from './pages/AdminDashboard/SetupCourse';
-import AddSubject from './pages/AdminDashboard/AddSubject';
-import AddVideo from './pages/AdminDashboard/AddVideo';
-import EditSubjectOrder from './pages/AdminDashboard/EditCourseSubjectOrder';
-import EditCourseSubjectTitle from './pages/AdminDashboard/EditCourseSubjectTitle';
-import EditCourseVideoTitle from './pages/AdminDashboard/EditCourseVideoTitle';
-import EditCourseVideoOrder from './pages/AdminDashboard/EditCourseVideoOrder';
-import PreviewCourseVideo from './pages/AdminDashboard/PreviewCourseVideo';
+import AdminAddCourse from './pages/AdminDashboard/Course/Course';
+import DashboardNewAuthor from './pages/AdminDashboard/Course/AdminDashboard';
+import CreateCourse from './pages/AdminDashboard/Course/CreateCourse';
+import EditCourse from './pages/AdminDashboard/Course/EditCourse';
+import EditCourseImage from './pages/AdminDashboard/Course/EditCourseImage';
+import SetupCourse from './pages/AdminDashboard/Course/SetupCourse';
+import AddSubject from './pages/AdminDashboard/Course/AddSubject';
+import AddVideo from './pages/AdminDashboard/Course/AddVideo';
+import EditSubjectOrder from './pages/AdminDashboard/Course/EditCourseSubjectOrder';
+import EditCourseSubjectTitle from './pages/AdminDashboard/Course/EditCourseSubjectTitle';
+import EditCourseVideoTitle from './pages/AdminDashboard/Course/EditCourseVideoTitle';
+import EditCourseVideoOrder from './pages/AdminDashboard/Course/EditCourseVideoOrder';
+import PreviewCourseVideo from './pages/AdminDashboard/Course/PreviewCourseVideo';
+import SetupSubjectQuestions from './pages/AdminDashboard/Course/SetupSubjectQuestions';
 
 // COURSE PUBLIC
 import CoursePreviewPublic from './pages/CoursePublic/CoursePreviewPublic';
+
+// COURSE PRIVATE
+import BuyCourse from './pages/CoursePrivate/BuyCourse';
+import AcquiredCourse from './pages/CoursePrivate/AcquiredCourse';
+
+// SAMPLE
+import SamplePage from './pages/AdminDashboard/Course/SamplePage';
+import ViewCertificateSample from './pages/ViewCertificateSample';
 
 const queryClient = new QueryClient();
 
@@ -78,6 +88,10 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <Router>
             <Routes>
+              {/* sample */}
+              <Route index path="/samsansan" element={<SamplePage />} />
+              <Route index path="/view-cert" element={<ViewCertificateSample />} />
+              
               {/* GENERAL */}
               <Route index path="/" element={<Home />} />
               <Route path="/search" element={<Search />} />
@@ -100,6 +114,10 @@ function App() {
               <Route
                 path="/paymongo-save"
                 element={<PaymongoSuccessRedirect />}
+              />
+              <Route
+                path="/process-payment"
+                element={<CoursePaymongoSuccessRedirect />}
               />
               {/* OWNED */}
               <Route path="/owned" element={<Owned />} />
@@ -173,9 +191,15 @@ function App() {
                 path="/admin-dashboard/course/setup/preview-course-video"
                 element={<PreviewCourseVideo />}
               />
+              <Route
+                path="/admin-dashboard/course/setup/subject-questions"
+                element={<SetupSubjectQuestions />}
+              />
               {/* COURSE PUBLIC */}
               <Route path="/view/course" element={<CoursePreviewPublic />} />
-
+              {/* COURSE PRIVATE */}
+              <Route path="/acquire/course" element={<BuyCourse />} />
+              <Route path="/acquired/course" element={<AcquiredCourse />} />
               {/* AUTHOR */}
               <Route path="">
                 <Route path="/author/dashboard" element={<AuthorDashboard />} />

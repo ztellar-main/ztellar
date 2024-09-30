@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 import { Button, Tooltip } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useAppSelector } from '../../state/store';
+import { useAppSelector } from '../../../state/store';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import toas from '../../utils/toas';
+import toas from '../../../utils/toas';
 
 const EditCourseVideoOrder = () => {
   const [openSidebar, setopenSidebar] = useState(true);

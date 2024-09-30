@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
-import { useAppSelector } from '../../state/store';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
+import { useAppSelector } from '../../../state/store';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, Tooltip } from '@material-tailwind/react';
-import toas from '../../utils/toas';
+import toas from '../../../utils/toas';
 
 const EditSubjectOrder = () => {
   const [openSidebar, setopenSidebar] = useState(true);

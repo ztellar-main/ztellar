@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
 import { Button, Tooltip } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Typography } from '@material-tailwind/react';
 import { Select, Option } from '@material-tailwind/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useAppSelector } from '../../state/store';
+import { useAppSelector } from '../../../state/store';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-
 
 const AuthorAddCourse = () => {
   const token = useAppSelector((e: any) => e.user.token);

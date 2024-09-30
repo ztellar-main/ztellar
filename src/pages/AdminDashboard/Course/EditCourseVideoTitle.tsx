@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
-import { useAppSelector } from '../../state/store';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
+import InputComponent from '../../../components/AdminDashboard/InputComponent';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import InputComponent from '../../components/AdminDashboard/InputComponent';
+import { axiosError } from '../../../utils/axiosError';
 import axios from 'axios';
-import { axiosError } from '../../utils/axiosError';
-import toas from '../../utils/toas';
+import { useAppSelector } from '../../../state/store';
+import toas from '../../../utils/toas';
 import { useNavigate } from 'react-router-dom';
 
-const EditCourseSubjectTitle = () => {
+const EditCourseVideoTitle = () => {
   const [openSidebar, setopenSidebar] = useState(true);
   const query = new URLSearchParams(location.search);
+  const videoId = query.get('videoId') || '';
+  const videoTitle = query.get('videoTitle') || '';
   const subjectId = query.get('subjectId') || '';
-  const subjectTitle = query.get('subjectTitle') || '';
   const courseId = query.get('courseId') || '';
-  const token = useAppSelector((e: any) => e.user.token);
   const navigate = useNavigate();
 
+  const token = useAppSelector((e: any) => e.user.token);
+
   //   values
-  const [title, setTitle] = useState(subjectTitle);
+  const [title, setTitle] = useState(videoTitle);
 
   //   error handlers
   const [titleErrorHandlerState, setTitleErrorHandlerState] = useState({
@@ -31,9 +33,9 @@ const EditCourseSubjectTitle = () => {
   //   uploading state
   const [uploading, setUploading] = useState(false);
 
-  //   upload button function
+  //   submit function
   const uploadButtonFunction = async () => {
-    const titleErrorHandlerFunction = async (data: any, errorSetter: any) => {
+    const titleErrorHandler = async (data: any, errorSetter: any) => {
       const regex = new RegExp(/[\\/]/g);
       const regexed = data.match(regex);
       if (!data) {
@@ -58,33 +60,32 @@ const EditCourseSubjectTitle = () => {
         });
         return 'error';
       }
-      setUploading(true);
+
       try {
         await axios({
-          method: 'POST',
-          url: '/course/check-if-subject-title-already-exist',
-          data: { title, courseId },
+          method: 'post',
+          url: '/course/check-if-subject-video-title-already-exists',
+          data: { title: data, subjectId },
           headers: {
             authorization: `Token ${token}`,
           },
         });
-        setTitleErrorHandlerState({
+        errorSetter({
           message: 'success',
           status: 'success',
         });
         return 'success';
       } catch (err) {
-        setUploading(false);
         axiosError(
           err,
-          setTitleErrorHandlerState,
-          'This subject title already exist in this course'
+          errorSetter,
+          'This video title already exist in this subject'
         );
         return 'error';
       }
     };
 
-    const titleHandler = await titleErrorHandlerFunction(
+    const titleHandler = await titleErrorHandler(
       title,
       setTitleErrorHandlerState
     );
@@ -93,28 +94,24 @@ const EditCourseSubjectTitle = () => {
       return toas('There is something wrong in your information', 'error');
     }
 
+    setUploading(true);
     try {
       await axios({
         method: 'put',
-        url: '/course/update-course-subject-title',
-        data: { subjectId, title },
+        url: '/course/edit-subject-video-title',
+        data: { videoId, title },
         headers: {
           authorization: `Token ${token}`,
         },
       });
-
-      setTitleErrorHandlerState({
-        message: 'success',
-        status: 'success',
-      });
-      toas('Subject Title Successfully Updated', 'success');
+      toas('Video Title Successfully Editted', 'success');
       navigate(`/admin-dashboard/course/setup?id=${courseId}`);
     } catch (err) {
-      const error = axiosError(err, setTitleErrorHandlerState, '');
-      toas(error, 'error');
+      setUploading(false);
+      toas('Something went wrong please try again', 'error');
+      navigate(`/admin-dashboard/course/setup?id=${courseId}`);
     }
   };
-
   return (
     <>
       <div className="bg-gray-50 flex">
@@ -128,7 +125,7 @@ const EditCourseSubjectTitle = () => {
           <SubHeader
             setopenSidebar={setopenSidebar}
             openSidebar={openSidebar}
-            page="/course/setup.edit-subject-title"
+            page="/course/setup/update-video-title"
           />
 
           {/* MAIN BODY */}
@@ -137,7 +134,7 @@ const EditCourseSubjectTitle = () => {
           </div>
 
           <p className="text-center my-[10px] tracking-wider font-semibold text-blue-800">
-            {subjectTitle}
+            {videoTitle}
           </p>
 
           <div className="w-[80%] ml-[50%] translate-x-[-50%] mobile:w-[90%]">
@@ -177,4 +174,4 @@ const EditCourseSubjectTitle = () => {
   );
 };
 
-export default EditCourseSubjectTitle;
+export default EditCourseVideoTitle;

@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import Header from '../../components/AdminDashboard/Header';
-import Sidebar from '../../components/AdminDashboard/Sidebar';
-import SubHeader from '../../components/AdminDashboard/SubHeader';
-import ImageInput from '../../components/AdminDashboard/ImageInput';
+import Header from '../../../components/AdminDashboard/Header';
+import Sidebar from '../../../components/AdminDashboard/Sidebar';
+import SubHeader from '../../../components/AdminDashboard/SubHeader';
+import ImageInput from '../../../components/AdminDashboard/ImageInput';
 import axios from 'axios';
-import { useAppSelector } from '../../state/store';
-import toas from '../../utils/toas';
+import { useAppSelector } from '../../../state/store';
+import toas from '../../../utils/toas';
 import { v4 as uuidv4 } from 'uuid';
-import { firebaseUpload } from '../../utils/firebaseUpload';
-import { inputTitleErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/inputTitleErrorHandlerFunction';
-import { descriptionErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/descriptionErrorHandlerFunction';
-import { priceErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/priceErrorHandlerFunction';
-import { liveIdErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/liveIdErrorHandlerFunction';
-import { fileErrorHandlerFunction } from '../../utils/formsErrorHandlerFunctions/fileErrorHandlerFunction';
+import { firebaseUpload } from '../../../utils/firebaseUpload';
+import { inputTitleErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/inputTitleErrorHandlerFunction';
+import { descriptionErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/descriptionErrorHandlerFunction';
+import { priceErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/priceErrorHandlerFunction';
+import { liveIdErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/liveIdErrorHandlerFunction';
+import { fileErrorHandlerFunction } from '../../../utils/formsErrorHandlerFunctions/fileErrorHandlerFunction';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
-import TextArea from '../../components/AdminDashboard/TextArea';
-import InputComponent from '../../components/AdminDashboard/InputComponent';
+import TextArea from '../../../components/AdminDashboard/TextArea';
+import InputComponent from '../../../components/AdminDashboard/InputComponent';
 
 const CreateCourse = () => {
   const token = useAppSelector((e: any) => e.user.token);
