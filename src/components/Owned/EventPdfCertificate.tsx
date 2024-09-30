@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   Image,
-} from "@react-pdf/renderer";
+} from '@react-pdf/renderer';
 
 type Props = {
   fname: any;
@@ -33,38 +33,38 @@ const EventPdfCertificate = ({
   // Register font
   const styles = StyleSheet.create({
     page: {
-      flexDirection: "row",
-      backgroundColor: "#E4E4E4",
+      flexDirection: 'row',
+      backgroundColor: '#E4E4E4',
       //   position:'relative'
     },
 
     view: {
       // backgroundColor:'red',
-      position: "relative",
-      top: "0",
-      width: "100%",
-      left: "0",
-      height: "100%",
+      position: 'relative',
+      top: '0',
+      width: '100%',
+      left: '0',
+      height: '100%',
     },
     image: {
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
     textView: {
-      width: "100%",
+      width: '100%',
       // height: "70px",
-      position: "absolute",
+      position: 'absolute',
       top: top,
       // display: "flex",
       alignItems: alignItems,
       // justifyContent: "center",
-      fontWeight: "semibold",
+      fontWeight: 'semibold',
       marginLeft: marginLeft,
     },
     text: {
-      fontSize: "28px",
-      fontWeight: "medium",
-      textAlign: "center",
+      fontSize: '28px',
+      fontWeight: 'medium',
+      textAlign: 'center',
     },
   });
 

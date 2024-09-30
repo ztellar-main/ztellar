@@ -167,7 +167,7 @@ const OwnedEventCredentials = () => {
                             marginLeft={certData?.margin_left}
                           />
                         }
-                        fileName={`${certData?.certificate_name}-${eventdata?.eventData?._id?.title}`}
+                        fileName={`${certData?.certificate_name}-${eventdata?.eventData?._id?.title}.pdf`}
                       >
                         <button className="ml-[50%] translate-x-[-50%] bg-blue-900 p-[10px] rounded text-white hover:opacity-[80%] active:opacity-[100%] flex items-center justify-center mobile:w-[80%]">
                           <PiCertificateLight className="w-[25px] h-[25px] mr-[5px]" />
