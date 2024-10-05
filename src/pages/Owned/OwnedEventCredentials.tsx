@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import OwnedSEventSidebar from '../../components/Owned/OwnedSEventSidebar';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
