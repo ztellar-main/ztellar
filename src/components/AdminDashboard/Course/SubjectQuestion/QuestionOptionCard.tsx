@@ -5,10 +5,14 @@ type Props = {
   qData: any;
 };
 
-const QuestionOptionCard = ({ choicesMap, setQuestion, questions, qData }: Props) => {
+const QuestionOptionCard = ({
+  choicesMap,
+  setQuestion,
+  questions,
+  qData,
+}: Props) => {
   //   choice handle change
   const choiceHandleChange = (qid: any, cid: any, e: any) => {
-    console.log(cid);
     const index = questions.findIndex((p: any) => p.id === qid);
     const _questions = [...questions] as any;
 

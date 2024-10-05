@@ -1,22 +1,22 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Card, Typography } from '@material-tailwind/react';
 
-import { Button } from "@material-tailwind/react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import SponsorNowReserve from "../components/SponsorNowReserve";
-import { useState } from "react";
-import toas from "../utils/toas";
+import { Button } from '@material-tailwind/react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import SponsorNowReserve from '../components/SponsorNowReserve';
+import { useState } from 'react';
+import toas from '../utils/toas';
 
 const SponsorNowEvent = () => {
   const query = new URLSearchParams(location.search);
-  const productId = query.get("id") || "";
+  const productId = query.get('id') || '';
   const [refresh, setRefresh] = useState(false);
 
   const { data: sponsorsBootData, isLoading } = useQuery({
-    queryKey: ["sponsors-boot",refresh],
+    queryKey: ['sponsors-boot', refresh],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `author/get-sponsors-boot?id=${productId}`,
       });
       return res?.data;
@@ -73,10 +73,10 @@ const SponsorNowEvent = () => {
             <Typography
               variant="small"
               className={`font-semibold ${
-                data?.status === "Available" && "text-green-600"
+                data?.status === 'Available' && 'text-green-600'
               }
-              ${data?.status === "Reserved" && "text-blue-600"}
-              ${data?.status === "Sold" && "text-red-600"}
+              ${data?.status === 'Reserved' && 'text-blue-600'}
+              ${data?.status === 'Sold' && 'text-red-600'}
               `}
               placeholder={undefined}
               onPointerEnterCapture={undefined}
@@ -102,10 +102,10 @@ const SponsorNowEvent = () => {
                 onPointerLeaveCapture={undefined}
                 className="bg-blue-800"
                 onClick={() => {
-                  if (data?.status !== "Available") {
+                  if (data?.status !== 'Available') {
                     return toas(
                       `This boot is already ${data?.status}`,
-                      "error"
+                      'error'
                     );
                   }
                   setOpenForm(true);
@@ -120,7 +120,7 @@ const SponsorNowEvent = () => {
     );
   };
 
-  const TABLE_HEAD = ["Boot number", "Status", "Action"];
+  const TABLE_HEAD = ['Boot number', 'Status', 'Action'];
   return (
     <>
       <div>
@@ -140,7 +140,7 @@ const SponsorNowEvent = () => {
         {/* image */}
         <div className="flex justify-center items-center">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/images%2Fplan.jpg?alt=media&token=f89d78b4-f252-4be3-a36e-340ef03f250a"
+            src={sponsorsBootData?.sponsors_boot[0]?.image_url}
             alt=""
             className="max-h-[500px] w-[auto]"
           />
@@ -184,9 +184,8 @@ const SponsorNowEvent = () => {
                       index ===
                       sponsorsBootData?.sponsors_boot[0]?.boot_list?.length - 1;
                     const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
-                    console.log(data);
+                      ? 'p-4'
+                      : 'p-4 border-b border-blue-gray-50';
                     return (
                       <SponsorRow
                         classes={classes}

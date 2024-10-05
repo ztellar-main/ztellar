@@ -5,17 +5,15 @@ type Props = {
   qData: any;
   setQuestion: any;
   questions: any;
+  qNumber: any;
 };
 
-const QuestionContainer = ({ qData, setQuestion, questions }: Props) => {
-  // ERROR HANDLER
-  // const [choiceErrorHandler, setChoiceErrorHandler] = useState({
-  //   message: '',
-  //   status: 'start',
-  // });
-
-  console.log(questions);
-
+const QuestionContainer = ({
+  qData,
+  setQuestion,
+  questions,
+  qNumber,
+}: Props) => {
   // HANDLE PRICE ONCHANGE
   const handlePriceChange = (id: any, e: any) => {
     const index = questions.findIndex((p: any) => p.id === id);
@@ -25,37 +23,11 @@ const QuestionContainer = ({ qData, setQuestion, questions }: Props) => {
     setQuestion(_questions);
   };
 
-  //   add choice
-  // const addChoiceFunction = (id: any, i: any) => {
-  //   const index = questions.findIndex((p: any) => p.id === id);
-  //   const _questions = [...questions] as any;
-
-  //   const choiceIndex = i - 1;
-
-  //   const choicesLength = questions[index].choices.length - 1;
-
-  //   const label = questions[index].choices[choicesLength].label;
-  //   const desc = questions[index].choices[choicesLength].description;
-
-  //   if (!label || !desc) {
-  //     return setChoiceErrorHandler({
-  //       message: 'Fill up all the fields of the last Choice input first',
-  //       status: 'error',
-  //     });
-  //   }
-
-  //   const choices = [..._questions[index].choices];
-
-  //   choices.push({
-  //     choiceId: i,
-  //     label: '',
-  //     description: '',
-  //   });
-
-  //   _questions[index] = { ..._questions[index], choices };
-
-  //   setQuestion(_questions);
-  // };
+  const deleteQuestionFunction = (qid: any) => {
+    let _questions = [...questions];
+    _questions = _questions.filter((q) => q.id !== qid);
+    setQuestion(_questions);
+  };
 
   return (
     <div>
@@ -63,7 +35,7 @@ const QuestionContainer = ({ qData, setQuestion, questions }: Props) => {
         {/* question container start */}
         <div className="">
           <p className="text-sm font-semibold text-blue-gray-900">
-            Question {qData?.id}
+            Question {qNumber}
           </p>
           <input
             type="text"
@@ -75,7 +47,7 @@ const QuestionContainer = ({ qData, setQuestion, questions }: Props) => {
           />
           {/* choices container */}
           <div className="mt-[10px]">
-            {questions?.choices?.map((choicesMap: any, i: any) => {
+            {qData?.choices?.map((choicesMap: any, i: any) => {
               return (
                 <QuestionOptionCard
                   key={i}
@@ -88,16 +60,27 @@ const QuestionContainer = ({ qData, setQuestion, questions }: Props) => {
             })}
           </div>
 
-          {/* ANSWER */}
-          <div className="w-[70px] mb-[10px] mt-[10px]">
-            <p className="text-sm font-semibold text-blue-gray-900">Answer</p>
-            <input
-              type="text"
-              className="w-100 border border-blue-gray-400 p-[10px] rounded"
-              name="answer"
-              value={qData?.answer}
-              onChange={(e) => handlePriceChange(qData?.id, e)}
-            />
+          <div className="flex items-center justify-between">
+            {/* ANSWER */}
+            <div className="w-[70px] mb-[10px] mt-[10px]">
+              <p className="text-sm font-semibold text-blue-gray-900">Answer</p>
+              <input
+                type="text"
+                className="w-100 border border-blue-gray-400 p-[10px] rounded"
+                name="answer"
+                value={qData?.answer}
+                onChange={(e) => handlePriceChange(qData?.id, e)}
+              />
+            </div>
+
+            {questions.length !== 1 && (
+              <button
+                onClick={() => deleteQuestionFunction(qData?.id)}
+                className="bg-red-600 text-white p-[10px] rounded"
+              >
+                Delete
+              </button>
+            )}
           </div>
 
           <hr className="border-t border-blue-gray-200 w-[90%] ml-[50%] translate-x-[-50%] my-[20px]" />

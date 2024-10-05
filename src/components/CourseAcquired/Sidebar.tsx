@@ -20,7 +20,7 @@ const VideoCard = ({
   currentVideo,
 }: VideoCardProps) => {
   const cardOnClickFunction = () => {
-    setCurrentVideo({ subjectIndex, videoIndex });
+    setCurrentVideo({ subjectIndex, videoIndex, type: 'video' });
   };
   let changeBg = '';
 
@@ -52,6 +52,7 @@ type SubjectCardProps = {
   subjectIndex: any;
   setCurrentVideo: any;
   currentVideo: any;
+  setAnswerTrigger: any;
 };
 
 const SubjectCard = ({
@@ -59,6 +60,7 @@ const SubjectCard = ({
   subjectIndex,
   setCurrentVideo,
   currentVideo,
+  setAnswerTrigger,
 }: SubjectCardProps) => {
   const [openCard, setOpenCard] = useState(false);
 
@@ -96,6 +98,23 @@ const SubjectCard = ({
               />
             );
           })}
+          <div
+            className={`p-[10px] flex items-top w-100 cursor-pointer hover:bg-blue-gray-100`}
+            onClick={() => {
+              setCurrentVideo({
+                subjectIndex,
+                videoIndex: subectDataMap?.videos.length,
+                type: 'quiz',
+                subjectId: subectDataMap?._id,
+              });
+              setAnswerTrigger((e: any) => !e);
+            }}
+          >
+            <GoVideo className="w-[18px] min-w-[18px] h-[20px] mr-[5px]" />
+            <div className="line-clamp-2 text-sm tracking-wider">
+              Subject 1 Quiz
+            </div>
+          </div>
         </div>
       )}
     </>
@@ -108,6 +127,7 @@ type Props = {
   courseData: any;
   setCurrentVideo: any;
   currentVideo: any;
+  setAnswerTrigger: any;
 };
 
 const Sidebar = ({
@@ -116,6 +136,7 @@ const Sidebar = ({
   courseData,
   setCurrentVideo,
   currentVideo,
+  setAnswerTrigger,
 }: Props) => {
   return (
     <>
@@ -151,6 +172,7 @@ const Sidebar = ({
                 subjectIndex={i}
                 setCurrentVideo={setCurrentVideo}
                 currentVideo={currentVideo}
+                setAnswerTrigger={setAnswerTrigger}
               />
             );
           })}

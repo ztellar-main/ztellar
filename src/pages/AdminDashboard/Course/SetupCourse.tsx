@@ -180,7 +180,15 @@ const SubjectCard = ({ subjectData, index, courseData }: SubjectProps) => {
             >
               Add Video
             </Option>
-            <Option>Setup Questionnaire</Option>
+            <Option
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/course/setup/subject-questions?courseId=${courseData?._id}&&subjectId=${subjectData?._id}&title=${subjectData?.data?.title}`
+                )
+              }
+            >
+              Setup Questionnaire
+            </Option>
             <Option
               onClick={() =>
                 navigate(

@@ -7,16 +7,44 @@ import { useAppSelector } from '../../state/store';
 import { FaStar } from 'react-icons/fa';
 import AcquiredVideoPlayer from '../../components/CourseAcquired/AcquiredVideoPlayer';
 
+type OptionCardProps = {
+  optionsData: any;
+  setQuizChoose: any;
+};
+
+const OptionCard = ({ optionsData, setQuizChoose }: OptionCardProps) => {
+  return (
+    <div className="flex mb-[10px] text-blue-gray-900">
+      <input
+        name="option"
+        value={optionsData?.label}
+        // checked={() => setQuizChoose(optionsData?.label)}
+        type="radio"
+        className="w-[17px] h-[17px] mt-[4px] mr-[10px]"
+        onClick={() => setQuizChoose(optionsData?.label)}
+      />
+      {optionsData?.label}. {optionsData?.description}
+    </div>
+  );
+};
+
 const AcquiredCourse = () => {
   const token = useAppSelector((e: any) => e.user.token);
   const query = new URLSearchParams(location.search);
   const courseId = query.get('id') || '';
   const [openSidebar, setopenSidebar] = useState(true);
+  const [quizChoose, setQuizChoose] = useState('');
+  const [answerTrigger, setAnswerTrigger] = useState(false);
+  const [answerId, setAnswerId] = useState('');
 
   const [currentVideo, setCurrentVideo] = useState({
     subjectIndex: 0,
     videoIndex: 0,
+    type: 'video',
+    subjectId: '',
   });
+
+  console.log(currentVideo);
 
   const stars = Array(5).fill(0);
   const colors = {
@@ -24,6 +52,45 @@ const AcquiredCourse = () => {
     gray: 'blue-gray-50',
   };
 
+  // GENERATE 10 numbers
+  const generateUniqueRandomNumbers = () => {
+    const numbers = Array.from({ length: 10 }, (_, i) => i + 1); // Creates an array [1, 2, 3, ..., 10]
+
+    for (let i = numbers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [numbers[i], numbers[j]] = [numbers[j], numbers[i]]; // Swap elements
+    }
+
+    return numbers;
+  };
+
+  const subjectId = currentVideo?.subjectId;
+
+  // take quiz button function
+  const takeQuizFunction = async () => {
+    try {
+      const res = await axios({
+        method: 'post',
+        url: '/course/create-subject-answer',
+        data: { subjectId, courseId },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      setAnswerId(res?.data?._id);
+      setAnswerTrigger((e: any) => !e);
+      console.log(res?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // nextQuestionFunction
+  const nextQuestionFunction = async () => {
+    
+  };
+
+  // query acquired course
   const { data: courseData, isLoading } = useQuery({
     queryKey: ['acquired-course'],
     queryFn: async () => {
@@ -38,9 +105,33 @@ const AcquiredCourse = () => {
     },
   });
 
+  const { data: answerData, isLoading: answerLoading } = useQuery({
+    queryKey: ['answer-key', answerTrigger, currentVideo?.subjectId],
+    queryFn: async () => {
+      const res = await axios({
+        method: 'get',
+        url: `/course/get-course-subject-answer?courseId=${courseId}&subjectId=${currentVideo?.subjectId}`,
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      return res?.data;
+    },
+  });
+
   if (isLoading) {
     return <p className="">LOADING</p>;
   }
+
+  if (answerLoading) {
+    return <p className="">LOADING</p>;
+  }
+
+  // curent question
+  const currentQuestionIndex = answerData?.answers?.length;
+  const currentQuestions =
+    courseData?.course_subjects?.[currentVideo?.subjectIndex]?.questions
+      ?.questions[currentQuestionIndex];
 
   const subjectLength = courseData?.course_subjects.length - 1;
   const videoLength =
@@ -55,12 +146,16 @@ const AcquiredCourse = () => {
       return setCurrentVideo({
         videoIndex: prevVideoLength,
         subjectIndex: currentVideo?.subjectIndex - 1,
+        type: 'video',
+        subjectId: '',
       });
     }
 
     setCurrentVideo({
       subjectIndex: currentVideo?.subjectIndex,
       videoIndex: currentVideo?.videoIndex - 1,
+      type: 'video',
+      subjectId: '',
     });
   };
 
@@ -70,12 +165,16 @@ const AcquiredCourse = () => {
       return setCurrentVideo({
         subjectIndex: currentVideo?.subjectIndex + 1,
         videoIndex: 0,
+        type: 'video',
+        subjectId: '',
       });
     }
 
     setCurrentVideo({
       subjectIndex: currentVideo?.subjectIndex,
       videoIndex: currentVideo?.videoIndex + 1,
+      type: 'video',
+      subjectId: '',
     });
   };
 
@@ -95,6 +194,7 @@ const AcquiredCourse = () => {
           setopenSidebar={setopenSidebar}
           setCurrentVideo={setCurrentVideo}
           currentVideo={currentVideo}
+          setAnswerTrigger={setAnswerTrigger}
         />
         <div className="w-100">
           {/* header */}
@@ -122,20 +222,87 @@ const AcquiredCourse = () => {
             </div>
           </div>
 
-          {/* video */}
-          <div className="w-100 bg-blue-gray-900">
-            <AcquiredVideoPlayer
-              key={
-                courseData?.course_subjects?.[currentVideo?.subjectIndex]
-                  ?.videos[currentVideo?.videoIndex]?.data?.video_url_converted
-              }
-              src={`http://localhost:4000/api/video/${
-                courseData?.course_subjects?.[currentVideo?.subjectIndex]
-                  ?.videos[currentVideo?.videoIndex]?.data?.video_url_converted
-              }`}
-              setVideoState={undefined}
-            />
-          </div>
+          {currentVideo?.type === 'video' && (
+            <>
+              {/* video */}
+              <div className="w-100 bg-blue-gray-900">
+                <AcquiredVideoPlayer
+                  key={
+                    courseData?.course_subjects?.[currentVideo?.subjectIndex]
+                      ?.videos[currentVideo?.videoIndex]?.data
+                      ?.video_url_converted
+                  }
+                  src={`http://localhost:4000/api/video/${
+                    courseData?.course_subjects?.[currentVideo?.subjectIndex]
+                      ?.videos[currentVideo?.videoIndex]?.data
+                      ?.video_url_converted
+                  }`}
+                  setVideoState={undefined}
+                />
+              </div>
+            </>
+          )}
+
+          {/* QUIZ */}
+          {currentVideo?.type === 'quiz' && (
+            <div className="bg-blue-gray-50">
+              {/* QUESTION */}
+              {!answerData ? (
+                <div className="w-100 max-w-[1280px] ml-[50%] translate-x-[-50%] p-[10px]">
+                  <p className="text-center text-lg mb-[20px]">
+                    Quiz Subject 1
+                  </p>
+                  <p className="mb-[10px]">
+                    Make sure to watch the entire course video before beginning
+                    the quiz. The quiz is time-sensitive, and once you start,
+                    you may not be able return to it. You will only have one
+                    additional attempt to pass after completing the quiz, so
+                    take your time and answer carefully.
+                  </p>
+                  <button
+                    onClick={takeQuizFunction}
+                    className="p-[10px] bg-blue-gray-800 text-white rounded ml-[50%] translate-x-[-50%]"
+                  >
+                    Take the Quiz
+                  </button>
+                </div>
+              ) : (
+                <div className="w-100 p-[10px]">
+                  {/* title */}
+                  <p className="text-center text-lg">Question Subject 1</p>
+                  {/* question body */}
+                  <div className="w-100 max-w-[1280px] ml-[50%] translate-x-[-50%] p-[10px] ">
+                    {/* question */}
+                    <p className="mb-[20px] text-blue-gray-900 text-lg">
+                      {currentQuestions?.question}
+                    </p>
+
+                    {/* Option Card */}
+                    {currentQuestions?.choices?.map(
+                      (optionsData: any, i: any) => {
+                        return (
+                          <OptionCard
+                            setQuizChoose={setQuizChoose}
+                            key={i}
+                            optionsData={optionsData}
+                          />
+                        );
+                      }
+                    )}
+
+                    <div className=" flex justify-end">
+                      <button
+                        onClick={nextQuestionFunction}
+                        className="p-[10px] bg-blue-gray-800 text-white rounded"
+                      >
+                        Next Question
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* BODY */}
 

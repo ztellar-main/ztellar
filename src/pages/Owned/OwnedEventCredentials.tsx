@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import OwnedSEventSidebar from '../../components/Owned/OwnedSEventSidebar';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
@@ -19,6 +19,13 @@ const OwnedEventCredentials = () => {
   const productId = query.get('id') || '';
 
   const [openSidebar, setOpenSide] = useState(true);
+
+  const formButtonFunction = (url: any) => {
+    console.log('sample');
+    window.open(`${url}`, '_blank');
+    // window.location.href =
+    //   'https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/event-downloadable-forms%2FAction-Sheet-Editable.pdf?alt=media&token=217313ef-50bb-4b1b-95d1-ecb62c00fee6';
+  };
 
   const {
     data: eventdata,
@@ -53,7 +60,7 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  console.log(eventdata);
+  console.log(eventdata?.eventData?._id);
 
   return (
     <div>
@@ -178,6 +185,31 @@ const OwnedEventCredentials = () => {
                   );
                 }
               )}
+
+              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
+                Forms
+              </div>
+              <div className="">
+                {eventdata?.eventData?._id?.download_forms?.map(
+                  (downloadableForms: any, i: any) => {
+                    return (
+                      <div key={i}>
+                        <p className="text-center font-semibold text-lg mb-[5px]">
+                          {downloadableForms?.title}
+                        </p>
+                        <button
+                          onClick={() =>
+                            formButtonFunction(downloadableForms?.url)
+                          }
+                          className="ml-[50%] translate-x-[-50%] bg-blue-900 p-[10px] rounded text-white hover:opacity-[80%] active:opacity-[100%] flex items-center justify-center mobile:w-[80%]"
+                        >
+                          Download Form
+                        </button>
+                      </div>
+                    );
+                  }
+                )}
+              </div>
 
               <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
                 Attendance
