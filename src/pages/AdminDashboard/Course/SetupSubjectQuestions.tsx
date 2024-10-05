@@ -13,7 +13,6 @@ const SetupSubjectQuestions = () => {
   const query = new URLSearchParams(location.search);
   const courseId = query.get('courseId') || '';
   const subjectId = query.get('subjectId') || '';
-  const title = query.get('title') || '';
   const navigate = useNavigate();
   const token = useAppSelector((e: any) => e.user.token);
 

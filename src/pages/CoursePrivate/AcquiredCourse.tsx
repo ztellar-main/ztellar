@@ -37,6 +37,8 @@ const AcquiredCourse = () => {
   const [answerTrigger, setAnswerTrigger] = useState(false);
   const [answerId, setAnswerId] = useState('');
 
+  console.log({ quizChoose, answerId });
+
   const [currentVideo, setCurrentVideo] = useState({
     subjectIndex: 0,
     videoIndex: 0,
@@ -64,6 +66,8 @@ const AcquiredCourse = () => {
     return numbers;
   };
 
+  console.log(generateUniqueRandomNumbers);
+
   const subjectId = currentVideo?.subjectId;
 
   // take quiz button function
@@ -86,9 +90,7 @@ const AcquiredCourse = () => {
   };
 
   // nextQuestionFunction
-  const nextQuestionFunction = async () => {
-    
-  };
+  const nextQuestionFunction = async () => {};
 
   // query acquired course
   const { data: courseData, isLoading } = useQuery({
