@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../../components/CourseAcquired/Sidebar';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useQuery } from '@tanstack/react-query';
@@ -6,6 +6,9 @@ import axios from 'axios';
 import { useAppSelector } from '../../state/store';
 import { FaStar } from 'react-icons/fa';
 import AcquiredVideoPlayer from '../../components/CourseAcquired/AcquiredVideoPlayer';
+import toas from '../../utils/toas';
+import { useNavigate } from 'react-router-dom';
+import { getRemainingTime } from '../../utils/getRemainingTime';
 
 type OptionCardProps = {
   optionsData: any;
@@ -18,7 +21,6 @@ const OptionCard = ({ optionsData, setQuizChoose }: OptionCardProps) => {
       <input
         name="option"
         value={optionsData?.label}
-        // checked={() => setQuizChoose(optionsData?.label)}
         type="radio"
         className="w-[17px] h-[17px] mt-[4px] mr-[10px]"
         onClick={() => setQuizChoose(optionsData?.label)}
@@ -27,18 +29,17 @@ const OptionCard = ({ optionsData, setQuizChoose }: OptionCardProps) => {
     </div>
   );
 };
-
+// Main component
 const AcquiredCourse = () => {
-  const token = useAppSelector((e: any) => e.user.token);
+  const token = useAppSelector((e: any) => e?.user?.token);
   const query = new URLSearchParams(location.search);
   const courseId = query.get('id') || '';
   const [openSidebar, setopenSidebar] = useState(true);
   const [quizChoose, setQuizChoose] = useState('');
   const [answerTrigger, setAnswerTrigger] = useState(false);
-  const [answerId, setAnswerId] = useState('');
+  const navigate = useNavigate();
 
-  console.log({ quizChoose, answerId });
-
+  // current video
   const [currentVideo, setCurrentVideo] = useState({
     subjectIndex: 0,
     videoIndex: 0,
@@ -46,7 +47,20 @@ const AcquiredCourse = () => {
     subjectId: '',
   });
 
-  console.log(currentVideo);
+  // COUNT DOWN TIMER
+  type CountDownProps = {
+    seconds: any;
+    minutes: any;
+    hours: any;
+    days: any;
+  };
+  const defaultRemainingTime: CountDownProps = {
+    seconds: '00',
+    minutes: '00',
+    hours: '00',
+    days: '00',
+  };
+  const [remainingTime, setRemainingTime] = useState(defaultRemainingTime);
 
   const stars = Array(5).fill(0);
   const colors = {
@@ -55,42 +69,92 @@ const AcquiredCourse = () => {
   };
 
   // GENERATE 10 numbers
-  const generateUniqueRandomNumbers = () => {
-    const numbers = Array.from({ length: 10 }, (_, i) => i + 1); // Creates an array [1, 2, 3, ..., 10]
+  // const generateUniqueRandomNumbers = () => {
+  //   const numbers = Array.from({ length: 10 }, (_, i) => i + 1); // Creates an array [1, 2, 3, ..., 10]
 
-    for (let i = numbers.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [numbers[i], numbers[j]] = [numbers[j], numbers[i]]; // Swap elements
-    }
+  //   for (let i = numbers.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [numbers[i], numbers[j]] = [numbers[j], numbers[i]]; // Swap elements
+  //   }
 
-    return numbers;
+  //   return numbers;
+  // };
+
+  const UpdateRemainingTime = (countDown: any) => {
+    setRemainingTime(getRemainingTime(countDown));
   };
 
-  console.log(generateUniqueRandomNumbers);
+  const [timeExpiredAt, setTimeExpiredAt] = useState('');
+  const timeExpired = new Date(timeExpiredAt).getTime();
 
-  const subjectId = currentVideo?.subjectId;
+  const [timeExpiredState, setTimeExpiredState] = useState(true);
 
-  // take quiz button function
-  const takeQuizFunction = async () => {
-    try {
+  console.log();
+  // EXPIRY TIMER
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const asd: any = Date.now();
+      const timeRemaining: any = timeExpired - asd || 0;
+      setTimeExpiredState(true);
+
+      if (currentVideo?.type !== 'quiz') {
+        setTimeExpiredState(false);
+        clearInterval(intervalId);
+      }
+
+      if (Number(timeRemaining) <= 0) {
+        // console.log(Number(timeRemaining));
+        setTimeExpiredState(false);
+        clearInterval(intervalId);
+      } else {
+        UpdateRemainingTime(timeExpired || 0 + 2000);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timeExpired, currentVideo?.subjectIndex, timeExpiredAt]);
+
+  // save recent clicked current video or quiz
+  // useEffect(() => {
+  //   const res = async () => {
+  //     try {
+  //       const result = await axios({
+  //         method: 'put',
+  //         url: '/course/save-recent-sidebar',
+  //         data: { currentVideo, courseId },
+  //         headers: {
+  //           authorization: `Token ${token}`,
+  //         },
+  //       });
+
+  //       console.log(result?.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   res();
+  // }, [currentVideo]);
+
+  // query recent state
+  const { isLoading: recentStateLoaing } = useQuery({
+    queryKey: ['query-recent-state'],
+    queryFn: async () => {
       const res = await axios({
-        method: 'post',
-        url: '/course/create-subject-answer',
-        data: { subjectId, courseId },
+        method: 'get',
+        url: `/course/get-recent-state?courseId=${courseId}`,
         headers: {
           authorization: `Token ${token}`,
         },
       });
-      setAnswerId(res?.data?._id);
-      setAnswerTrigger((e: any) => !e);
-      console.log(res?.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // nextQuestionFunction
-  const nextQuestionFunction = async () => {};
+      setCurrentVideo({
+        subjectIndex: res?.data?.recent?.subjectIndex || 0,
+        videoIndex: res?.data?.recent?.videoIndex || 0,
+        type: res?.data?.recent?.stateType || 'video',
+        subjectId: res?.data?.recent?.subjectId,
+      });
+      return res?.data;
+    },
+  });
 
   // query acquired course
   const { data: courseData, isLoading } = useQuery({
@@ -107,8 +171,9 @@ const AcquiredCourse = () => {
     },
   });
 
+  // answer data
   const { data: answerData, isLoading: answerLoading } = useQuery({
-    queryKey: ['answer-key', answerTrigger, currentVideo?.subjectId],
+    queryKey: ['answer-key', answerTrigger, currentVideo],
     queryFn: async () => {
       const res = await axios({
         method: 'get',
@@ -117,9 +182,27 @@ const AcquiredCourse = () => {
           authorization: `Token ${token}`,
         },
       });
+      setTimeExpiredAt(res?.data?.time_expired);
       return res?.data;
     },
   });
+
+  const { data: finishedAnswerData, isLoading: finishedAnswerDataLoading } =
+    useQuery({
+      queryKey: ['finished-answer-data', currentVideo],
+      queryFn: async () => {
+        const res = await axios({
+          method: 'get',
+          url: `/course/get-finished-answer?productId=${courseId}&subjectId=${currentVideo?.subjectId}`,
+          headers: {
+            authorization: `Token ${token}`,
+          },
+        });
+        return res?.data;
+      },
+    });
+
+  // console.log(finishedAnswerData);
 
   if (isLoading) {
     return <p className="">LOADING</p>;
@@ -129,12 +212,57 @@ const AcquiredCourse = () => {
     return <p className="">LOADING</p>;
   }
 
+  if (finishedAnswerDataLoading) {
+    return <p className="">LOADING</p>;
+  }
+
+  if (recentStateLoaing) {
+    return <p className="">LOADING</p>;
+  }
+
+  // check if already passed the quiz
+  const quizPassedFunction = () => {
+    if (!finishedAnswerData || finishedAnswerData === 'no-subejct') {
+      return;
+    }
+    const quizPassed = finishedAnswerData?.filter((data: any) => {
+      return data?.passed === true;
+    });
+    return quizPassed;
+  };
+
   // curent question
   const currentQuestionIndex = answerData?.answers?.length;
+
   const currentQuestions =
     courseData?.course_subjects?.[currentVideo?.subjectIndex]?.questions
       ?.questions[currentQuestionIndex];
 
+  // question time limit
+  const questionTimeLimitInMunites =
+    courseData?.course_subjects?.[currentVideo?.subjectIndex]?.questions
+      ?.time_per_question_in_minutes;
+
+  // question length
+  const questionLength =
+    courseData?.course_subjects?.[currentVideo?.subjectIndex]?.questions
+      ?.questions.length;
+
+  // answer length
+  const answerLength = answerData?.answers?.length;
+
+  // subject id
+  // const subjectIdDb =
+  //   courseData?.course_subjects[currentVideo?.subjectIndex]?._id;
+
+  const subjectIdDb =
+    courseData?.course_subjects[currentVideo?.subjectIndex]?.data?._id;
+
+  // question id
+  const questionId =
+    courseData?.course_subjects?.[currentVideo?.subjectIndex]?.questions?._id;
+
+  // subject length
   const subjectLength = courseData?.course_subjects.length - 1;
   const videoLength =
     courseData?.course_subjects[currentVideo?.subjectIndex]?.videos.length - 1;
@@ -142,12 +270,18 @@ const AcquiredCourse = () => {
   // PREV BUTTON FUNCTION
   const prevButtonFunction = () => {
     if (currentVideo?.videoIndex === 0) {
-      const prevVideoLength =
-        courseData?.course_subjects[currentVideo?.subjectIndex - 1]?.videos
-          .length - 1;
       return setCurrentVideo({
-        videoIndex: prevVideoLength,
+        videoIndex: videoLength - 1,
         subjectIndex: currentVideo?.subjectIndex - 1,
+        type: 'video',
+        subjectId: subjectIdDb,
+      });
+    }
+
+    if (currentVideo?.type === 'quiz') {
+      return setCurrentVideo({
+        subjectIndex: currentVideo?.subjectIndex,
+        videoIndex: videoLength,
         type: 'video',
         subjectId: '',
       });
@@ -161,14 +295,93 @@ const AcquiredCourse = () => {
     });
   };
 
+  // take quiz button function
+  const takeQuizFunction = async () => {
+    const questionTimeInMunites = questionTimeLimitInMunites;
+    const asd =
+      courseData?.course_subjects[currentVideo?.subjectIndex]?.data?._id;
+    try {
+      const res = await axios({
+        method: 'post',
+        url: '/course/create-subject-answer',
+        data: {
+          subjectId: asd,
+          courseId,
+          questionTimeInMunites,
+        },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      console.log(res);
+
+      setAnswerTrigger((e: any) => !e);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // nextQuestionFunction
+  const nextQuestionFunction = async () => {
+    const questionTimeInMunites = questionTimeLimitInMunites;
+    let finalAnswer = quizChoose;
+
+    if (timeExpiredState === false) {
+      finalAnswer = 'Question timer expired. No Answer';
+    }
+
+    if (!finalAnswer || finalAnswer === '') {
+      return toas('Please choose your answer first', 'error');
+    }
+
+    try {
+      const res = await axios({
+        method: 'post',
+        url: '/course/save-answer',
+        data: {
+          answerId: answerData?._id,
+          answer: finalAnswer,
+          questionId,
+          questionTimeInMunites,
+        },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+
+      console.log(res?.data);
+      setAnswerTrigger((e: any) => !e);
+
+      if (res?.data?.status === true) {
+        navigate(`/acquired/course/answer?id=${answerData?._id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // NEXT BUTTON FUNCTION
   const nextButtonFunction = () => {
     if (videoLength === currentVideo?.videoIndex) {
-      return setCurrentVideo({
-        subjectIndex: currentVideo?.subjectIndex + 1,
-        videoIndex: 0,
-        type: 'video',
-        subjectId: '',
+      console.log('asd');
+      return setCurrentVideo((e: any) => {
+        return {
+          subjectIndex: e?.subjectIndex,
+          videoIndex: videoLength + 1,
+          type: 'quiz',
+          subjectId: subjectIdDb,
+        };
+      });
+    }
+
+    if (currentVideo?.type === 'quiz') {
+      return setCurrentVideo((e: any) => {
+        return {
+          subjectIndex: e?.subjectIndex + 1,
+          videoIndex: 0,
+          type: 'video',
+          subjectId: subjectIdDb,
+        };
       });
     }
 
@@ -182,7 +395,8 @@ const AcquiredCourse = () => {
 
   const isLastVideoInSubject =
     subjectLength === currentVideo?.subjectIndex &&
-    videoLength === currentVideo?.videoIndex;
+    videoLength + 1 === currentVideo?.videoIndex &&
+    currentVideo?.type === 'quiz';
 
   const isFirstVideoInSubject =
     currentVideo?.subjectIndex === 0 && currentVideo?.videoIndex === 0;
@@ -197,6 +411,7 @@ const AcquiredCourse = () => {
           setCurrentVideo={setCurrentVideo}
           currentVideo={currentVideo}
           setAnswerTrigger={setAnswerTrigger}
+          courseId={courseId}
         />
         <div className="w-100">
           {/* header */}
@@ -219,8 +434,19 @@ const AcquiredCourse = () => {
               <MdKeyboardArrowRight className="w-[30px] h-[30px]" />
             </button>
 
-            <div className="p-[10px] bg-blue-gray-100 text-blue-gray-900 font-semibold text-xl mobile:hidden">
-              <div className="line-clamp-2">{courseData?.title}</div>
+            {/* sub body header */}
+            <div className="p-[10px] bg-blue-gray-100 flex justify-end w-100">
+              {/* <div className="line-clamp-2">{courseData?.title}</div> */}
+              <button
+                onClick={() =>
+                  navigate(
+                    `/acquired/course/download-certificate-page?id=${courseId}`
+                  )
+                }
+                className="bg-blue-gray-800 text-white p-[10px] rounded  "
+              >
+                Progress / Download Certificate
+              </button>
             </div>
           </div>
 
@@ -234,7 +460,7 @@ const AcquiredCourse = () => {
                       ?.videos[currentVideo?.videoIndex]?.data
                       ?.video_url_converted
                   }
-                  src={`http://localhost:4000/api/video/${
+                  src={`https://ztellar-api-backend.onrender.com/api/video/${
                     courseData?.course_subjects?.[currentVideo?.subjectIndex]
                       ?.videos[currentVideo?.videoIndex]?.data
                       ?.video_url_converted
@@ -254,6 +480,56 @@ const AcquiredCourse = () => {
                   <p className="text-center text-lg mb-[20px]">
                     Quiz Subject 1
                   </p>
+                  {/* Quiz attemp container */}
+                  <div className="mb-[20px]">
+                    {/* Quiz attemp card */}
+                    {finishedAnswerData?.map(
+                      (finishedAnswerMap: any, i: any) => {
+                        function getOrdinalSuffix(n: any) {
+                          const s = ['th', 'st', 'nd', 'rd'],
+                            v = n % 100;
+                          return n + (s[(v - 20) % 10] || s[v] || s[0]);
+                        }
+                        const attempNumber = i + 1;
+                        return (
+                          <div
+                            key={i}
+                            className="p-[10px] w-100 border border-gray-500 flex justify-between items-center"
+                          >
+                            <p className="">
+                              {getOrdinalSuffix(attempNumber)} attempt -{' '}
+                              {finishedAnswerMap?.score}/
+                              {finishedAnswerMap?.answers?.length}
+                            </p>
+                            <div className="flex items-center">
+                              <p
+                                className={`class pr-[10px] ${
+                                  finishedAnswerMap?.passed
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
+                                }`}
+                              >
+                                {finishedAnswerMap?.passed
+                                  ? 'Passed'
+                                  : 'Failed'}
+                              </p>
+                              <button
+                                onClick={() =>
+                                  navigate(
+                                    `/acquired/course/answer?id=${finishedAnswerMap?._id}`
+                                  )
+                                }
+                                className="p-[10px] bg-blue-gray-800 text-white rounded"
+                              >
+                                View answer
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+
                   <p className="mb-[10px]">
                     Make sure to watch the entire course video before beginning
                     the quiz. The quiz is time-sensitive, and once you start,
@@ -261,50 +537,113 @@ const AcquiredCourse = () => {
                     additional attempt to pass after completing the quiz, so
                     take your time and answer carefully.
                   </p>
-                  <button
-                    onClick={takeQuizFunction}
-                    className="p-[10px] bg-blue-gray-800 text-white rounded ml-[50%] translate-x-[-50%]"
-                  >
-                    Take the Quiz
-                  </button>
+
+                  {finishedAnswerData?.length === 2 ? (
+                    <div className="ml-[50%] translate-x-[-50%] text-center font-semibold text-blue-gray-900">
+                      You've finished your 2 attempts.&nbsp;
+                      <p
+                        className={`${
+                          quizPassedFunction()?.length > 0
+                            ? 'text-green-600'
+                            : 'text-red-600'
+                        }`}
+                      >
+                        {quizPassedFunction()?.length > 0
+                          ? "Congratulations! You've passed this subject."
+                          : "Unfortunately, you've failed to pass this subject's quiz."}
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      {quizPassedFunction()?.length > 0 ? (
+                        <div className="ml-[50%] translate-x-[-50%] text-center font-semibold text-green-800">
+                          Congratulations! You've passed this subject.
+                        </div>
+                      ) : (
+                        <>
+                          {!timeExpiredState && (
+                            <button
+                              onClick={takeQuizFunction}
+                              className="p-[10px] bg-blue-gray-800 text-white rounded ml-[50%] translate-x-[-50%]"
+                            >
+                              {finishedAnswerData?.length > 0
+                                ? 'Take the quiz again'
+                                : 'Take the Quiz'}
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
                 </div>
               ) : (
-                <div className="w-100 p-[10px]">
-                  {/* title */}
-                  <p className="text-center text-lg">Question Subject 1</p>
-                  {/* question body */}
-                  <div className="w-100 max-w-[1280px] ml-[50%] translate-x-[-50%] p-[10px] ">
-                    {/* question */}
-                    <p className="mb-[20px] text-blue-gray-900 text-lg">
-                      {currentQuestions?.question}
-                    </p>
-
-                    {/* Option Card */}
-                    {currentQuestions?.choices?.map(
-                      (optionsData: any, i: any) => {
-                        return (
-                          <OptionCard
-                            setQuizChoose={setQuizChoose}
-                            key={i}
-                            optionsData={optionsData}
-                          />
-                        );
-                      }
-                    )}
-
-                    <div className=" flex justify-end">
-                      <button
-                        onClick={nextQuestionFunction}
-                        className="p-[10px] bg-blue-gray-800 text-white rounded"
-                      >
-                        Next Question
-                      </button>
+                <div>
+                  {!timeExpiredState ? (
+                    <div className="p-[10px]">
+                      {/* title */}
+                      <p className="text-center text-lg">Question Subject 1</p>
+                      <p className="my-[10px] text-center">
+                        Your quiz time limit expired during question{' '}
+                        {answerLength + 1}. Click the 'Next Question' button to
+                        proceed
+                      </p>
+                      {/* next button time expired */}
+                      <div className=" flex justify-end">
+                        <button
+                          onClick={nextQuestionFunction}
+                          className="p-[10px] bg-blue-gray-800 text-white rounded"
+                        >
+                          {questionLength === Number(answerLength + 1)
+                            ? 'Finish Quiz'
+                            : 'Next Question'}
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="w-100 p-[10px]">
+                      <p className="text-center font-semibold text-lg">
+                        {remainingTime?.minutes}:{remainingTime?.seconds}
+                      </p>
+                      {/* title */}
+                      <p className="text-center text-lg">Question Subject 1</p>
+                      {/* question body */}
+                      <div className="w-100 max-w-[1280px] ml-[50%] translate-x-[-50%] p-[10px] ">
+                        {/* question */}
+                        <p className="mb-[20px] text-blue-gray-900 text-lg">
+                          {answerLength + 1}. {currentQuestions?.question}
+                        </p>
+
+                        {/* Option Card */}
+                        {currentQuestions?.choices?.map(
+                          (optionsData: any, i: any) => {
+                            return (
+                              <OptionCard
+                                setQuizChoose={setQuizChoose}
+                                key={i}
+                                optionsData={optionsData}
+                              />
+                            );
+                          }
+                        )}
+
+                        <div className=" flex justify-end">
+                          <button
+                            onClick={nextQuestionFunction}
+                            className="p-[10px] bg-blue-gray-800 text-white rounded"
+                          >
+                            Next Question
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           )}
+
+          {/* ANSWER */}
+          {currentVideo?.type === 'answer' && <div>ANSWER PAGE VIEW</div>}
 
           {/* BODY */}
 
@@ -346,11 +685,19 @@ const AcquiredCourse = () => {
               </div>
 
               <div className="mt-[5px]">
-                Video {currentVideo?.videoIndex + 1}:{' '}
-                {
-                  courseData?.course_subjects?.[currentVideo?.subjectIndex]
-                    ?.videos[currentVideo?.videoIndex]?.data?.title
-                }
+                <div className="flex">
+                  {currentVideo?.type} &nbsp;
+                  {currentVideo?.type === 'video' && (
+                    <div>
+                      {currentVideo?.videoIndex + 1}: &nbsp;
+                      {
+                        courseData?.course_subjects?.[
+                          currentVideo?.subjectIndex
+                        ]?.videos[currentVideo?.videoIndex]?.data?.title
+                      }
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

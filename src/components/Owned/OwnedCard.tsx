@@ -19,6 +19,8 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
     return e.user === user._id;
   });
 
+  console.log(data?._id?.type);
+
   return (
     <>
       {openLeaveRatingOpen && (
@@ -67,9 +69,12 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
 
         {/* TYPE */}
         <button
-          onClick={() =>
-            navigate(`/owned/event/credentials?id=${data?._id?._id}`)
-          }
+          onClick={() => {
+            if (data?._id?.type === 'course') {
+              return navigate(`/acquired/course?id=${data?._id?._id}`);
+            }
+            navigate(`/owned/event/credentials?id=${data?._id?._id}`);
+          }}
           className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900"
         >
           OPEN EVENT

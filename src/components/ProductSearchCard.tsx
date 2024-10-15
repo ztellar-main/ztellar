@@ -1,5 +1,5 @@
-import { FaStar } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FaStar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   data: any;
@@ -9,8 +9,8 @@ const ProductSearchCards = ({ data }: Props) => {
   const navigate = useNavigate();
   const stars = Array(5).fill(0);
   const colors = {
-    orange: "#facc15",
-    gray: "#f9fafb",
+    orange: '#facc15',
+    gray: '#f9fafb',
   };
 
   const date = new window.Date(data?.createdAt);
@@ -20,6 +20,9 @@ const ProductSearchCards = ({ data }: Props) => {
   const dateEnd = new window.Date(data?.date_end);
 
   const cardOnClickFunction = async () => {
+    if (data?.type === 'course') {
+      return navigate(`/view/course?id=${data?._id}`);
+    }
     navigate(`/view/event?id=${data?._id}`);
   };
 
@@ -56,8 +59,8 @@ const ProductSearchCards = ({ data }: Props) => {
                   key={index}
                   size="20"
                   style={{
-                    marginRight: "10",
-                    cursor: "pointer",
+                    marginRight: '10',
+                    cursor: 'pointer',
                   }}
                   color={
                     data?.average_rating > index ? colors.orange : colors.gray
@@ -77,7 +80,7 @@ const ProductSearchCards = ({ data }: Props) => {
           </div>
         </div>
 
-        {data?.type === "event" && (
+        {data?.type === 'event' && (
           <>
             <div>
               <p className="text-[#64748B]">
@@ -90,8 +93,8 @@ const ProductSearchCards = ({ data }: Props) => {
               <p className="text-[#64748B]">
                 Event date:
                 <span className="text-black ml-[5px]">
-                  {dateStart.toLocaleDateString("en-US")} -{" "}
-                  {dateEnd.toLocaleDateString("en-US")}
+                  {dateStart.toLocaleDateString('en-US')} -{' '}
+                  {dateEnd.toLocaleDateString('en-US')}
                 </span>
               </p>
             </div>
@@ -109,7 +112,7 @@ const ProductSearchCards = ({ data }: Props) => {
           <p className="text-[#64748B]">
             Created on:
             <span className="text-black ml-[5px]">
-              {date.toLocaleDateString("en-US")}
+              {date.toLocaleDateString('en-US')}
             </span>
           </p>
         </div>

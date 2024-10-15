@@ -3,6 +3,8 @@ import { Tooltip } from '@material-tailwind/react';
 import { MdOutlineSubject } from 'react-icons/md';
 import { GoVideo } from 'react-icons/go';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useAppSelector } from '../../state/store';
 
 type VideoCardProps = {
   videoDataMap: any;
@@ -10,6 +12,7 @@ type VideoCardProps = {
   setCurrentVideo: any;
   subjectIndex: any;
   currentVideo: any;
+  courseId: any;
 };
 
 const VideoCard = ({
@@ -18,8 +21,32 @@ const VideoCard = ({
   setCurrentVideo,
   subjectIndex,
   currentVideo,
+  courseId,
 }: VideoCardProps) => {
-  const cardOnClickFunction = () => {
+  const token = useAppSelector((e: any) => e.user.token);
+  const cardOnClickFunction = async () => {
+    const currentData = {
+      subjectIndex,
+      videoIndex,
+      type: 'video',
+    };
+
+    try {
+      const result = await axios({
+        method: 'put',
+        url: '/course/save-recent-sidebar',
+        data: { currentVideo: currentData, courseId },
+        headers: {
+          authorization: `Token ${token}`,
+        },
+      });
+      setCurrentVideo({ subjectIndex, videoIndex, type: 'video' });
+
+      console.log(result?.data);
+    } catch (err) {
+      console.log(err);
+    }
+
     setCurrentVideo({ subjectIndex, videoIndex, type: 'video' });
   };
   let changeBg = '';
@@ -53,6 +80,7 @@ type SubjectCardProps = {
   setCurrentVideo: any;
   currentVideo: any;
   setAnswerTrigger: any;
+  courseId: any;
 };
 
 const SubjectCard = ({
@@ -61,8 +89,10 @@ const SubjectCard = ({
   setCurrentVideo,
   currentVideo,
   setAnswerTrigger,
+  courseId,
 }: SubjectCardProps) => {
   const [openCard, setOpenCard] = useState(false);
+  const token = useAppSelector((e: any) => e.user.token);
 
   useEffect(() => {
     const func = () => {
@@ -72,6 +102,10 @@ const SubjectCard = ({
     };
     func();
   });
+
+  const highLightQuizCard =
+    subjectIndex === currentVideo?.subjectIndex &&
+    currentVideo?.type === 'quiz';
 
   return (
     <>
@@ -95,19 +129,41 @@ const SubjectCard = ({
                 setCurrentVideo={setCurrentVideo}
                 subjectIndex={subjectIndex}
                 currentVideo={currentVideo}
+                courseId={courseId}
               />
             );
           })}
           <div
-            className={`p-[10px] flex items-top w-100 cursor-pointer hover:bg-blue-gray-100`}
-            onClick={() => {
-              setCurrentVideo({
+            className={`p-[10px] flex items-top w-100 cursor-pointer hover:bg-blue-gray-100 ${
+              highLightQuizCard && 'bg-blue-gray-200'
+            }`}
+            onClick={async () => {
+              const currentData = {
                 subjectIndex,
                 videoIndex: subectDataMap?.videos.length,
                 type: 'quiz',
-                subjectId: subectDataMap?._id,
-              });
-              setAnswerTrigger((e: any) => !e);
+                subjectId: subectDataMap?.data?._id,
+              };
+              try {
+                await axios({
+                  method: 'put',
+                  url: '/course/save-recent-sidebar',
+                  data: { currentVideo: currentData, courseId },
+                  headers: {
+                    authorization: `Token ${token}`,
+                  },
+                });
+                setCurrentVideo({
+                  subjectIndex,
+                  videoIndex: subectDataMap?.videos.length,
+                  type: 'quiz',
+                  subjectId: subectDataMap?.data?._id,
+                });
+                console.log(subectDataMap?.data?._id);
+                setAnswerTrigger((e: any) => !e);
+              } catch (err) {
+                console.log(err);
+              }
             }}
           >
             <GoVideo className="w-[18px] min-w-[18px] h-[20px] mr-[5px]" />
@@ -128,6 +184,7 @@ type Props = {
   setCurrentVideo: any;
   currentVideo: any;
   setAnswerTrigger: any;
+  courseId: any;
 };
 
 const Sidebar = ({
@@ -137,6 +194,7 @@ const Sidebar = ({
   setCurrentVideo,
   currentVideo,
   setAnswerTrigger,
+  courseId,
 }: Props) => {
   return (
     <>
@@ -173,6 +231,7 @@ const Sidebar = ({
                 setCurrentVideo={setCurrentVideo}
                 currentVideo={currentVideo}
                 setAnswerTrigger={setAnswerTrigger}
+                courseId={courseId}
               />
             );
           })}

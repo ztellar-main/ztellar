@@ -110,7 +110,10 @@ const CoursePreviewPublic = () => {
   };
 
   const acquireButtonFunction = async () => {
-    navigate(`/acquire/course?id=${courseData?.data?._id}`);
+    if (courseData?.registered === true) {
+      return navigate(`/acquired/course?id=${courseData?.data?._id}`);
+    }
+    return navigate(`/acquire/course?id=${courseData?.data?._id}`);
   };
   return (
     <div>

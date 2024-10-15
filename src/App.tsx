@@ -74,6 +74,11 @@ import CoursePreviewPublic from './pages/CoursePublic/CoursePreviewPublic';
 // COURSE PRIVATE
 import BuyCourse from './pages/CoursePrivate/BuyCourse';
 import AcquiredCourse from './pages/CoursePrivate/AcquiredCourse';
+import CourseAnswerPage from './pages/CoursePrivate/CourseAnswerPage';
+import DownloadCertificateCourse from './pages/CoursePrivate/DownloadCertificateCourse';
+
+// ACQUIRED COURSE PRIVATE ROUTE
+import AcquiredCoursePrivateRoute from './privateRoutes/AcquiredCoursePrivateRoute';
 
 // SAMPLE
 import SamplePage from './pages/AdminDashboard/Course/SamplePage';
@@ -90,8 +95,11 @@ function App() {
             <Routes>
               {/* sample */}
               <Route index path="/samsansan" element={<SamplePage />} />
-              <Route index path="/view-cert" element={<ViewCertificateSample />} />
-              
+              <Route
+                index
+                path="/view-cert"
+                element={<ViewCertificateSample />}
+              />
               {/* GENERAL */}
               <Route index path="/" element={<Home />} />
               <Route path="/search" element={<Search />} />
@@ -199,7 +207,22 @@ function App() {
               <Route path="/view/course" element={<CoursePreviewPublic />} />
               {/* COURSE PRIVATE */}
               <Route path="/acquire/course" element={<BuyCourse />} />
-              <Route path="/acquired/course" element={<AcquiredCourse />} />
+              <Route
+                path="/acquired/course"
+                element={<AcquiredCoursePrivateRoute />}
+              >
+                <Route path="/acquired/course" element={<AcquiredCourse />} />
+              </Route>
+
+              <Route
+                path="/acquired/course/answer"
+                element={<CourseAnswerPage />}
+              />
+              <Route
+                path="/acquired/course/download-certificate-page"
+                element={<DownloadCertificateCourse />}
+              />
+
               {/* AUTHOR */}
               <Route path="">
                 <Route path="/author/dashboard" element={<AuthorDashboard />} />
