@@ -9,6 +9,11 @@ import { useAppSelector } from '../../../state/store';
 import toas from '../../../utils/toas';
 import { axiosError } from '../../../utils/axiosError';
 import { useNavigate } from 'react-router-dom';
+import { storage } from '../../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import OnDropSubjectVideoInput from '../../../components/Author/OnDropSubjectVideoInput';
+import { PiWarningCircleFill } from 'react-icons/pi';
 
 const AddVideo = () => {
   const [openSidebar, setopenSidebar] = useState(true);
@@ -19,8 +24,19 @@ const AddVideo = () => {
   const subjectId = query.get('subjectId') || '';
   const subjectTitle = query.get('title') || '';
 
+  // video states
+  const [videoFile, setVideoFile] = useState<File>();
+
+  //   ERROR HANDLER
+  const [videoFileErrorHandler, setVideoFileErrorHandler] = useState({
+    message: '',
+    status: 'start',
+  });
+
   // values
   const [title, setTitle] = useState('');
+  const [videoDuration, setVideoDuration] = useState(null);
+  console.log(videoDuration);
 
   // error handler states
   const [titleErrorHandlerState, setTitleErrorHandlerState] = useState({
@@ -41,7 +57,6 @@ const AddVideo = () => {
         });
         return 'error';
       }
-
       try {
         await axios({
           method: 'POST',
@@ -73,13 +88,68 @@ const AddVideo = () => {
       return toas('There is something wrong in your information', 'error');
     }
 
+    const uploadVideoToFirebase = new Promise((resolve: any, reject: any) => {
+      if (!videoFile) {
+        return setVideoFileErrorHandler({
+          message: 'Please enter video file.',
+          status: 'error',
+        });
+      }
+
+      try {
+        // UPLOAD VIDEO INTRO
+        const fileRef = ref(
+          storage,
+          `videos/course/${courseId}/${subjectId}/${title}${uuidv4()}`
+        );
+        const uploadTask = uploadBytesResumable(fileRef, videoFile);
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // setVideoUploadProgress(progress);
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused');
+                break;
+              case 'running':
+                console.log('Upload is running');
+                break;
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+            reject(error);
+          },
+          async () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              async (video) => {
+                resolve(video);
+              }
+            );
+          }
+        );
+      } catch (err) {
+        // navigate(`/author/event/setup?id=${productId}`);
+        console.log(err);
+      }
+    });
+
     // start upload
     setUploading(true);
     try {
+      const videoUrl = await uploadVideoToFirebase;
+      console.log(videoUrl);
       await axios({
         method: 'PUT',
         url: '/course/add-video-to-subject-course-admin',
-        data: { title, courseId, subjectId },
+        data: { title, courseId, subjectId, videoUrl },
         headers: {
           authorization: `Token ${token}`,
         },
@@ -119,6 +189,25 @@ const AddVideo = () => {
         </p>
 
         <div className="w-[80%] ml-[50%] translate-x-[-50%] mobile:w-[90%]">
+          {/* video input */}
+          <OnDropSubjectVideoInput
+            setVideoFile={setVideoFile}
+            videoFileErrorHandler={videoFileErrorHandler}
+            setVideoFileErrorHandler={setVideoFileErrorHandler}
+            setVideoDuration={setVideoDuration}
+          />
+          {videoFileErrorHandler?.status !== 'start' && (
+            <div
+              className={` mt-[5px] ml-[10px] flex items-center ${
+                videoFileErrorHandler?.status === 'success'
+                  ? 'text-green-600'
+                  : 'text-red-600'
+              }`}
+            >
+              <PiWarningCircleFill className="mr-[5px]" />
+              {videoFileErrorHandler?.message}
+            </div>
+          )}
           {/* inputs */}
           <InputComponent
             setter={setTitle}

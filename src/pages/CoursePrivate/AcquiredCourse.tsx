@@ -5,10 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
 import { FaStar } from 'react-icons/fa';
-import AcquiredVideoPlayer from '../../components/CourseAcquired/AcquiredVideoPlayer';
+// import AcquiredVideoPlayer from '../../components/CourseAcquired/AcquiredVideoPlayer';
 import toas from '../../utils/toas';
 import { useNavigate } from 'react-router-dom';
 import { getRemainingTime } from '../../utils/getRemainingTime';
+import AcquiredReactPlayer from '../../components/CourseAcquired/AcquiredReactPlayer';
 
 type OptionCardProps = {
   optionsData: any;
@@ -454,7 +455,7 @@ const AcquiredCourse = () => {
             <>
               {/* video */}
               <div className="w-100 bg-blue-gray-900">
-                <AcquiredVideoPlayer
+                {/* <AcquiredVideoPlayer
                   key={
                     courseData?.course_subjects?.[currentVideo?.subjectIndex]
                       ?.videos[currentVideo?.videoIndex]?.data
@@ -466,6 +467,13 @@ const AcquiredCourse = () => {
                       ?.video_url_converted
                   }`}
                   setVideoState={undefined}
+                /> */}
+
+                <AcquiredReactPlayer
+                  url={
+                    courseData?.course_subjects?.[currentVideo?.subjectIndex]
+                      ?.videos[currentVideo?.videoIndex]?.data?.video_public_url
+                  }
                 />
               </div>
             </>
