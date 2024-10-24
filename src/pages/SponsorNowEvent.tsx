@@ -135,9 +135,9 @@ const SponsorNowEvent = () => {
   };
 
   const TABLE_HEAD = [
-    'Boot Name/#',
-    'Boot Type',
-    'Boot Price',
+    'Booth Name/#',
+    'Booth Type',
+    'Booth Price',
     'Status',
     'Action',
   ];
