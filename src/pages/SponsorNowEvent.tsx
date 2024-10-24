@@ -32,23 +32,30 @@ const SponsorNowEvent = () => {
     index: any;
     data: any;
     eventTitle: String;
+    mainBootId: any;
   };
 
-  const SponsorRow = ({ classes, index, data, eventTitle }: SponsorProps) => {
+  const SponsorRow = ({
+    classes,
+    index,
+    data,
+    eventTitle,
+    mainBootId,
+  }: SponsorProps) => {
     const [openForm, setOpenForm] = useState(false);
+
     return (
       <>
         {openForm && (
           <>
             <SponsorNowReserve
               eventTitle={eventTitle}
-              bootNumber={data?.boot_number}
-              fileUrl={sponsorsBootData?.sponsors_boot[0]?.file_letter_url}
-              prices={data?.prices}
+              fileUrl=""
               setOpenForm={setOpenForm}
               productId={productId}
-              bootId={data?._id}
               setRefresh={setRefresh}
+              bootData={data}
+              mainBootId={mainBootId}
             />
           </>
         )}
@@ -64,8 +71,24 @@ const SponsorNowEvent = () => {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              {data?.boot_number}
+              {data?.boot_name}
             </Typography>
+          </td>
+
+          {/* boot type */}
+          <td className={classes}>
+            <div
+              className={`${data?.boot_type_color} p-[10px] w-[150px] text-center rounded text-blue-gray-700`}
+            >
+              {data?.boot_type}
+            </div>
+          </td>
+
+          {/* boot price */}
+          <td className={classes}>
+            <p className="font-semibold text-blue-gray-800">
+              {data?.boot_price}
+            </p>
           </td>
 
           {/* status */}
@@ -73,7 +96,7 @@ const SponsorNowEvent = () => {
             <Typography
               variant="small"
               className={`font-semibold ${
-                data?.status === 'Available' && 'text-green-600'
+                data?.boot_status === 'Available' && 'text-green-600'
               }
               ${data?.status === 'Reserved' && 'text-blue-600'}
               ${data?.status === 'Sold' && 'text-red-600'}
@@ -82,45 +105,42 @@ const SponsorNowEvent = () => {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              {data?.status}
+              {data?.boot_status}
             </Typography>
           </td>
 
           {/* action */}
           <td className={classes}>
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
+            <Button
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
+              className="bg-blue-800"
+              onClick={() => {
+                if (data?.boot_status !== 'Available') {
+                  return toas(
+                    `This boot is already ${data?.boot_status}`,
+                    'error'
+                  );
+                }
+                setOpenForm(true);
+              }}
             >
-              <Button
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-                className="bg-blue-800"
-                onClick={() => {
-                  if (data?.status !== 'Available') {
-                    return toas(
-                      `This boot is already ${data?.status}`,
-                      'error'
-                    );
-                  }
-                  setOpenForm(true);
-                }}
-              >
-                Open Form
-              </Button>
-            </Typography>
+              Open Form
+            </Button>
           </td>
         </tr>
       </>
     );
   };
 
-  const TABLE_HEAD = ['Boot number', 'Status', 'Action'];
+  const TABLE_HEAD = [
+    'Boot Name/#',
+    'Boot Type',
+    'Boot Price',
+    'Status',
+    'Action',
+  ];
   return (
     <>
       <div>
@@ -186,12 +206,14 @@ const SponsorNowEvent = () => {
                     const classes = isLast
                       ? 'p-4'
                       : 'p-4 border-b border-blue-gray-50';
+
                     return (
                       <SponsorRow
                         classes={classes}
                         index={index}
                         data={data}
                         eventTitle={sponsorsBootData?.title}
+                        mainBootId={sponsorsBootData?.sponsors_boot[0]?._id}
                       />
                     );
                   }

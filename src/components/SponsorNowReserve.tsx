@@ -1,60 +1,47 @@
-import { Select, Option } from "@material-tailwind/react";
-import { useState } from "react";
-import { IoCloseOutline } from "react-icons/io5";
-import toas from "../utils/toas";
-import axios from "axios";
-import { useAppSelector } from "../state/store";
+import { IoCloseOutline } from 'react-icons/io5';
+import toas from '../utils/toas';
+import axios from 'axios';
+import { useAppSelector } from '../state/store';
 
 type Props = {
   eventTitle: String;
-  bootNumber: String;
-  prices: any;
   fileUrl: string;
   setOpenForm: any;
   productId: string;
-  bootId: string;
   setRefresh: any;
+  bootData: any;
+  mainBootId: any;
 };
 
 const SponsorNowReserve = ({
   eventTitle,
-  bootNumber,
   fileUrl,
-  prices,
   setOpenForm,
   productId,
-  bootId,
   setRefresh,
+  bootData,
+  mainBootId,
 }: Props) => {
-  const [priceData, setPriceData] = useState({
-    priceName: "",
-    price: null,
-  });
-
   const user = useAppSelector((e) => e.user.currentUser);
   const senderEmail = user?.email;
 
-  const submitButtonFunction = async (sponsorType: any, sponsorPrice: any) => {
-    if (!priceData?.priceName || !priceData?.price) {
-      return toas("Please select type to sponsor", "error");
-    }
+  console.log(bootData);
 
+  const submitButtonFunction = async () => {
     try {
       await axios({
-        method: "put",
-        url: "users/sponsor-reserve",
+        method: 'put',
+        url: 'users/sponsor-reserve',
         data: {
           productId,
           senderEmail,
           eventTitle,
-          bootNumber,
-          sponsorType,
-          sponsorPrice,
-          bootId,
+          bootData,
+          mainBootId,
         },
       });
       window.location.href = fileUrl;
-      toas("Successfully reserved", "success");
+      toas('Successfully reserved', 'success');
       setRefresh((data: any) => !data);
       setOpenForm(false);
     } catch (err) {
@@ -76,32 +63,15 @@ const SponsorNowReserve = ({
       </p>
 
       <p className="text-center font-semibold text-blue-600 text-lg">
-        Boot number: {bootNumber}
+        Boot number: {bootData?.boot_name}
       </p>
 
-      <Select
-        size="lg"
-        label="Select type to sponsor"
-        placeholder={undefined}
-        onPointerEnterCapture={() => {}}
-        onPointerLeaveCapture={undefined}
+      <div
+        className={`${bootData?.boot_type_color} text-blue-gray-900 rounded p-[10px] w-[200px] text-center ml-[50%] translate-x-[-50%] mt-[10px]`}
       >
-        {prices?.map((priceData: any, i: any) => {
-          return (
-            <Option
-              onClick={() =>
-                setPriceData({
-                  priceName: priceData?.price_name,
-                  price: priceData?.price,
-                })
-              }
-              key={i}
-            >
-              {priceData?.price_name}: {priceData?.price}
-            </Option>
-          );
-        })}
-      </Select>
+        {' '}
+        {bootData?.boot_type}
+      </div>
 
       <p className="text-center font-semibold mt-[20px] mb-[5px]">
         Important Reminder:
@@ -110,17 +80,17 @@ const SponsorNowReserve = ({
       <p className="w-[70%] ml-[50%] translate-x-[-50%] indent-10">
         Please download the sponsorship contract by clicking the "Download"
         button below. Fill in the required information, sign the contract, and
-        send it back to us within 2 weeks or before the 72nd PSME National
-        Convention, scheduled for October 17–19, 2024. Your prompt response will
-        help us secure your participation and ensure a smooth collaboration.
-        Please email the completed contract to psmelrc@vizcom.ph. Should you
-        need further information, please book an appointment [here] or email us
-        at psmelrc@vizcom.ph.
+        send it back to us within 2 weeks or before the {eventTitle}, scheduled
+        for (ENTER DATE). Your prompt response will help us secure your
+        participation and ensure a smooth collaboration. Please email the
+        completed contract to admin@ztellar.tech. Should you need further
+        information, please book an appointment [here] or email us at
+        admin@ztellar.tech.
       </p>
 
       <button
         onClick={() => {
-          return submitButtonFunction(priceData?.priceName, priceData?.price);
+          return submitButtonFunction();
         }}
         className="bg-blue-800 py-[10px] px-[20px] rounded ml-[50%] translate-x-[-50%] text-white cursor-pointer hover:bg-blue-600 mt-[20px]"
       >
