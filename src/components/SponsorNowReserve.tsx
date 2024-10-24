@@ -25,6 +25,13 @@ const SponsorNowReserve = ({
   const user = useAppSelector((e) => e.user.currentUser);
   const senderEmail = user?.email;
 
+  function formatToPeso(number: number) {
+    return new Intl.NumberFormat('en-PH', {
+      style: 'currency',
+      currency: 'PHP',
+    }).format(number);
+  }
+
   console.log(bootData);
 
   const submitButtonFunction = async () => {
@@ -64,6 +71,10 @@ const SponsorNowReserve = ({
 
       <p className="text-center font-semibold text-blue-600 text-lg">
         Boot number: {bootData?.boot_name}
+      </p>
+
+      <p className="text-center font-semibold text-blue-600 text-lg">
+        Boot price: {formatToPeso(bootData?.boot_price)}
       </p>
 
       <div

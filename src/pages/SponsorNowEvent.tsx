@@ -12,6 +12,13 @@ const SponsorNowEvent = () => {
   const productId = query.get('id') || '';
   const [refresh, setRefresh] = useState(false);
 
+  function formatToPeso(number: number) {
+    return new Intl.NumberFormat('en-PH', {
+      style: 'currency',
+      currency: 'PHP',
+    }).format(number);
+  }
+
   const { data: sponsorsBootData, isLoading } = useQuery({
     queryKey: ['sponsors-boot', refresh],
     queryFn: async () => {
@@ -87,7 +94,7 @@ const SponsorNowEvent = () => {
           {/* boot price */}
           <td className={classes}>
             <p className="font-semibold text-blue-gray-800">
-              {data?.boot_price}
+              {formatToPeso(data?.boot_price)}
             </p>
           </td>
 
