@@ -93,7 +93,7 @@ const SponsorNowEvent = () => {
 
           {/* boot price */}
           <td className={classes}>
-            <p className="font-semibold text-blue-gray-800">
+            <p className="bg-blue-gray-900 font-semibold text-blue-gray-800 ">
               {formatToPeso(data?.boot_price)}
             </p>
           </td>

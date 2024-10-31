@@ -70,11 +70,11 @@ const SponsorNowReserve = ({
       </p>
 
       <p className="text-center font-semibold text-blue-600 text-lg">
-        Boot number: {bootData?.boot_name}
+        Booth number: {bootData?.boot_name}
       </p>
 
       <p className="text-center font-semibold text-blue-600 text-lg">
-        Boot price: {formatToPeso(bootData?.boot_price)}
+        Booth price: {formatToPeso(bootData?.boot_price)}
       </p>
 
       <div
