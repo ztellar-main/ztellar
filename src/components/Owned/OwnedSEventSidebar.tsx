@@ -1,11 +1,11 @@
-import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaArrowLeftLong } from 'react-icons/fa6';
 // import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { FaBookOpen } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { TiHome } from "react-icons/ti";
-import { RiLiveFill } from "react-icons/ri";
-import { PiIdentificationCardFill } from "react-icons/pi";
-import { useAppSelector } from "../../state/store";
+import { FaBookOpen } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { TiHome } from 'react-icons/ti';
+import { RiLiveFill } from 'react-icons/ri';
+import { PiIdentificationCardFill } from 'react-icons/pi';
+import { useAppSelector } from '../../state/store';
 
 type Props = {
   setOpenSide: any;
@@ -24,24 +24,24 @@ const OwnedSEventSidebar = ({
   const navigate = useNavigate();
   const buttonLinskDetails = [
     {
-      name: "Credentials",
+      name: 'Credentials',
       icon: (
         <PiIdentificationCardFill className="h-[20px] w-[auto] mr-[10px]" />
       ),
       route: `/owned/event/credentials?id=${productId}`,
     },
     {
-      name: "S D L",
+      name: 'S D L',
       icon: <FaBookOpen className="h-[20px] w-[auto] mr-[10px]" />,
       route: `/owned/event/sdl?id=${productId}`,
     },
+    // {
+    //   name: "Quiz",
+    //   icon: <FaBookOpen className="h-[20px] w-[auto] mr-[10px]" />,
+    //   route: `/owned/event/quiz?id=${productId}`,
+    // },
     {
-      name: "Quiz",
-      icon: <FaBookOpen className="h-[20px] w-[auto] mr-[10px]" />,
-      route: `/owned/event/quiz?id=${productId}`,
-    },
-    {
-      name: "Live",
+      name: 'Live',
       icon: <RiLiveFill className="h-[20px] w-[auto] mr-[10px]" />,
       route: `/owned/event/live?id=${productId}`,
     },
@@ -52,10 +52,10 @@ const OwnedSEventSidebar = ({
         className={`w-[300px] mobile:w-100 h-[100vh] bg-indigo-900 sticky mobile:fixed top-0 tablet:fixed ease-in-out duration-300 z-[25] min-w-[300px]
        ${
          openSidebar
-           ? "tabletMin:ml-0 tabletMin:left-0:"
-           : "tabletMin:ml-[-300px] tabletMin:left-[-300px]"
+           ? 'tabletMin:ml-0 tabletMin:left-0:'
+           : 'tabletMin:ml-[-300px] tabletMin:left-[-300px]'
        }
-       ${!openSidebar ? "tablet:left-0" : "tablet:left-[-100%]"}
+       ${!openSidebar ? 'tablet:left-0' : 'tablet:left-[-100%]'}
        `}
       >
         <div className="w-100 p-[10px] ">
@@ -95,15 +95,15 @@ const OwnedSEventSidebar = ({
             return (
               <button
                 onClick={() =>
-                  data?.name === "Live"
+                  data?.name === 'Live'
                     ? (window.location.href = data?.route)
                     : navigate(data?.route)
                 }
                 key={i}
                 className={`w-100 p-[10px] flex items-center ${
                   page === data?.name
-                    ? "text-gray-900 bg-white"
-                    : "text-white hover:text-gray-500"
+                    ? 'text-gray-900 bg-white'
+                    : 'text-white hover:text-gray-500'
                 } rounded   mb-[10px] tracking-widest cursor-pointer`}
               >
                 {data?.icon}
@@ -115,7 +115,7 @@ const OwnedSEventSidebar = ({
           <hr className="my-[10px]" />
 
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             className={`w-100 p-[10px] flex items-center text-white rounded hover:bg-white hover:text-gray-900 active:bg-white active:text-gray-900   mb-[10px] tracking-widest`}
           >
             <TiHome className="h-[20px] w-[auto] mr-[10px]" />

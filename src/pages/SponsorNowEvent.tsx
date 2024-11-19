@@ -1,16 +1,18 @@
-import { Card, Typography } from '@material-tailwind/react';
-
-import { Button } from '@material-tailwind/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import SponsorNowReserve from '../components/SponsorNowReserve';
 import { useState } from 'react';
+// import toas from '../utils/toas';
+import { useAppSelector } from '../state/store';
+import { useNavigate } from 'react-router-dom';
 import toas from '../utils/toas';
 
 const SponsorNowEvent = () => {
+  const token = useAppSelector((e: any) => e.user.token);
   const query = new URLSearchParams(location.search);
   const productId = query.get('id') || '';
-  const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
+  const [boothData, setBoothData] = useState([]);
+  const [statusState, setStatusState] = useState('All');
 
   function formatToPeso(number: number) {
     return new Intl.NumberFormat('en-PH', {
@@ -19,135 +21,40 @@ const SponsorNowEvent = () => {
     }).format(number);
   }
 
-  const { data: sponsorsBootData, isLoading } = useQuery({
-    queryKey: ['sponsors-boot', refresh],
+  const { data, isLoading } = useQuery({
+    queryKey: ['get-all-event-sponsors-booth', statusState],
     queryFn: async () => {
       const res = await axios({
-        method: 'get',
-        url: `author/get-sponsors-boot?id=${productId}`,
+        method: 'GET',
+        url: `/product/get-all-event-booths?status=${statusState}&productId=${productId}`,
+        headers: {
+          authorization: `Token ${token}`,
+        },
       });
+      setBoothData(res?.data?.booths);
       return res?.data;
     },
   });
 
   if (isLoading) {
-    return <p className="class">Loading</p>;
+    return <p>Loading</p>;
   }
 
-  type SponsorProps = {
-    classes: any;
-    index: any;
-    data: any;
-    eventTitle: String;
-    mainBootId: any;
+  const filterStatusFunction = (status: string) => {
+    setStatusState(status);
   };
 
-  const SponsorRow = ({
-    classes,
-    index,
-    data,
-    eventTitle,
-    mainBootId,
-  }: SponsorProps) => {
-    const [openForm, setOpenForm] = useState(false);
-
-    return (
-      <>
-        {openForm && (
-          <>
-            <SponsorNowReserve
-              eventTitle={eventTitle}
-              fileUrl=""
-              setOpenForm={setOpenForm}
-              productId={productId}
-              setRefresh={setRefresh}
-              bootData={data}
-              mainBootId={mainBootId}
-            />
-          </>
-        )}
-
-        <tr key={index}>
-          {/* boot number */}
-          <td className={classes}>
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              {data?.boot_name}
-            </Typography>
-          </td>
-
-          {/* boot type */}
-          <td className={classes}>
-            <div
-              className={`${data?.boot_type_color} p-[10px] w-[150px] text-center rounded text-blue-gray-700`}
-            >
-              {data?.boot_type}
-            </div>
-          </td>
-
-          {/* boot price */}
-          <td className={classes}>
-            <p className="bg-blue-gray-900 font-semibold text-blue-gray-800 ">
-              {formatToPeso(data?.boot_price)}
-            </p>
-          </td>
-
-          {/* status */}
-          <td className={classes}>
-            <Typography
-              variant="small"
-              className={`font-semibold ${
-                data?.boot_status === 'Available' && 'text-green-600'
-              }
-              ${data?.status === 'Reserved' && 'text-blue-600'}
-              ${data?.status === 'Sold' && 'text-red-600'}
-              `}
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              {data?.boot_status}
-            </Typography>
-          </td>
-
-          {/* action */}
-          <td className={classes}>
-            <Button
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              className="bg-blue-800"
-              onClick={() => {
-                if (data?.boot_status !== 'Available') {
-                  return toas(
-                    `This boot is already ${data?.boot_status}`,
-                    'error'
-                  );
-                }
-                setOpenForm(true);
-              }}
-            >
-              Open Form
-            </Button>
-          </td>
-        </tr>
-      </>
-    );
-  };
-
-  const TABLE_HEAD = [
-    'Booth Name/#',
-    'Booth Type',
-    'Booth Price',
-    'Status',
-    'Action',
+  const status = [
+    'All',
+    'Available',
+    'Pending Reserved',
+    'MOA Approved',
+    'Pending Down Payment',
+    'Pending Payment',
+    'Reserved',
+    'Acquired',
   ];
+
   return (
     <>
       <div>
@@ -157,77 +64,99 @@ const SponsorNowEvent = () => {
         </div>
 
         {/* title of event */}
-
         <div className="w-100 p-[10px] bg-gray-50">
-          <p className="text-center text-lg font-semibold">
-            {sponsorsBootData?.title}
-          </p>
+          <p className="text-center text-lg font-semibold">{data?.title}</p>
         </div>
 
         {/* image */}
         <div className="flex justify-center items-center">
           <img
-            src={sponsorsBootData?.sponsors_boot[0]?.image_url}
+            src={data?.boothImage}
             alt=""
             className="max-h-[500px] w-[auto]"
           />
         </div>
 
+        <h1 className="p-2 text-2xl font-bold">Filter</h1>
+
+        {status?.map((data: any, i: any) => {
+          return (
+            <button
+              key={i}
+              onClick={() => filterStatusFunction(data)}
+              className={`bg-blue-800 p-3 rounded ml-2 text-white mb-2 ${
+                data === statusState && 'opacity-55'
+              }`}
+            >
+              {data}
+            </button>
+          );
+        })}
+
         {/* list of available boots */}
 
-        <div className="p-[20px] mobile:p-[10px]">
-          <Card
-            className="h-full w-full overflow-scroll"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <table className="w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head) => (
-                    <th
-                      key={head}
-                      className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                    >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-semibold leading-none opacity-70"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
+        <div className="p-3 overflow-x-auto">
+          <p className="mb-2">Total: {boothData?.length}</p>
+          <table className="border-collapse border border-slate-500 w-full min-w-[670px] ">
+            <thead>
+              <tr>
+                <th className="p-3 text-left border border-slate-600">
+                  BOOTH NAME
+                </th>
+                <th className="p-3 text-left border border-slate-600">
+                  BOOTH TYPE
+                </th>
+                <th className="p-3 text-left border border-slate-600">
+                  BOOTH PRICE
+                </th>
+                <th className="p-3 text-left border border-slate-600">
+                  BOOTH STATUS
+                </th>
+                <th className="p-3 text-left border border-slate-600">
+                  ACTION
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {boothData?.map((data: any, i: any) => {
+                return (
+                  <tr key={i}>
+                    <td className="p-3 text-left border border-slate-600">
+                      {data?.booth_name}
+                    </td>
+                    <td className="p-3 text-left border border-slate-600">
+                      {data?.booth_type}
+                    </td>
+                    <td className="p-3 text-left border border-slate-600">
+                      {formatToPeso(data?.booth_price)}
+                    </td>
+                    <td className="p-3 text-left border border-slate-600">
+                      {data?.booth_status}
+                    </td>
+                    <td className="p-3 text-left border border-slate-600">
+                      <button
+                        onClick={() => {
+                          if (data?.booth_status === 'Available') {
+                            return navigate(
+                              `/event/sponsor-this-booth?productId=${productId}&boothId=${data?._id}`
+                            );
+                          } else {
+                            return toas(
+                              'This booth is already reserved',
+                              'error'
+                            );
+                          }
+                        }}
+                        className="p-3 bg-blue-800 rounded text-white"
                       >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {sponsorsBootData?.sponsors_boot[0]?.boot_list.map(
-                  (data: any, index: any) => {
-                    const isLast =
-                      index ===
-                      sponsorsBootData?.sponsors_boot[0]?.boot_list?.length - 1;
-                    const classes = isLast
-                      ? 'p-4'
-                      : 'p-4 border-b border-blue-gray-50';
-
-                    return (
-                      <SponsorRow
-                        classes={classes}
-                        index={index}
-                        data={data}
-                        eventTitle={sponsorsBootData?.title}
-                        mainBootId={sponsorsBootData?.sponsors_boot[0]?._id}
-                      />
-                    );
-                  }
-                )}
-              </tbody>
-            </table>
-          </Card>
+                        Open
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </>

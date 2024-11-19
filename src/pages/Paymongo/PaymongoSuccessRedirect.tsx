@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { useAppDispatch, useAppSelector } from "../../state/store";
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { paymongoIdClear } from "../../state/userSlice";
-import toas from "../../utils/toas";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { useQuery } from '@tanstack/react-query';
+import { useAppDispatch, useAppSelector } from '../../state/store';
+import { Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { paymongoIdClear } from '../../state/userSlice';
+import toas from '../../utils/toas';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const PaymongoSuccessRedirect = () => {
   const paymongoId = useAppSelector((e) => e.user.paymongo);
@@ -20,7 +20,7 @@ const PaymongoSuccessRedirect = () => {
     queryKey: [paymongoId],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `/paymongo/retrieve-checkout?checkoutId=${paymongoId}`,
         headers: {
           authorization: `Token ${token}`,
@@ -29,14 +29,12 @@ const PaymongoSuccessRedirect = () => {
 
       const result = res?.data;
 
-      console.log(result?.data);
-
       const paymentStatus =
         result?.data?.attributes?.payment_intent?.attributes.status;
 
-      if (paymentStatus !== "succeeded") {
-        toas("You have no present registration.", "error");
-        navigate("/");
+      if (paymentStatus !== 'succeeded') {
+        toas('You have no present registration.', 'error');
+        navigate('/');
         return res?.data;
       }
 
@@ -52,35 +50,33 @@ const PaymongoSuccessRedirect = () => {
 
       const tString = transactionFee.toString();
 
-      const T = tString.slice(0, -2) + "." + tString.slice(-2);
-
-
+      const T = tString.slice(0, -2) + '.' + tString.slice(-2);
 
       // VALUE START
-      const lessAmount: any = last.slice(0, -2) + "." + last.slice(-2);
+      const lessAmount: any = last.slice(0, -2) + '.' + last.slice(-2);
       const baseAmount: any =
-        amountString.slice(0, -2) + "." + amountString.slice(-2);
+        amountString.slice(0, -2) + '.' + amountString.slice(-2);
 
       const paymentMode =
         result?.data?.attributes?.payment_intent?.attributes?.payments[0]
           .attributes.source.type;
-      const paymentSource = "paymongo";
-      const authorId = description.split("/")[1];
-      const productId = description.split("/")[0];
-      const productType = description.split("/")[2];
-      const regType = description.split("/")[3];
+      const paymentSource = 'paymongo';
+      const authorId = description.split('/')[1];
+      const productId = description.split('/')[0];
+      const productType = description.split('/')[2];
+      const regType = description.split('/')[3];
 
       const authorPayment = Number(baseAmount * 0.6);
 
       const ztellarFee = Number(baseAmount * 0.4) - Number(T);
 
-      const buyerId = description.split("/")[4];
+      const buyerId = description.split('/')[4];
 
-      console.log(authorPayment)
+      console.log(authorPayment);
 
       try {
         const res = await axios({
-          method: "get",
+          method: 'get',
           url: `/product/get-event-qr-scan?id=${productId}`,
           headers: {
             authorization: `Token ${token}`,
@@ -93,15 +89,15 @@ const PaymongoSuccessRedirect = () => {
 
         if (user) {
           toas(
-            "Transaction is already successfull. Please check your aquired coursesa and events.",
-            "error"
+            'Transaction is already successfull. Please check your aquired coursesa and events.',
+            'error'
           );
-          return navigate("/");
+          return navigate('/');
         }
         try {
           await axios({
-            method: "put",
-            url: "/payment/create-payment",
+            method: 'put',
+            url: '/payment/create-payment',
             data: {
               lessAmount,
               baseAmount,
@@ -120,15 +116,15 @@ const PaymongoSuccessRedirect = () => {
             },
           });
           dispatch(paymongoIdClear());
-          toas("Transaction successful", "success");
-          navigate("/");
+          toas('Transaction successful', 'success');
+          navigate('/');
         } catch (err) {
           console.log(err);
         }
 
         return res?.data;
       } catch (err) {
-        toas("Something went wrong. Please check RFQ's", "error");
+        toas("Something went wrong. Please check RFQ's", 'error');
       }
 
       return res?.data;
@@ -146,7 +142,7 @@ const PaymongoSuccessRedirect = () => {
           Processing
         </p>
         <p className="text-indigo-900 font-semibold tracking-widest">
-          Please wait ...{" "}
+          Please wait ...{' '}
         </p>
         <div className="w-[70px] h-[70px]">
           <CgSpinnerTwoAlt className="animate-spin w-100 h-[100%] text-indigo-900" />

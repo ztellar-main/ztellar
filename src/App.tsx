@@ -84,6 +84,12 @@ import AcquiredCoursePrivateRoute from './privateRoutes/AcquiredCoursePrivateRou
 import SamplePage from './pages/AdminDashboard/Course/SamplePage';
 import ViewCertificateSample from './pages/ViewCertificateSample';
 
+import SponsorNowAcquirePage from './pages/SponsorNowAcquirePage';
+
+// AUTHOR NEW
+import AuthorDashboardNew from './pages/AuthorDashboard/AuthorDashboardNew';
+import ViewEvent from './pages/AuthorDashboard/event/ViewEvent';
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -213,7 +219,6 @@ function App() {
               >
                 <Route path="/acquired/course" element={<AcquiredCourse />} />
               </Route>
-
               <Route
                 path="/acquired/course/answer"
                 element={<CourseAnswerPage />}
@@ -222,7 +227,6 @@ function App() {
                 path="/acquired/course/download-certificate-page"
                 element={<DownloadCertificateCourse />}
               />
-
               {/* AUTHOR */}
               <Route path="">
                 <Route path="/author/dashboard" element={<AuthorDashboard />} />
@@ -261,7 +265,17 @@ function App() {
                   element={<PaymongoSuccessRedirectCashPayment />}
                 />
                 <Route path="/total-sum-secret" element={<Total />} />
+                <Route
+                  path="/event/sponsor-this-booth"
+                  element={<SponsorNowAcquirePage />}
+                />
               </Route>
+              {/* AUTHOR DASHBOARD NEW */}
+              <Route
+                path="/author-new/dashboard"
+                element={<AuthorDashboardNew />}
+              />
+              <Route path="/author-new/view-event" element={<ViewEvent />} />
             </Routes>
           </Router>
         </QueryClientProvider>

@@ -1,14 +1,14 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import toas from "../utils/toas";
-import { PiWarningCircleFill } from "react-icons/pi";
-import { useQuery } from "@tanstack/react-query";
-import { getRemainingTime } from "../utils/getRemainingTime";
-import { useAppDispatch } from "../state/store";
-import { loginSuccess, token } from "../state/userSlice";
+import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import axios, { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import toas from '../utils/toas';
+import { PiWarningCircleFill } from 'react-icons/pi';
+import { useQuery } from '@tanstack/react-query';
+import { getRemainingTime } from '../utils/getRemainingTime';
+import { useAppDispatch } from '../state/store';
+import { loginSuccess, token } from '../state/userSlice';
 
 const EmailVerify = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const EmailVerify = () => {
   const userData = location.state;
   const dispatch = useAppDispatch();
 
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState('');
 
   type CountDownProps = {
     seconds: any;
@@ -27,16 +27,16 @@ const EmailVerify = () => {
 
   // COUNT DOWN TIMER
   const defaultRemainingTime: CountDownProps = {
-    seconds: "00",
-    minutes: "00",
-    hours: "00",
-    days: "00",
+    seconds: '00',
+    minutes: '00',
+    hours: '00',
+    days: '00',
   };
   const [remainingTime, setRemainingTime] = useState(defaultRemainingTime);
 
   const [resendCodeError, setResendCodeError] = useState({
-    message: "",
-    status: "",
+    message: '',
+    status: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +52,7 @@ const EmailVerify = () => {
     queryKey: [remainingTime],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `/users/get-otp-expiry?email=${email}`,
       });
       return new Date(res?.data).getTime();
@@ -88,43 +88,43 @@ const EmailVerify = () => {
 
   // SUBMIT BUTTON FUNCTION
   const submitButtonFunction = async () => {
-    setResendCodeError({ message: "Please wait.", status: "loading" });
+    setResendCodeError({ message: 'Please wait.', status: 'loading' });
     setLoading(true);
     if (!otp) {
       setLoading(false);
       return setResendCodeError({
-        message: "Please enter your otp.",
-        status: "error",
+        message: 'Please enter your otp.',
+        status: 'error',
       });
     }
 
     try {
       const res = await axios({
-        method: "post",
-        url: "/users/verify-email-and-signup",
+        method: 'post',
+        url: '/users/verify-email-and-signup',
         data: { otp, email, fname, lname, mobileNumber, password },
       });
       setLoading(false);
-      setResendCodeError({ message: "successful", status: "success" });
+      setResendCodeError({ message: 'successful', status: 'success' });
 
       dispatch(loginSuccess(res?.data?.data));
       dispatch(token(res?.data?.token));
 
-      toas("You are successfully signed up.", "success");
+      toas('You are successfully signed up.', 'success');
       window.history.replaceState({}, email);
       window.history.replaceState({}, fname);
       window.history.replaceState({}, lname);
       window.history.replaceState({}, mobileNumber);
       window.history.replaceState({}, password);
-      navigate("/");
+      navigate('/');
     } catch (err) {
       setLoading(false);
       if (err instanceof AxiosError) {
         setResendCodeError({
           message:
             `${err?.response?.data?.message}` ||
-            "Something went wrong. Please signup again.",
-          status: "error",
+            'Something went wrong. Please signup again.',
+          status: 'error',
         });
       }
     }
@@ -134,14 +134,14 @@ const EmailVerify = () => {
   const resendCodeFunction = async () => {
     try {
       setLoading(true);
-      setResendCodeError({ message: "Resending otp.", status: "loading" });
+      setResendCodeError({ message: 'Resending otp.', status: 'loading' });
       const res = await axios({
-        method: "post",
-        url: "/users/send-otp",
+        method: 'post',
+        url: '/users/send-otp',
         data: { email },
       });
       setLoading(false);
-      setResendCodeError({ message: "Otp has been sent.", status: "success" });
+      setResendCodeError({ message: 'Otp has been sent.', status: 'success' });
       console.log(res);
     } catch (err) {
       setLoading(false);
@@ -196,15 +196,15 @@ const EmailVerify = () => {
                   {loading && (
                     <CgSpinnerTwoAlt className="animate-spin text-blue-600" />
                   )}
-                  {resendCodeError?.status === "error" && (
+                  {resendCodeError?.status === 'error' && (
                     <PiWarningCircleFill className="text-red-600" />
                   )}
 
                   <p
                     className={`ml-[2px] text-sm 
-                    ${resendCodeError?.status === "error" && "text-red-600"}
-                    ${resendCodeError?.status === "success" && "text-green-600"}
-                    ${resendCodeError?.status === "loading" && "text-blue-600"}
+                    ${resendCodeError?.status === 'error' && 'text-red-600'}
+                    ${resendCodeError?.status === 'success' && 'text-green-600'}
+                    ${resendCodeError?.status === 'loading' && 'text-blue-600'}
                     `}
                   >
                     {resendCodeError.message}
