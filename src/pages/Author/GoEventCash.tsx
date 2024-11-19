@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import AuthorSidebar from "../../components/Author/AuthorSidebar";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAppSelector } from "../../state/store";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import { useLocation } from "react-router-dom";
-import toas from "../../utils/toas";
+import { useEffect, useState } from 'react';
+import AuthorSidebar from '../../components/Author/AuthorSidebar';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useAppSelector } from '../../state/store';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { useLocation } from 'react-router-dom';
+import toas from '../../utils/toas';
 
 // COMPONENTS
 
 const GoEventCash = () => {
   const [openSidebar, setOpenSide] = useState(true);
   const token = useAppSelector((state) => state.user.token);
-  const [uid, setUid] = useState("");
-  const [price, setPrice] = useState("");
+  const [uid, setUid] = useState('');
+  const [price, setPrice] = useState('');
 
-  const regTypeFinal = price.split("/")[0];
-  const priceFinal = price.split("/")[1];
+  const regTypeFinal = price.split('/')[0];
+  const priceFinal = price.split('/')[1];
 
   const [idValid, setIdValid] = useState(false);
 
@@ -28,20 +28,20 @@ const GoEventCash = () => {
       }
     }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     handleResize();
   }, []);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const eventId = query.get("id") || "";
+  const eventId = query.get('id') || '';
 
   const { data: eventData, isLoading } = useQuery({
-    queryKey: ["gocash"],
+    queryKey: ['gocash'],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `/product/get-event-qr-scan?id=${eventId}`,
         headers: {
           authorization: `Token ${token}`,
@@ -61,62 +61,72 @@ const GoEventCash = () => {
     }
   };
 
-  const PHP = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "PHP",
+  console.log(eventData);
+
+  const PHP = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'PHP',
   });
 
   const checkIfRegisteredFunction = async () => {
     if (!uid) {
-      return toas("Please enter user id.", "error");
+      return toas('Please enter user id.', 'error');
     }
     const user = eventData?.registered.find((u: any) => {
       return u?.qr_code === uid;
     });
 
-    try{
+    try {
       await axios({
-        method:"post",
-        url:"/users/user-exist",
-        data:{userId:uid}
-      })
-
-    }catch(err){
-      return toas("User id is invalid or not yet registered.","error")
+        method: 'post',
+        url: '/users/user-exist',
+        data: { userId: uid },
+      });
+    } catch (err) {
+      return toas('User id is invalid or not yet registered.', 'error');
     }
 
     if (user) {
-      return toas("User id is already registered on this event.", "error");
+      return toas('User id is already registered on this event.', 'error');
     }
-    
+
     setIdValid(true);
   };
 
+  console.log({
+    regTypeFinal,
+    priceFinal,
+    eventID: eventData?._id,
+    eventType: eventData?.type,
+    authorId: eventData?.author_id,
+    userId: uid,
+  });
 
+  const registerFunction = async () => {
+    // if (!price) {
+    //   return toas('Please choose registration', 'error');
+    // }
 
-                    console.log({regTypeFinal,priceFinal,eventID:eventData?._id,eventType:eventData?.type,authorId:eventData?.author_id,userId:uid})
-
-    const registerFunction = async() => {
-      if(!price){
-        return toas("Please choose registration","error");
-      }
-
-      try{
-        await axios({
-          method:"put",
-          url:"/payment/cash-payment",
-          data:{authorId:eventData?.author_id,productId:eventData?._id,productType:eventData?.type,regType:regTypeFinal,buyerId:uid,priceFinal},
-        })
-        toas("Successfully registered.","success");
-        window.location.reload();
-      }catch(err){
-        toas("Something went wrong, please try again.","error");
-        window.location.reload();
-      }
-
-
-  
+    try {
+      await axios({
+        method: 'put',
+        url: '/payment/cash-payment',
+        data: {
+          authorId: eventData?.author_id,
+          productId: eventData?._id,
+          productType: eventData?.type,
+          regType: regTypeFinal,
+          buyerId: uid,
+          priceFinal,
+        },
+      });
+      toas('Successfully registered.', 'success');
+      window.location.reload();
+    } catch (err) {
+      toas('Something went wrong, please try again.', 'error');
+      window.location.reload();
     }
+  };
   return (
     <>
       <div className="flex">
@@ -199,23 +209,25 @@ const GoEventCash = () => {
                           key={i}
                           value={`${priceData?.priceType}/${priceData?.price}`}
                         >
-                          {priceData?.priceName} -{" "}
+                          {priceData?.priceName} -{' '}
                           {PHP.format(priceData?.price)}
                         </option>
                       );
                     })}
                   </select>
-                    {/* regType={regTypeFinal}
+                  {/* regType={regTypeFinal}
                     price={priceFinal}
                     productId={eventData?._id}
                     productType={eventData?.type}
                     title={eventData?.title}
                     authorId={eventData?.author_id}
                     userId={uid} */}
-                    <button onClick={registerFunction} className="w-100 p-[10px] bg-indigo-800 text-white rounded mt-[10px]">Register</button>
-
-                    
-                  
+                  <button
+                    onClick={registerFunction}
+                    className="w-100 p-[10px] bg-indigo-800 text-white rounded mt-[10px]"
+                  >
+                    Register
+                  </button>
                 </div>
               )}
             </div>

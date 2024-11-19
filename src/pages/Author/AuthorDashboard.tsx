@@ -113,7 +113,7 @@ const AuthorDashboard = () => {
               </thead>
               <tbody>
                 {data?.map((datas: any, index: any) => {
-                  const isLast = index === data.length - 1;
+                  const isLast = index === data?.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
@@ -141,7 +141,7 @@ const AuthorDashboard = () => {
                           onPointerEnterCapture={undefined}
                           onPointerLeaveCapture={undefined}
                         >
-                          {datas?.product?.registered.length}
+                          {datas?.product?.registered?.length}
                         </Typography>
                       </td>
                       <td className={classes}>

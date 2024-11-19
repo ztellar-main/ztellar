@@ -110,6 +110,7 @@ const PaymongoSuccessRedirect = () => {
               buyerId,
               authorPayment,
               ztellarFee,
+              transactionFee: Number(T),
             },
             headers: {
               Authorization: `Token ${token}`,

@@ -396,6 +396,7 @@ const ViewEvent = () => {
     ],
   };
   const [graphData, setGraphData] = useState(lineChartData);
+  console.log(graphData);
   const options = {
     scales: {
       y: {
