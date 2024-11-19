@@ -1,7 +1,7 @@
-import { useAppDispatch } from "../state/store";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../state/userSlice";
-import { useAppSelector } from "../state/store";
+import { useAppDispatch } from '../state/store';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../state/userSlice';
+import { useAppSelector } from '../state/store';
 
 type Props = {
   isOpen: boolean;
@@ -13,7 +13,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
   const user = useAppSelector((e) => e.user.currentUser);
 
   const logoutButtonFunction = () => {
-    navigate("/");
+    navigate('/');
     dispatch(logout());
   };
   return (
@@ -22,8 +22,8 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
         onClick={() => setIsOpen(false)}
         className={`bg-white w-100 h-[100dvh] fixed shadow top-0 left-0 ${
           isOpen
-            ? "tablet:translate-x-[5px] mobile:translate-x-0"
-            : "translate-x-[-100%] "
+            ? 'tablet:translate-x-[5px] mobile:translate-x-0'
+            : 'translate-x-[-100%] '
         } ease-in-out duration-300 p-[5px] mobile:top-0 mobile:w-100 mobile:h-[100dvh]
          tablet:top-[60px] tablet:w-[350px] tablet:rounded tablet:border tablet:border-blue-600 tablet:h-[auto] z-[18]`}
       >
@@ -50,25 +50,25 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
 
         {/* BUTTON LINKS */}
         <button
-          onClick={() => navigate("/owned")}
+          onClick={() => navigate('/owned')}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
           Acquired Courses and Events
         </button>
-        <button
-          onClick={() => {
-            if (user?.role === "superAuthorUser") {
-              navigate("/author/dashboard");
+        {user?.role !== 'member' && (
+          <button
+            onClick={() => {
+              navigate('/author-new/dashboard');
               return setIsOpen(false);
-            }
-            return setIsOpen(false);
-          }}
-          className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
-        >
-          Author Dashboard
-        </button>
+            }}
+            className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
+          >
+            Author Dashboard
+          </button>
+        )}
+
         <button
-          onClick={() => navigate("/edit-profile")}
+          onClick={() => navigate('/edit-profile')}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
           Account Settings
@@ -76,7 +76,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
 
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
         <button
-          onClick={() => navigate("/owned/qr")}
+          onClick={() => navigate('/owned/qr')}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
         >
           QR Code
@@ -87,7 +87,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
         {/* HOME AND ABOUT US BUTTON CONTAINER */}
         <div className="w-100 flex">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             className="bg-blue-100 text-gray-800 grow w-[auto] p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700 mobile:py-[12px]"
           >
             Home
@@ -106,7 +106,7 @@ function UserPopupMobileAndDesktop({ isOpen, setIsOpen }: Props) {
           onClick={logoutButtonFunction}
           className="bg-blue-600 text-white w-100 p-[10px] rounded laptop:text-sm hover:bg-blue-400 mt-[10px] mobile:py-[12px]"
         >
-          Logout{" "}
+          Logout{' '}
         </button>
       </div>
 

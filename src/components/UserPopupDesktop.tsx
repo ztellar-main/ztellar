@@ -1,8 +1,7 @@
-
-import { useAppDispatch } from "../state/store";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../state/userSlice";
-import { useAppSelector } from "../state/store";
+import { useAppDispatch } from '../state/store';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../state/userSlice';
+import { useAppSelector } from '../state/store';
 
 type Props = {
   isOpen: boolean;
@@ -15,7 +14,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
 
   const logoutButtonFunction = () => {
     setIsOpen(false);
-    navigate("/");
+    navigate('/');
     dispatch(logout());
   };
   return (
@@ -24,7 +23,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
       <div
         className={`bg-white fixed w-[300px] p-[5px] shadow right-[0] top-[70px] z-[18] rounded border border-blue-600 laptop:w-[270px]
         ${
-          isOpen ? "translate-x-[-3px]" : "translate-x-full"
+          isOpen ? 'translate-x-[-3px]' : 'translate-x-full'
         } ease-in-out duration-300 laptop:top-[60px]
         `}
       >
@@ -52,27 +51,27 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         {/* BUTTON LINKS */}
         <button
           onClick={() => {
-            navigate("/owned");
+            navigate('/owned');
             setIsOpen(false);
           }}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
         >
-          Acquired Courses and Events{" "}
+          Acquired Courses and Events{' '}
         </button>
+        {user?.role !== 'member' && (
+          <button
+            onClick={() => {
+              navigate('/author-new/dashboard');
+              setIsOpen(false);
+            }}
+            className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
+          >
+            Author Dashboard{' '}
+          </button>
+        )}
+
         <button
-          onClick={() => {
-            if (user?.role === "superAuthorUser") {
-              navigate("/author/dashboard");
-              return setIsOpen(false);
-            }
-            return setIsOpen(false);
-          }}
-          className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded mb-[5px] hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
-        >
-          Author Dashboard{" "}
-        </button>
-        <button
-          onClick={() => navigate("/edit-profile")}
+          onClick={() => navigate('/edit-profile')}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
         >
           Account Settings
@@ -81,7 +80,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
         <hr className="w-100 border-blue-600 my-[10px] opacity-[40%]" />
 
         <button
-          onClick={() => navigate("/owned/qr")}
+          onClick={() => navigate('/owned/qr')}
           className="bg-blue-100 text-gray-800 w-100 p-[10px] rounded hover:bg-blue-500 hover:text-white transition-all cursor-pointer laptop:text-sm active:bg-blue-700"
         >
           QR Code
@@ -93,7 +92,7 @@ function UserPopupDesktop({ isOpen, setIsOpen }: Props) {
           onClick={logoutButtonFunction}
           className="bg-blue-600 text-white w-100 p-[10px] rounded laptop:text-sm hover:bg-blue-400"
         >
-          Logout{" "}
+          Logout{' '}
         </button>
       </div>
 
