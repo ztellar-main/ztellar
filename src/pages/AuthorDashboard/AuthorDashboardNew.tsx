@@ -66,9 +66,9 @@ const AuthorDashboardNew = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="">
         {openSidebar && <Sidebar setOpenSidebar={setOpenSidebar} />}
-        <div className="grow">
+        <div className="">
           {/* 1ST SECTION START - PAGE NAME */}
           <section className="w-full mb-2 text-2xl flex items-center bg-blue-gray-800 h-[57px] px-4 text-white">
             {!openSidebar && (
@@ -94,60 +94,62 @@ const AuthorDashboardNew = () => {
               List of Active Events
             </h1>
 
-            <table className="border-collapse border border-slate-500 w-full min-w-[670px] ">
-              <thead>
-                <tr>
-                  <th className="p-3 text-left border border-slate-600">#</th>
-                  <th className="p-3 text-left border border-slate-600">
-                    Event Name
-                  </th>
-                  <th className="p-3 text-left border border-slate-600">
-                    Number of Registered
-                  </th>
-                  <th className="p-3 text-left border border-slate-600">
-                    Total Sale
-                  </th>
-                  <th className="p-3 text-left border border-slate-600">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.events?.map((data: any, i: any) => {
-                  const totalAuthorPayment = data?.registered?.reduce(
-                    (sum: any, registration: any) =>
-                      sum + (registration.author_payment || 0),
-                    0
-                  );
-                  return (
-                    <tr key={i}>
-                      <td className="p-3 text-left border border-slate-600">
-                        {i + 1}
-                      </td>
-                      <td className="p-3 text-left border border-slate-600">
-                        {data?.title}
-                      </td>
-                      <td className="p-3 text-left border border-slate-600">
-                        {data?.registered?.length}
-                      </td>
-                      <td className="p-3 text-left border border-slate-600">
-                        {formatToPeso(totalAuthorPayment)}
-                      </td>
-                      <td className="p-3 text-left border border-slate-600">
-                        <button
-                          onClick={() =>
-                            navigate(`/author-new/view-event?id=${data?._id}`)
-                          }
-                          className=""
-                        >
-                          Open
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
+                <thead>
+                  <tr>
+                    <th className="p-3 text-left border border-slate-600">#</th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Event Name
+                    </th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Number of Registered
+                    </th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Total Sale
+                    </th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.events?.map((data: any, i: any) => {
+                    const totalAuthorPayment = data?.registered?.reduce(
+                      (sum: any, registration: any) =>
+                        sum + (registration.author_payment || 0),
+                      0
+                    );
+                    return (
+                      <tr key={i}>
+                        <td className="p-3 text-left border border-slate-600">
+                          {i + 1}
+                        </td>
+                        <td className="p-3 text-left border border-slate-600">
+                          {data?.title}
+                        </td>
+                        <td className="p-3 text-left border border-slate-600">
+                          {data?.registered?.length}
+                        </td>
+                        <td className="p-3 text-left border border-slate-600">
+                          {formatToPeso(totalAuthorPayment)}
+                        </td>
+                        <td className="p-3 text-left border border-slate-600">
+                          <button
+                            onClick={() =>
+                              navigate(`/author-new/view-event?id=${data?._id}`)
+                            }
+                            className=""
+                          >
+                            Open
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </section>
           {/* 3RD SECTION END - LIST OF ACTIVE EVENTS */}
         </div>
