@@ -476,8 +476,7 @@ const ViewEvent = () => {
           {/* 2ND SECTION START */}
           <section className="w-full p-2 bg-gray-100 text-blue-gray-900">
             <p className="line-clamp-2 font-semibold">
-              Title :
-              <span className="underline">This is a sample event title</span>
+              Title :<span className="underline">{data?.eventTitle}</span>
             </p>
           </section>
           {/* 2ND SECTION END */}
