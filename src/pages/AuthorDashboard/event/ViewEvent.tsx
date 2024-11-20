@@ -24,7 +24,6 @@ import {
   Legend,
 } from 'chart.js';
 import { exportToExcel } from '../../../utils/excelDownloader';
-import toas from '../../../utils/toas';
 
 ChartJS.register(
   CategoryScale,
