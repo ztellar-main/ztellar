@@ -57,17 +57,17 @@ const SponsorNowAcquirePage = () => {
     const bootName = data?.booth?.booth_name;
     const bootType = data?.booth?.booth_type;
     const bootPrice = data?.booth?.booth_price;
-    // if (
-    //   !companyName ||
-    //   !companyAddress ||
-    //   !companyTinNumber ||
-    //   !companyContact ||
-    //   !companyContactPerson ||
-    //   !mainLineOfBusiness ||
-    //   !learnUs
-    // ) {
-    //   return toas('Please fill up all the fields', 'error');
-    // }
+    if (
+      !companyName ||
+      !companyAddress ||
+      !companyTinNumber ||
+      !companyContact ||
+      !companyContactPerson ||
+      !mainLineOfBusiness ||
+      !learnUs
+    ) {
+      return toas('Please fill up all the fields', 'error');
+    }
     setBUttonLoading(true);
     try {
       await axios({

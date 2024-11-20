@@ -24,6 +24,7 @@ import {
   Legend,
 } from 'chart.js';
 import { exportToExcel } from '../../../utils/excelDownloader';
+import toas from '../../../utils/toas';
 
 ChartJS.register(
   CategoryScale,
@@ -61,6 +62,10 @@ const ListOfSponsorsPopup = ({
 
   // UPDATE BOOTH STATUS BUTTON FUNCTION
   const updateBoothButtonFunction = async () => {
+    if (boothStatus === data?.booth_status) {
+      return;
+    }
+
     try {
       await axios({
         method: 'put',
@@ -103,130 +108,143 @@ const ListOfSponsorsPopup = ({
 
         <hr className="border-0 border-t border-blue-gray-100 my-3" />
 
-        {/* RESERVED BY */}
-        <h1 className="text-xl font-bold mb-3">Reserved By:</h1>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company Name :</span>{' '}
-          {data?.reserved_company_name}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company Address :</span>{' '}
-          {data?.reserve_company_address}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company TIN Number :</span>{' '}
-          {data?.reserve_tin_number}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company Contact :</span>{' '}
-          {data?.reserve_company_contact}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company Main Line of Business :</span>{' '}
-          {data?.reserve_mainline_business}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Company Contact Person :</span>{' '}
-          {data?.reserve_contact_person}
-        </p>
-        <p className="text-base mb-3">
-          <span className="font-semibold">Where did you learn from us? :</span>{' '}
-          {data?.reserve_solicitor}
-        </p>
 
-        <hr className="border-0 border-t border-blue-gray-100 my-3" />
 
-        {/* BOOTH STATUS UPDATE LOGS */}
-        <h1 className="text-xl font-bold mb-3">Booth Status Update Logs:</h1>
+        <div className={`${data?.booth_status === "Available" && "hidden"}`}>
+          {/* RESERVED BY */}
+          <h1 className="text-xl font-bold mb-3">Reserved By:</h1>
+          <p className="text-base mb-3">
+            <span className="font-semibold">Company Name :</span>{' '}
+            {data?.reserved_company_name}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">Company Address :</span>{' '}
+            {data?.reserve_company_address}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">Company TIN Number :</span>{' '}
+            {data?.reserve_tin_number}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">Company Contact :</span>{' '}
+            {data?.reserve_company_contact}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">
+              Company Main Line of Business :
+            </span>{' '}
+            {data?.reserve_mainline_business}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">Company Contact Person :</span>{' '}
+            {data?.reserve_contact_person}
+          </p>
+          <p className="text-base mb-3">
+            <span className="font-semibold">
+              Where did you learn from us? :
+            </span>{' '}
+            {data?.reserve_solicitor}
+          </p>
 
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto border-collapse border border-gray-200">
-            <thead>
-              <tr>
-                <th className="p-3 text-left border border-slate-600">Email</th>
-                <th className="p-3 text-left border border-slate-600">Date</th>
-                <th className="p-3 text-left border border-slate-600">
-                  Booth Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.booth_status_update_logs?.map((data: any, i: any) => {
-                const date = new Date(data?.date);
-                return (
-                  <tr key={i}>
-                    <td className="p-3 text-left border border-slate-600">
-                      {data?.email}
-                    </td>
-                    <td className="p-3 text-left border border-slate-600">
-                      {date?.toLocaleDateString()} {date?.toLocaleTimeString()}
-                    </td>
-                    <td className="p-3 text-left border border-slate-600">
-                      {data?.booth_status_value}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+          <hr className="border-0 border-t border-blue-gray-100 my-3" />
 
-        <hr className="border-0 border-t border-blue-gray-100 my-3" />
+          {/* BOOTH STATUS UPDATE LOGS */}
+          <h1 className="text-xl font-bold mb-3">Booth Status Update Logs:</h1>
 
-        {/* BOOTH STATUS UPDATE */}
-        <h1 className="text-xl font-bold mb-3">Update Booth Status:</h1>
-        <div className="mb-3">
-          <button
-            onClick={() => setOpenDropdown((e: any) => !e)}
-            className="p-3 border w-full flex items-center justify-between text-base"
-          >
-            {boothStatus}
-            <MdOutlineKeyboardArrowDown />
-          </button>
-          {openDropdown && (
-            <div
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto border-collapse border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="p-3 text-left border border-slate-600">
+                    Email
+                  </th>
+                  <th className="p-3 text-left border border-slate-600">
+                    Date
+                  </th>
+                  <th className="p-3 text-left border border-slate-600">
+                    Booth Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.booth_status_update_logs?.map((data: any, i: any) => {
+                  const date = new Date(data?.date);
+                  return (
+                    <tr key={i}>
+                      <td className="p-3 text-left border border-slate-600">
+                        {data?.email}
+                      </td>
+                      <td className="p-3 text-left border border-slate-600">
+                        {date?.toLocaleDateString()}{' '}
+                        {date?.toLocaleTimeString()}
+                      </td>
+                      <td className="p-3 text-left border border-slate-600">
+                        {data?.booth_status_value}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <hr className="border-0 border-t border-blue-gray-100 my-3" />
+
+          {/* BOOTH STATUS UPDATE */}
+          <h1 className="text-xl font-bold mb-3">Update Booth Status:</h1>
+          <div className="mb-3">
+            <button
               onClick={() => setOpenDropdown((e: any) => !e)}
-              className="w-full border p-3 border-t-0 text-base text-blue-gray-900"
+              className="p-3 border w-full flex items-center justify-between text-base"
             >
-              <p
-                onClick={() => setBootStatus('Reserved (Pending)')}
-                className="text-blue-gray-900 mb-3 cursor-pointer"
+              {boothStatus}
+              <MdOutlineKeyboardArrowDown />
+            </button>
+            {openDropdown && (
+              <div
+                onClick={() => setOpenDropdown((e: any) => !e)}
+                className="w-full border p-3 border-t-0 text-base text-blue-gray-900"
               >
-                Reserved (Pending)
-              </p>
-              <p
-                onClick={() => setBootStatus('Moa Approved')}
-                className="text-blue-gray-900 mb-3 cursor-pointer"
-              >
-                Moa Approved
-              </p>
-              <p
-                onClick={() => setBootStatus('Downpayment (20%)')}
-                className="text-blue-gray-900 mb-3 cursor-pointer"
-              >
-                Downpayment (20%)
-              </p>
-              <p
-                onClick={() => setBootStatus('Pending Payment')}
-                className="text-blue-gray-900 mb-3 cursor-pointer"
-              >
-                Pending Payment
-              </p>
-              <p
-                onClick={() => setBootStatus('Acquired')}
-                className="text-blue-gray-900 cursor-pointer"
-              >
-                Acquired
-              </p>
-            </div>
-          )}
+                <p
+                  onClick={() => setBootStatus('Reserved (Pending)')}
+                  className="text-blue-gray-900 mb-3 cursor-pointer"
+                >
+                  Reserved (Pending)
+                </p>
+                <p
+                  onClick={() => setBootStatus('Moa Approved')}
+                  className="text-blue-gray-900 mb-3 cursor-pointer"
+                >
+                  Moa Approved
+                </p>
+                <p
+                  onClick={() => setBootStatus('Downpayment (20%)')}
+                  className="text-blue-gray-900 mb-3 cursor-pointer"
+                >
+                  Downpayment (20%)
+                </p>
+                <p
+                  onClick={() => setBootStatus('Pending Payment')}
+                  className="text-blue-gray-900 mb-3 cursor-pointer"
+                >
+                  Pending Payment
+                </p>
+                <p
+                  onClick={() => setBootStatus('Acquired')}
+                  className="text-blue-gray-900 cursor-pointer"
+                >
+                  Acquired
+                </p>
+              </div>
+            )}
+          </div>
+          <button
+            onClick={updateBoothButtonFunction}
+            className="w-full p-3 rounded bg-blue-gray-800 text-white"
+          >
+            Update Booth Status
+          </button>
         </div>
-        <button
-          onClick={updateBoothButtonFunction}
-          className="w-full p-3 rounded bg-blue-gray-800 text-white"
-        >
-          Update Booth Status
-        </button>
       </div>
       {/* BACKGROUND CLOSER */}
       <div
