@@ -90,6 +90,9 @@ import SponsorNowAcquirePage from './pages/SponsorNowAcquirePage';
 import AuthorDashboardNew from './pages/AuthorDashboard/AuthorDashboardNew';
 import ViewEvent from './pages/AuthorDashboard/event/ViewEvent';
 
+// GENERAL
+import NewHome from './pages/general/NewHome';
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -276,6 +279,8 @@ function App() {
                 element={<AuthorDashboardNew />}
               />
               <Route path="/author-new/view-event" element={<ViewEvent />} />
+
+              <Route path="/home" element={<NewHome />} />
             </Routes>
           </Router>
         </QueryClientProvider>

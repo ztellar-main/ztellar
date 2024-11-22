@@ -113,13 +113,13 @@ const SponsorNowAcquirePage = () => {
 
       <section className="text-blue-gray-800 w-full ml-[50%] translate-x-[-50%] p-3 md:w-[600px]">
         <p className="text-center text-lg font-semibold mb-1">
-          Boot name: {data?.booth?.booth_name}
+          Booth name: {data?.booth?.booth_name}
         </p>
         <p className="text-center text-lg font-semibold mb-1">
-          Boot type: {data?.booth?.booth_type}
+          Booth type: {data?.booth?.booth_type}
         </p>
         <p className="text-center text-lg font-semibold mb-3">
-          Boot price: {formatToPeso(data?.booth?.booth_price)}
+          Booth price: {formatToPeso(data?.booth?.booth_price)}
         </p>
         {/* COMPANY NAME */}
         <input

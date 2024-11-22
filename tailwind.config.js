@@ -28,6 +28,21 @@ export default withMt({
 
         mobileMin: { min: '500px' },
         // => @media (min-width: 767px) { ... }
+        'max-md': { max: '767px' },
+        sm: '640px',
+        // => @media (min-width: 640px) { ... }
+
+        md: '768px',
+        // => @media (min-width: 768px) { ... }
+
+        lg: '1024px',
+        // => @media (min-width: 1024px) { ... }
+
+        xl: '1280px',
+        // => @media (min-width: 1280px) { ... }
+
+        '2xl': '1536px',
+        // => @media (min-width: 1536px) { ... }
       },
       width: {
         100: '100%',
@@ -39,6 +54,9 @@ export default withMt({
       },
       borderRadius: {
         circle: '50%',
+      },
+      colors: {
+        primary: '#1A66CC',
       },
     },
   },
