@@ -19,7 +19,6 @@ type PaymentMethodCardProps = {
 const PaymentMethodCard = ({
   selectedOption,
   setSelectedOption,
-
   name,
   logo,
   value,

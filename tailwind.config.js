@@ -57,6 +57,10 @@ export default withMt({
       },
       colors: {
         primary: '#1A66CC',
+        violet1: '#7E57C2',
+        orange1: '#FF7043',
+        accent1: '#243B55',
+        accent2: '#2F2F2F',
       },
     },
   },

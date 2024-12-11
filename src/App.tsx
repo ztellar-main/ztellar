@@ -89,6 +89,9 @@ import SponsorNowAcquirePage from './pages/SponsorNowAcquirePage';
 // AUTHOR NEW
 import AuthorDashboardNew from './pages/AuthorDashboard/AuthorDashboardNew';
 import ViewEvent from './pages/AuthorDashboard/event/ViewEvent';
+import AuthorDashboardUpdateAccount from './pages/AuthorDashboard/AuthorDashboardUpdateAccount';
+import AuthorDashboardSettings from './pages/AuthorDashboard/AuthorDashboardSettings';
+import AuthorDashboardAccountDetails from './pages/AuthorDashboard/AuthorDashboardAccountDetails';
 
 // GENERAL
 import NewHome from './pages/general/NewHome';
@@ -273,13 +276,26 @@ function App() {
                   element={<SponsorNowAcquirePage />}
                 />
               </Route>
-              {/* AUTHOR DASHBOARD NEW */}
+              {/* AUTHOR DASHBOARD NEW START */}
               <Route
                 path="/author-new/dashboard"
                 element={<AuthorDashboardNew />}
               />
               <Route path="/author-new/view-event" element={<ViewEvent />} />
+              <Route
+                path="/author-new/update-account-details"
+                element={<AuthorDashboardUpdateAccount />}
+              />
+              <Route
+                path="/author-new/settings"
+                element={<AuthorDashboardSettings />}
+              />
+              <Route
+                path="/author-new/account-details"
+                element={<AuthorDashboardAccountDetails />}
+              />
 
+              {/* AUTHOR DASHBOARD NEW END */}
               <Route path="/home" element={<NewHome />} />
             </Routes>
           </Router>

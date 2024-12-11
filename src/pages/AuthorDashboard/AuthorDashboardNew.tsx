@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 type CardProps = {
   title: string;
   value: number;
+  bgColor: string;
 };
 function formatToPeso(number: number) {
   return new Intl.NumberFormat('en-PH', {
@@ -20,9 +21,9 @@ function formatToPeso(number: number) {
     currency: 'PHP',
   }).format(number);
 }
-const Card = ({ title, value }: CardProps) => {
+const Card = ({ title, value, bgColor }: CardProps) => {
   return (
-    <div className="bg-blue-gray-50 rounded p-4 text-blue-gray-800">
+    <div className={`bg-blue-gray-50 rounded p-4 ${bgColor} text-white`}>
       {/* TITLE */}
       <h1 className="text-xl font-bold mb-2">{title}</h1>
       <h1 className="text-4xl font-bold">{formatToPeso(value)}</h1>
@@ -84,7 +85,11 @@ const AuthorDashboardNew = () => {
 
           {/* 2ND SECTION START - CARDS */}
           <section className="p-8 w-full grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card title="Current Balance" value={data?.currentBalance} />
+            <Card
+              title="Current Balance"
+              value={data?.currentBalance}
+              bgColor="bg-orange1"
+            />
           </section>
           {/* 2ND SECTION END - CARDS */}
 
@@ -96,7 +101,7 @@ const AuthorDashboardNew = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
-                <thead>
+                <thead className="bg-indigo-900 text-white">
                   <tr>
                     <th className="p-3 text-left border border-slate-600">#</th>
                     <th className="p-3 text-left border border-slate-600">
@@ -121,7 +126,7 @@ const AuthorDashboardNew = () => {
                       0
                     );
                     return (
-                      <tr key={i}>
+                      <tr key={i} className="even:bg-gray-100">
                         <td className="p-3 text-left border border-slate-600">
                           {i + 1}
                         </td>

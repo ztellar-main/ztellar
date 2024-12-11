@@ -22,6 +22,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from 'chart.js';
 import { exportToExcel } from '../../../utils/excelDownloader';
 
@@ -32,7 +33,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 function formatToPeso(number: number) {
@@ -107,9 +109,7 @@ const ListOfSponsorsPopup = ({
 
         <hr className="border-0 border-t border-blue-gray-100 my-3" />
 
-
-
-        <div className={`${data?.booth_status === "Available" && "hidden"}`}>
+        <div className={`${data?.booth_status === 'Available' && 'hidden'}`}>
           {/* RESERVED BY */}
           <h1 className="text-xl font-bold mb-3">Reserved By:</h1>
           <p className="text-base mb-3">
@@ -268,7 +268,7 @@ const ListOfSponsorsTableRowComponent = ({
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
-    <tr>
+    <tr className="even:bg-gray-100">
       <td className="p-3 text-left border border-slate-600">
         {data?.booth_name}
       </td>
@@ -311,7 +311,7 @@ const ListOfRegisteredTableRowComponents = ({
 
   const [openPopup, setOpenPopup] = useState(false);
   return (
-    <tr>
+    <tr className="even:bg-gray-100">
       <td className="p-3 text-left border border-slate-600">{index + 1}</td>
       <td className="p-3 text-left border border-slate-600">
         {data?._id?.email}
@@ -375,10 +375,11 @@ type CardComponentProps = {
   title: string;
   value: any;
   type: string;
+  bgColor: string;
 };
-const CardComponent = ({ title, value, type }: CardComponentProps) => {
+const CardComponent = ({ title, value, type, bgColor }: CardComponentProps) => {
   return (
-    <div className="text-blue-gray-900 bg-blue-gray-50 p-8 rounded">
+    <div className={`text-blue-gray-900 p-8 rounded ${bgColor} text-white`}>
       <h1 className="text-xl font-bold mb-2">{title}</h1>
       <h1 className="text-4xl font-bold">
         {type === 'currency' && formatToPeso(value)}
@@ -415,8 +416,12 @@ const ViewEvent = () => {
   const [graphData, setGraphData] = useState(lineChartData);
   console.log(graphData);
   const options = {
+    responsive: true,
     scales: {
       y: {
+        beginAtZero: true,
+      },
+      x: {
         beginAtZero: true,
       },
     },
@@ -439,7 +444,10 @@ const ViewEvent = () => {
           {
             label: 'Weekly Registration',
             data: res?.data?.chartWeek?.chartWeekDataset,
-            borderColor: 'blue',
+            borderColor: '#7E57C2', // Line color
+            backgroundColor: 'rgba(159, 75, 192, 0.2)', // Shaded area color
+            fill: true, // Enables the shaded area
+            tension: 0.4, // Smooths the line
           },
         ],
       };
@@ -491,8 +499,8 @@ const ViewEvent = () => {
           </section>
           {/* 1ST SECTION END - PAGE NAME */}
           {/* 2ND SECTION START */}
-          <section className="w-full p-2 bg-gray-100 text-blue-gray-900">
-            <p className="line-clamp-2 font-semibold">
+          <section className="w-full p-2 bg-indigo-900 ">
+            <p className="line-clamp-2 font-semibold text-white">
               Title :<span className="underline">{data?.eventTitle}</span>
             </p>
           </section>
@@ -500,21 +508,29 @@ const ViewEvent = () => {
 
           {/* 3RD SECTION START */}
           <section className="p-2 text-blue-gray-900 md:p-8 grid gap-2 md:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
-            <CardComponent title="TOTAL" value={data?.total} type="currency" />
+            <CardComponent
+              title="TOTAL"
+              value={data?.total}
+              type="currency"
+              bgColor="bg-violet1"
+            />
             <CardComponent
               title="TOTAL NUMBER OF REGISTERED"
               value={data?.numberOfRegistered}
               type="asd"
+              bgColor="bg-orange1"
             />
             <CardComponent
               title="REGISTERED - FACE TO FACE"
               value={data?.numberOfRegisteredFaceToFace}
               type="asd"
+              bgColor="bg-accent1"
             />
             <CardComponent
               title="REGISTERED - VIRTUAL"
               value={data?.numberOfRegisteredVirtual}
               type="asd"
+              bgColor="bg-accent2"
             />
             <div className="p-8 bg-blue-gray-50">
               <h1 className="text-xl font-bold mb-2">SHORTCUTS</h1>
@@ -555,7 +571,7 @@ const ViewEvent = () => {
                 onClick={() =>
                   handleExportExcel(data?.excel, 'Registered Users')
                 }
-                className="p-3 bg-blue-gray-800 text-white rounded"
+                className="p-3 bg-orange1 text-white rounded"
               >
                 DOWNLOAD EXCEL FILE
               </button>
@@ -563,7 +579,7 @@ const ViewEvent = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
-                <thead className="bg-blue-gray-800 text-white">
+                <thead className="bg-indigo-900 text-white">
                   <tr>
                     <th className="p-3 text-left border border-slate-600 ">
                       #
@@ -612,7 +628,7 @@ const ViewEvent = () => {
             <h1 className="text-2xl font-bold mb-2">List of Sponsors</h1>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
-                <thead className="bg-blue-gray-800 text-white">
+                <thead className="bg-indigo-900 text-white">
                   <tr>
                     <th className="p-3 text-left border border-slate-600">
                       Booth Name

@@ -1,11 +1,14 @@
 // ICONS
 import { IoMdClose } from 'react-icons/io';
 import { MdOutlineSpaceDashboard } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { IoSettingsOutline } from 'react-icons/io5';
 
 type Props = {
   setOpenSidebar: any;
 };
 const Sidebar = ({ setOpenSidebar }: Props) => {
+  const navigate = useNavigate();
   return (
     <>
       {/* BACKGROUND CLOSER */}
@@ -34,9 +37,22 @@ const Sidebar = ({ setOpenSidebar }: Props) => {
 
           {/* 2ND SECTION START - BUTTON LINKS */}
           <section className="w-full text-blue-gray-900">
-            <button className="border p-3 flex items-center text-lg">
+            {/* dashboard */}
+            <button
+              onClick={() => navigate('/author-new/dashboard')}
+              className="border p-3 flex items-center text-lg"
+            >
               <MdOutlineSpaceDashboard className="mr-4" />
               Dashboard
+            </button>
+
+            {/* SETTINGS */}
+            <button
+              onClick={() => navigate('/author-new/settings')}
+              className="border p-3 flex items-center text-lg"
+            >
+              <IoSettingsOutline className="mr-4" />
+              Settings
             </button>
           </section>
           {/* 2ND SECTION END - BUTTON LINKS */}
