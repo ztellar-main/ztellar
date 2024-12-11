@@ -4,7 +4,6 @@ import Sidebar from '../../components/AuthorDashboard/Sidebar';
 // ICONS
 import { CiMenuBurger } from 'react-icons/ci';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
