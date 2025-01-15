@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../state/store';
 import toas from '../utils/toas';
 
-
 function formatToPeso(number: any) {
   return new Intl.NumberFormat('en-PH', {
     style: 'currency',
@@ -208,8 +207,17 @@ const ChoosePaymentMethodComponents = ({
 }: ChoosePaymentMethodComponentsProps) => {
   const [loading, setLoading] = useState(false);
   const nextFunction = async () => {
+    console.log(amount);
     setLoading(true);
     try {
+      console.log({
+        amount,
+        title,
+        id,
+        authorId,
+        registrationType,
+        paymentMethod,
+      });
       const res = await axios({
         method: 'post',
         url: '/paymongo/create-payment-intent-for-event',
@@ -322,7 +330,7 @@ const ChoosePriceComponent = ({
         {prices?.map((price: any, i: any) => {
           return (
             <option key={i} value={`${price?.priceType}/${price?.price}`}>
-              {price?.priceType} - {price?.price}
+              {price?.priceType} - {formatToPeso(price?.price)}
             </option>
           );
         })}
@@ -373,17 +381,18 @@ const BuyProduct = () => {
     let transactionFee: any;
     const numberAmount = Number(amount);
 
-    const ztellarFee = numberAmount * Number(fee);
-
-    console.log(fee);
+    let ztellarFee;
 
     if (componentState !== 'complete-payment') return;
 
     if (selectedOption?.value === 'gcash') {
       const rate = 0.022;
+      const ztellar = Number(fee) - rate;
+      ztellarFee = numberAmount * Number(ztellar);
       const f = 1 - rate;
       const subAmount = numberAmount / f;
-      finalAmount = Math.ceil(subAmount) + ztellarFee;
+      const finalSubAmount = Math.ceil(subAmount) + Math.ceil(ztellarFee);
+      finalAmount = Math.ceil(Number(finalSubAmount));
       transactionFee = finalAmount - numberAmount;
       setTransactionFee(transactionFee);
       return setPrice(finalAmount);
@@ -391,9 +400,12 @@ const BuyProduct = () => {
 
     if (selectedOption?.value === 'paymaya') {
       const rate = 0.019;
+      const ztellar = Number(fee) - rate;
+      ztellarFee = numberAmount * Number(ztellar);
       const f = 1 - rate;
       const subAmount = numberAmount / f;
-      finalAmount = Math.ceil(subAmount) + ztellarFee;
+      const finalSubAmount = Math.ceil(subAmount) + Math.ceil(ztellarFee);
+      finalAmount = Math.ceil(Number(finalSubAmount));
       transactionFee = finalAmount - numberAmount;
       setTransactionFee(transactionFee);
       return setPrice(finalAmount);
