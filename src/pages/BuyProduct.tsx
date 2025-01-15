@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../state/store';
 import toas from '../utils/toas';
-import { responsive } from '@cloudinary/react';
+
 
 function formatToPeso(number: any) {
   return new Intl.NumberFormat('en-PH', {
@@ -435,7 +435,7 @@ const BuyProduct = () => {
             />
           </div>
 
-          <h1 className="text-[#333333] text-xl font-bold">Sample title</h1>
+          <h1 className="text-[#333333] text-xl font-bold">{data?.title}</h1>
 
           <table className="w-full border text-sm tracking-wide">
             <thead>
