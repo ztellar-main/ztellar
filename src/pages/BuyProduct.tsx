@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../state/store';
 import toas from '../utils/toas';
+import { responsive } from '@cloudinary/react';
 
 function formatToPeso(number: any) {
   return new Intl.NumberFormat('en-PH', {
@@ -224,6 +225,7 @@ const ChoosePaymentMethodComponents = ({
           authorization: `Token ${token}`,
         },
       });
+      console.log(res);
       setPaymentIntentId(res?.data?.data?.id);
       setClientKey(res?.data?.data?.attributes?.client_key);
       setComponentState('complete-payment');
