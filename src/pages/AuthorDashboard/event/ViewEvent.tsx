@@ -481,6 +481,8 @@ const ViewEvent = () => {
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  console.log(sponsorsBoothData);
   return (
     <>
       <div className="w-full">

@@ -50,6 +50,7 @@ import OwnedEventQuiz from './pages/Owned/OwnedEventQuiz';
 // PAYMONGO
 import PaymongoSuccessRedirect from './pages/Paymongo/PaymongoSuccessRedirect';
 import CoursePaymongoSuccessRedirect from './pages/Paymongo/CoursePaymongoSuccessRedirect';
+import EventPaymongoSuccessRedirect from './pages/Paymongo/EventPaymongoSuccessRedirect';
 
 // ADMIN
 // course
@@ -139,6 +140,11 @@ function App() {
                 path="/process-payment"
                 element={<CoursePaymongoSuccessRedirect />}
               />
+                <Route
+                path="/process-payment/e"
+                element={<EventPaymongoSuccessRedirect />}
+              />
+              
               {/* OWNED */}
               <Route path="/owned" element={<Owned />} />
               <Route path="/owned/event/live" element={<OwnedEventLive />} />

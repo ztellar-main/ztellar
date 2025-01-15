@@ -61,6 +61,7 @@ export default withMt({
         orange1: '#FF7043',
         accent1: '#243B55',
         accent2: '#2F2F2F',
+        tcolor: '#333333',
       },
     },
   },
