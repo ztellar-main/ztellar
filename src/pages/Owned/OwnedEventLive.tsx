@@ -1,43 +1,28 @@
-import { useEffect, useRef, useState } from "react";
-import OwnedSEventSidebar from "../../components/Owned/OwnedSEventSidebar";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAppSelector } from "../../state/store";
-import { Navigate } from "react-router-dom";
-import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useState } from 'react';
+import OwnedSEventSidebar from '../../components/Owned/OwnedSEventSidebar';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+// import { useAppSelector } from '../../state/store';
+// import { Navigate } from 'react-router-dom';
+// import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
-import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const OwnedEventLive = () => {
-  const token = useAppSelector((e) => e.user.token);
+  // const token = useAppSelector((e) => e.user.token);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const productId = query.get("id") || "";
+  const productId = query.get('id') || '';
   const [openSidebar, setOpenSide] = useState(true);
 
-  const scrollInto: any = useRef(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      scrollInto.current?.scrollIntoView({ behavior: "smooth" });
-    }, 2000);
-  }, []);
-
-  const {
-    data: eventData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["live"],
+  const { data: zoomJoinUrl, isLoading } = useQuery({
+    queryKey: ['live'],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
-        url: `users/get-user-owned-event?id=${productId}`,
-        headers: {
-          Authorization: `Token ${token}`,
-        },
+        method: 'get',
+        url: `/product/get-zoom-url-for-client?id=${productId}`,
       });
 
       return res?.data;
@@ -52,44 +37,46 @@ const OwnedEventLive = () => {
     );
   }
 
-  if (isError) {
-    return <Navigate to="/owned" />;
-  }
+  console.log(zoomJoinUrl);
 
-  const myMeeting = (element: any) => {
-    // Create instance object from Kit Token.
-    const liveId = eventData.eventData?._id?.liveId;
-    const qrCode = eventData.eventData?.qr_code;
-    const fname = eventData.userData?.fname;
-    const lname = eventData.userData?.lname;
-    const fullName = `${fname} ${lname}`;
-    const appID = 1419563012;
-    const serverSecret = "7f853fd9293aa601543f494dabd96943";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-      appID,
-      serverSecret,
-      liveId,
-      qrCode,
-      fullName
-    );
+  // if (isError) {
+  //   return <Navigate to="/owned" />;
+  // }
 
-    const zp = ZegoUIKitPrebuilt.create(kitToken);
+  // const myMeeting = (element: any) => {
+  //   // Create instance object from Kit Token.
+  //   const liveId = eventData.eventData?._id?.liveId;
+  //   const qrCode = eventData.eventData?.qr_code;
+  //   const fname = eventData.userData?.fname;
+  //   const lname = eventData.userData?.lname;
+  //   const fullName = `${fname} ${lname}`;
+  //   const appID = 1419563012;
+  //   const serverSecret = '7f853fd9293aa601543f494dabd96943';
+  //   const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+  //     appID,
+  //     serverSecret,
+  //     liveId,
+  //     qrCode,
+  //     fullName
+  //   );
 
-    zp.joinRoom({
-      container: element,
-      scenario: {
-        mode: ZegoUIKitPrebuilt.LiveStreaming,
-        config: {
-          role: ZegoUIKitPrebuilt.Audience,
-        },
-      },
-      showPreJoinView: false,
-      lowerLeftNotification: {
-        showUserJoinAndLeave: true, // Whether to display notifications on the lower left area when participants join and leave the room. Displayed by default.
-        showTextChat: true, // Whether to display the latest messages on the lower left area. Displayed by default.
-      },
-    });
-  };
+  //   const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+  //   zp.joinRoom({
+  //     container: element,
+  //     scenario: {
+  //       mode: ZegoUIKitPrebuilt.LiveStreaming,
+  //       config: {
+  //         role: ZegoUIKitPrebuilt.Audience,
+  //       },
+  //     },
+  //     showPreJoinView: false,
+  //     lowerLeftNotification: {
+  //       showUserJoinAndLeave: true, // Whether to display notifications on the lower left area when participants join and leave the room. Displayed by default.
+  //       showTextChat: true, // Whether to display the latest messages on the lower left area. Displayed by default.
+  //     },
+  //   });
+  // };
 
   return (
     <div>
@@ -136,11 +123,14 @@ const OwnedEventLive = () => {
           {/* <Live /> */}
 
           {/* <div ref={liveRef} className="class">asdasdas</div> */}
-          <div className="w-100 bg-blue-900 h-[100dvh]">
-            <div ref={myMeeting} className="w-100 h-[100%]" />
+          <div className="w-100 p-4">
+            {/* <div ref={myMeeting} className="w-100 h-[100%]" /> */}
+            <a href={`${zoomJoinUrl?.joinUrl}`}>
+              <button className="border border-gray-500 rounded p-4">
+                Proceed to Live
+              </button>
+            </a>
           </div>
-
-          <div ref={scrollInto} className="w-100" />
         </div>
       </div>
     </div>

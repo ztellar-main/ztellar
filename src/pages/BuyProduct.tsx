@@ -395,6 +395,7 @@ const BuyProduct = () => {
       finalAmount = Math.ceil(Number(finalSubAmount));
       transactionFee = finalAmount - numberAmount;
       setTransactionFee(transactionFee);
+      console.log(finalAmount);
       return setPrice(finalAmount);
     }
 

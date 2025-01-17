@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import AuthorSidebar from "../../components/Author/AuthorSidebar";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAppSelector } from "../../state/store";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import { useLocation } from "react-router-dom";
-import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useEffect, useState } from 'react';
+import AuthorSidebar from '../../components/Author/AuthorSidebar';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useAppSelector } from '../../state/store';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { useLocation } from 'react-router-dom';
+// import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
 const GoLiveEvent = () => {
   const [openSidebar, setOpenSide] = useState(true);
-  const token = useAppSelector((e) => e.user.token);
+  // const token = useAppSelector((e) => e.user.token);
   const user = useAppSelector((state) => state.user.currentUser);
 
   useEffect(() => {
@@ -20,25 +20,73 @@ const GoLiveEvent = () => {
       }
     }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     handleResize();
   }, []);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const eventId = query.get("id") || "";
+  const eventId = query.get('id') || '';
 
   // GET ALL AUTHOR EVENTS
+  // const { data: eventData, isLoading } = useQuery({
+  //   queryKey: ['golive'],
+  //   queryFn: async () => {
+  //     const res = await axios({
+  //       method: 'get',
+  //       url: `/product/get-single-author-event?id=${eventId}`,
+  //       headers: {
+  //         authorization: `Token ${token}`,
+  //       },
+  //     });
+  //     return res?.data;
+  //   },
+  // });
+
+  // const userId = user?._id;
+
+  // const roomId = eventData?.liveId;
+  // const name = `${user?.fname} ${user?.lname}`;
+
+  // const appID = 1419563012;
+  // const serverSecret = '7f853fd9293aa601543f494dabd96943';
+  // const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+  //   appID,
+  //   serverSecret,
+  //   roomId,
+  //   userId,
+  //   name
+  // );
+  // // start the call
+  // const myMeeting = async (element: any) => {
+  //   // Create instance object from Kit Token.
+  //   const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+  //   // start the call
+  //   zp.joinRoom({
+  //     container: element,
+  //     scenario: {
+  //       mode: ZegoUIKitPrebuilt.LiveStreaming,
+  //       config: {
+  //         role: ZegoUIKitPrebuilt.Host,
+  //       },
+  //     },
+  //     showPreJoinView: false,
+  //     lowerLeftNotification: {
+  //       showUserJoinAndLeave: true, // Whether to display notifications on the lower left area when participants join and leave the room. Displayed by default.
+  //       showTextChat: true, // Whether to display the latest messages on the lower left area. Displayed by default.
+  //     },
+  //   });
+  // };
+  const [accessToken, setAccessToken] = useState('');
+
   const { data: eventData, isLoading } = useQuery({
-    queryKey: ["golive"],
+    queryKey: ['get-event-credentials-for-zoom-live'],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
-        url: `/product/get-single-author-event?id=${eventId}`,
-        headers: {
-          authorization: `Token ${token}`,
-        },
+        method: 'get',
+        url: `/product/get-credentials-for-zoom-live?id=${eventId}`,
       });
       return res?.data;
     },
@@ -52,40 +100,38 @@ const GoLiveEvent = () => {
     );
   }
 
-  const userId = user?._id;
+  console.log(eventData?.meetingData?.admin_url);
 
-  const roomId = eventData?.liveId;
-  const name = `${user?.fname} ${user?.lname}`;
+  // get token
+  const getToken = async () => {
+    try {
+      const res = await axios({
+        method: 'get',
+        url: '/product/get-access-token-zoom-live',
+      });
+      setAccessToken(res?.data?.access_token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const appID = 1419563012;
-  const serverSecret = "7f853fd9293aa601543f494dabd96943";
-  const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-    appID,
-    serverSecret,
-    roomId,
-    userId,
-    name
-  );
-  // start the call
-  const myMeeting = async (element: any) => {
-    // Create instance object from Kit Token.
-    const zp = ZegoUIKitPrebuilt.create(kitToken);
-
-    // start the call
-    zp.joinRoom({
-      container: element,
-      scenario: {
-        mode: ZegoUIKitPrebuilt.LiveStreaming,
-        config: {
-          role: ZegoUIKitPrebuilt.Host,
+  // create live function
+  const createLiveFunction = async () => {
+    try {
+      await axios({
+        method: 'post',
+        url: '/product/create-update-zoom-live',
+        data: {
+          topic: eventData?.title,
+          duration: 3600,
+          accessToken: accessToken,
+          adminEmail: user?.email,
+          eventId,
         },
-      },
-      showPreJoinView: false,
-      lowerLeftNotification: {
-        showUserJoinAndLeave: true, // Whether to display notifications on the lower left area when participants join and leave the room. Displayed by default.
-        showTextChat: true, // Whether to display the latest messages on the lower left area. Displayed by default.
-      },
-    });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -130,13 +176,25 @@ const GoLiveEvent = () => {
           <div className="w-100">
             {/* <Loading /> */}
             {/* LIVE */}
-            <div className="w-100 bg-blue-900 h-[calc(100dvh-70px)]">
+            {/* <div className="w-100 bg-blue-900 h-[calc(100dvh-70px)]">
               <div
                 className="myCallContainer"
                 ref={myMeeting}
                 style={{ width: "100%", height: "100%" }}
               />
-            </div>
+            </div> */}
+
+            <button onClick={getToken} className="bg-green-100">
+              Get Access Token
+            </button>
+
+            <button onClick={createLiveFunction} className="bg-red-100">
+              Create Live
+            </button>
+
+            <a href={`${eventData?.meetingData?.admin_url}`}>
+              <button className="">GO TO LIVE</button>
+            </a>
           </div>
         </div>
       </div>
