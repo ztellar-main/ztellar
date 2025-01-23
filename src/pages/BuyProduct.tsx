@@ -189,6 +189,7 @@ type ChoosePaymentMethodComponentsProps = {
   setClientKey: any;
   setComponentState: any;
   paymentMethod: any;
+  fee: any;
 };
 
 const ChoosePaymentMethodComponents = ({
@@ -204,11 +205,12 @@ const ChoosePaymentMethodComponents = ({
   setClientKey,
   setComponentState,
   paymentMethod,
+  fee,
 }: ChoosePaymentMethodComponentsProps) => {
   const [loading, setLoading] = useState(false);
   const nextFunction = async () => {
-    console.log(amount);
     setLoading(true);
+    const transactionFee = Number(amount) * Number(fee);
     try {
       console.log({
         amount,
@@ -217,12 +219,14 @@ const ChoosePaymentMethodComponents = ({
         authorId,
         registrationType,
         paymentMethod,
+
       });
       const res = await axios({
         method: 'post',
         url: '/paymongo/create-payment-intent-for-event',
         data: {
-          amount,
+          amount: transactionFee + Number(amount),
+          baseAmount: amount,
           title,
           id,
           authorId,
@@ -233,7 +237,6 @@ const ChoosePaymentMethodComponents = ({
           authorization: `Token ${token}`,
         },
       });
-      console.log(res);
       setPaymentIntentId(res?.data?.data?.id);
       setClientKey(res?.data?.data?.attributes?.client_key);
       setComponentState('complete-payment');
@@ -353,7 +356,6 @@ const ChoosePriceComponent = ({
 };
 
 const BuyProduct = () => {
-  const [price, setPrice] = useState('');
   const token = useAppSelector((e: any) => e.user.token);
   const [selectedOption, setSelectedOption] = useState({
     name: 'GCash',
@@ -370,48 +372,9 @@ const BuyProduct = () => {
   const [email, setEmail] = useState(`${user?.email}`);
   const [contact, setContact] = useState(`${user?.mobile_number}`);
   const [fee, setFee] = useState('');
-  const [transactionFee, setTransactionFee] = useState('');
 
   // component state
   const [componentState, setComponentState] = useState('regType');
-
-  // transaction function
-  useEffect(() => {
-    let finalAmount: any;
-    let transactionFee: any;
-    const numberAmount = Number(amount);
-
-    let ztellarFee;
-
-    if (componentState !== 'complete-payment') return;
-
-    if (selectedOption?.value === 'gcash') {
-      const rate = 0.022;
-      const ztellar = Number(fee) - rate;
-      ztellarFee = numberAmount * Number(ztellar);
-      const f = 1 - rate;
-      const subAmount = numberAmount / f;
-      const finalSubAmount = Math.ceil(subAmount) + Math.ceil(ztellarFee);
-      finalAmount = Math.ceil(Number(finalSubAmount));
-      transactionFee = finalAmount - numberAmount;
-      setTransactionFee(transactionFee);
-      console.log(finalAmount);
-      return setPrice(finalAmount);
-    }
-
-    if (selectedOption?.value === 'paymaya') {
-      const rate = 0.019;
-      const ztellar = Number(fee) - rate;
-      ztellarFee = numberAmount * Number(ztellar);
-      const f = 1 - rate;
-      const subAmount = numberAmount / f;
-      const finalSubAmount = Math.ceil(subAmount) + Math.ceil(ztellarFee);
-      finalAmount = Math.ceil(Number(finalSubAmount));
-      transactionFee = finalAmount - numberAmount;
-      setTransactionFee(transactionFee);
-      return setPrice(finalAmount);
-    }
-  }, [amount, selectedOption, componentState, fee]);
 
   // query event data
   const { data, isLoading } = useQuery({
@@ -430,6 +393,8 @@ const BuyProduct = () => {
   if (isLoading) {
     return <div className="">Loading</div>;
   }
+
+  const transactionFee = Number(amount) * Number(fee);
 
   return (
     <div className="h-screen bg-[#f9f9f9]  flex items-center justify-center py-[19px]">
@@ -475,7 +440,7 @@ const BuyProduct = () => {
               <tr>
                 <td className="border p-2 text-left tracking-wide">Total</td>
                 <td className="border p-2 text-right tracking-wide">
-                  {formatToPeso(price)}
+                  {formatToPeso(Number(amount) + transactionFee)}
                 </td>
               </tr>
             </tbody>
@@ -507,6 +472,7 @@ const BuyProduct = () => {
               setClientKey={setClientKey}
               setComponentState={setComponentState}
               paymentMethod={selectedOption?.value}
+              fee={fee}
             />
           )}
 

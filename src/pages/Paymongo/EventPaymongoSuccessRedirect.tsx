@@ -12,8 +12,6 @@ const EventPaymongoSuccessRedirect = () => {
   const cid = query.get('cid') || '';
   const pid = query.get('pid') || '';
 
-  console.log(cid, pid);
-
   useEffect(() => {
     const func = async () => {
       try {

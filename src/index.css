@@ -27,4 +27,17 @@ button {
   .tcolor {
     color: #333333;
   }
+  /* custom scroll bar */
+  /* width */
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+  /* track */
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  /* thumb */
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #444e54;
+  }
 }
