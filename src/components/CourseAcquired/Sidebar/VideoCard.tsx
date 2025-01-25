@@ -1,15 +1,43 @@
 import { GoVideo } from 'react-icons/go';
 
-const VideoCard = () => {
+type Props = {
+  videoData: any;
+  userStates: any;
+  setUserStates: any;
+  subjectId: any;
+  subjectTitle: any;
+};
+
+const VideoCard = ({
+  videoData,
+  subjectId,
+  // userStates,
+  setUserStates,
+  subjectTitle,
+}: Props) => {
+  const videoCardOnclickFunction = () => {
+    setUserStates({
+      component: 'video',
+      subject: {
+        subjectTitle,
+        subjectId,
+      },
+      video: {
+        videoTitle: videoData?.data?.title,
+        videoUrl: videoData?.data?.video_public_url,
+        videoId: videoData?._id,
+      },
+    });
+  };
   return (
-    <div className="h-[72px] w-full bg-red-100 flex items-center px-2 py-2">
-      <div className="mr-2 bg-green-50 h-full">
-        <GoVideo />
-      </div>
-      <div className="text-sm line-clamp-2">
-        1. ndustry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it
+    <div
+      onClick={videoCardOnclickFunction}
+      className="h-[60px] w-full  flex items-center px-2 py-2 cursor-pointer hover:bg-blue-gray-50"
+    >
+      <GoVideo className="mr-2 w-[17px] h-[17px] min-w-[17px] min-h-[17px]" />
+
+      <div className="text-sm line-clamp-1 text-blue-gray-900">
+        1. {videoData?.data?.title}
       </div>
     </div>
   );
