@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../state/store';
 import toas from '../utils/toas';
 
@@ -219,7 +219,6 @@ const ChoosePaymentMethodComponents = ({
         authorId,
         registrationType,
         paymentMethod,
-
       });
       const res = await axios({
         method: 'post',
