@@ -22,7 +22,7 @@ const Homepage: React.FC = () => {
           muted
           className="mb-[20px] mt-[50px] mobile:hidden"
         >
-          <source src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/videos%2FhomeDesktop.mp4?alt=media&token=90d856e7-a4a3-4750-82d9-a3df57372099" />
+          <source src="https://firebasestorage.googleapis.com/v0/b/vizcom-6a8e0.appspot.com/o/ztellar%2FBanner%20desktop.mp4?alt=media&token=69a8d998-7797-40cf-ab9b-14377cda894f" />
         </video>
 
         <video
@@ -31,7 +31,7 @@ const Homepage: React.FC = () => {
           muted
           className="mb-[20px] mt-[30px] mobileMin:hidden"
         >
-          <source src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/videos%2FhoMePhone.mp4?alt=media&token=9fc228a3-7e70-4eb0-9c85-ed7601f6e2d3" />
+          <source src="https://firebasestorage.googleapis.com/v0/b/vizcom-6a8e0.appspot.com/o/ztellar%2FBanner%20mobile.mp4?alt=media&token=9aed1938-5b3b-4eb9-b663-d7755f42830b" />
         </video>
 
         <div className="w-full bg-white p-1 flex justify-center items-center flex-col">
