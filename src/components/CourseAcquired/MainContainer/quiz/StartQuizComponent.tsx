@@ -5,12 +5,14 @@ type Props = {
   setStartQuizRefresher: any;
   questionId: any;
   answersList: any;
+
 };
 
 const StartQuizComponent = ({
   setStartQuizRefresher,
   questionId,
   answersList,
+
 }: Props) => {
   const { token } = useAppSelector((state: any) => state?.user);
   const startQuizSubmitFunction = async () => {
@@ -60,7 +62,7 @@ const StartQuizComponent = ({
                 <tr key={i} className="border">
                   <td className="text-xs p-2 tracking-wider border">{i + 1}</td>
                   <td className="text-xs p-2 tracking-wider border">
-                    {answerData?.score}/5
+                    {answerData?.score}/{answerData?.quiz_length}
                   </td>
                   <td className="text-xs p-2 tracking-wider border text-red-600">
                     {answerData?.passed ? 'passed' : 'failed'}

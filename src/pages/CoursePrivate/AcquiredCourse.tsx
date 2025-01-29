@@ -29,7 +29,11 @@ const AcquiredCourse = () => {
     },
   });
 
-  const { data: courseData, isLoading } = useQuery({
+  const {
+    data: courseData,
+    isLoading,
+    isFetched,
+  } = useQuery({
     queryKey: ['get-owned-course-data'],
     queryFn: async () => {
       const res = await axios({
@@ -41,6 +45,8 @@ const AcquiredCourse = () => {
       });
       return res?.data;
     },
+    staleTime: 0,
+    gcTime: 0,
   });
 
   if (isLoading) {
@@ -49,31 +55,33 @@ const AcquiredCourse = () => {
 
   return (
     <>
-      <div className="h-screen bg-red-100 flex">
-        {/* BODY */}
-        {showSidebar && (
-          <Sidebar
-            setShowSidebar={setShowSidebar}
-            courseSubject={courseData?.course_subjects}
-            userStates={userStates}
-            setUserStates={setUserStates}
-          />
-        )}
+      {isFetched && (
+        <div className="h-screen bg-red-100 flex">
+          {/* BODY */}
+          {showSidebar && (
+            <Sidebar
+              setShowSidebar={setShowSidebar}
+              courseSubject={courseData?.course_subjects}
+              userStates={userStates}
+              setUserStates={setUserStates}
+            />
+          )}
 
-        <div className="w-full h-full bg-green-100">
-          <Header setShowSidebar={setShowSidebar} />
-          {/* video and quiz container */}
-          <div className=" w-full bg-white">
-            {userStates?.component === 'video' && (
-              <VideoContainer userStates={userStates} />
-            )}
+          <div className="w-full h-full bg-green-100">
+            <Header setShowSidebar={setShowSidebar} />
+            {/* video and quiz container */}
+            <div className=" w-full bg-white">
+              {userStates?.component === 'video' && (
+                <VideoContainer userStates={userStates} />
+              )}
 
-            {userStates?.component === 'quiz' && (
-              <QuizContainer userStates={userStates} />
-            )}
+              {userStates?.component === 'quiz' && (
+                <QuizContainer userStates={userStates} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

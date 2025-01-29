@@ -3,7 +3,7 @@ import QuizComponent from './QuizComponent';
 import StartQuizComponent from './StartQuizComponent';
 import axios from 'axios';
 import { useAppSelector } from '../../../../state/store';
-import { useState } from 'react';
+import {  useState } from 'react';
 
 type Props = {
   userStates: any;
@@ -13,7 +13,12 @@ const QuizContainer = ({ userStates }: Props) => {
   const { token } = useAppSelector((state: any) => state?.user);
   const [startQuizRefresher, setStartQuizRefresher] = useState(false);
 
-  const { data: quizData, isLoading } = useQuery({
+  const {
+    data: quizData,
+    isLoading,
+    isFetched,
+    refetch
+  } = useQuery({
     queryKey: ['course-quiz-data', startQuizRefresher],
     queryFn: async () => {
       const res = await axios({
@@ -25,31 +30,41 @@ const QuizContainer = ({ userStates }: Props) => {
       });
       return res?.data;
     },
+    staleTime: 0,
+    gcTime: 0,
   });
 
   if (isLoading) {
     return <p>Loading</p>;
   }
 
-  return (
-    <div className="w-full h-[500px] overflow-scroll overflow-x-hidden">
-      {quizData?.message === 'no-answer' && (
-        <StartQuizComponent
-          setStartQuizRefresher={setStartQuizRefresher}
-          questionId={userStates?.quizId}
-          answersList={quizData?.answersList}
-        />
-      )}
+  const questionExpiry =
+    new Date(quizData?.answerExpiryTime)?.getTime() - new Date().getTime();
 
-      {quizData?.message === 'answer' && (
-        <QuizComponent
-          quizData={quizData?.data}
-          quizNumber={quizData?.qNumber}
-          userStates={userStates}
-          setStartQuizRefresher={setStartQuizRefresher}
-        />
+  return (
+    <>
+      {isFetched && (
+        <div className="w-full h-[500px] overflow-scroll overflow-x-hidden">
+          {quizData?.message === 'no-answer' && (
+            <StartQuizComponent
+              setStartQuizRefresher={setStartQuizRefresher}
+              questionId={userStates?.quizId}
+              answersList={quizData?.answersList}
+            />
+          )}
+
+          {quizData?.message === 'answer' && (
+            <QuizComponent
+              quizData={quizData?.data}
+              quizNumber={quizData?.qNumber}
+              userStates={userStates}
+              questionExpiry={questionExpiry}
+              refetch={refetch}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

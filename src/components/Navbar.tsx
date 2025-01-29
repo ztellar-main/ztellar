@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 // ICONS
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoIosArrowDown } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { IoIosArrowDown } from 'react-icons/io';
+import { CiSearch } from 'react-icons/ci';
 
 // COMPONENTS
-import UserPopupDesktop from "./UserPopupDesktop";
-import UserPopupMobileAndDesktop from "./UserPopupMobileAndDesktop";
-import MobileSearchPopup from "./MobileSearchPopup";
-import UserBurgerPopup from "./UserBurgerPopup";
-import { useAppSelector } from "../state/store";
+import UserPopupDesktop from './UserPopupDesktop';
+import UserPopupMobileAndDesktop from './UserPopupMobileAndDesktop';
+import MobileSearchPopup from './MobileSearchPopup';
+import UserBurgerPopup from './UserBurgerPopup';
+import { useAppSelector } from '../state/store';
 
 const Navbar = () => {
   const user = useAppSelector((state) => state.user.currentUser);
@@ -21,11 +21,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchIsOpen, setSearchIsOpen] = useState(false);
   const [burgerIsOpen, setBurgerIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const searchEnterFunction = (e: any) => {
     const title = e.target.value;
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       navigate(`/search?query=${title}`);
       setSearchValue(title);
     }
@@ -36,11 +36,11 @@ const Navbar = () => {
       <div className="w-100 h-[65px] shadow flex sticky top-0 left-0 p-[5px] bg-blue-50 z-[20] tablet:justify-between">
         {/* LEFT CONTAINER */}
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
           className="w-[120px] h-100 flex items-center mobile:w-[100px]"
         >
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar%2FGroup%207363.png?alt=media&token=4a7ac4cd-7d2a-4572-9ba9-d8fde4277650"
+            src="https://firebasestorage.googleapis.com/v0/b/vizcom-6a8e0.appspot.com/o/ztellar%2Fztellar%20logo.svg?alt=media&token=3b281f17-56ad-4128-9b0c-bf4f7ca237bd"
             className="h-[50px]"
             alt=""
           />
@@ -64,7 +64,7 @@ const Navbar = () => {
           {/* LINKS */}
           <div className="h-100 flex items-center px-[20px]">
             <p
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
               className="mr-[20px] cursor-pointer text-blue-600 transition-all"
             >
               Home
@@ -94,13 +94,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="h-100 ml-[15px] flex flex-col">
-                  {user?.role === "company" && (
+                  {user?.role === 'company' && (
                     <p className="break-keep font-semibold mt-[5px] ">
                       {user?.company_name}
                     </p>
                   )}
 
-                  {user?.role !== "company" && (
+                  {user?.role !== 'company' && (
                     <p className="break-keep font-semibold mt-[5px] ">
                       {user?.fname}
                     </p>
@@ -122,14 +122,14 @@ const Navbar = () => {
               // LOGGED OUT
               <>
                 <button
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate('/login')}
                   className="p-[8px] w-[90px] rounded-[30px] border border-blue-600 text-blue-600 mr-[10px] tracking-wide font-semibold cursor-pointer hover:bg-blue-100 active:bg-blue-50 transition-all"
                 >
                   Login
                 </button>
 
                 <button
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate('/signup')}
                   className="bg-blue-600 p-[8px] w-[90px] rounded-[30px] border border-blue-600 text-white mr-[5px] tracking-wide font-semibold cursor-pointer hover:bg-blue-500 active:bg-blue-600 transition-all"
                 >
                   Signup

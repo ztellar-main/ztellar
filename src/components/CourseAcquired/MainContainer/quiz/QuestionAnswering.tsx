@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useAppSelector } from '../../../../state/store';
+import toas from '../../../../utils/toas';
+import { useState } from 'react';
 
 type Props = {
   quizData: any;
@@ -7,7 +9,10 @@ type Props = {
   answer: any;
   userStates: any;
   quizNumber: any;
-  setStartQuizRefresher: any;
+  questionExpiry: any;
+  timeLeft: any;
+  setTimeLeft: any;
+  refetch: any;
 };
 
 const QuestionAnswering = ({
@@ -16,13 +21,31 @@ const QuestionAnswering = ({
   answer,
   userStates,
   quizNumber,
-  setStartQuizRefresher,
+  timeLeft,
+  refetch,
 }: Props) => {
   const { token } = useAppSelector((state: any) => state?.user);
+  const [loading, setLoading] = useState(false);
+
+  // Format the time into mm:ss
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60000);
+    const seconds = Math.floor((time % 60000) / 1000);
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  };
 
   const nextQuestionSubmitButton = async () => {
+    if (!answer) {
+      return toas(
+        'Please choose an answer before proceeding to the next question',
+        'error'
+      );
+    }
     try {
-      const res = await axios({
+      setLoading(true);
+      await axios({
         method: 'post',
         url: '/course/submit-answer',
         data: { questionId: userStates?.quizId, quizNumber, answer, quizData },
@@ -30,18 +53,17 @@ const QuestionAnswering = ({
           authorization: `Token ${token}`,
         },
       });
-      setStartQuizRefresher((e: any) => !e);
+      await refetch();
+      setLoading(false);
       setAnswer('');
-
-      console.log(res?.data);
     } catch (err) {
-      console.log(err);
+      setLoading(false);
     }
   };
   return (
     <div>
       <div className="w-full text-center font-semibold text-lg tracking-wider">
-        11:11
+        {formatTime(timeLeft)}
       </div>
       <hr className="my-4" />
       {/* question */}
@@ -75,10 +97,15 @@ const QuestionAnswering = ({
 
       <div className="flex items-center justify-end">
         <button
-          onClick={nextQuestionSubmitButton}
+          onClick={() => {
+            if (loading) {
+              return;
+            }
+            nextQuestionSubmitButton();
+          }}
           className="bg-blue-gray-600 text-white px-4 py-2 rounded"
         >
-          Next Question
+          {loading ? 'Loading' : 'Next Question'}
         </button>
       </div>
     </div>
