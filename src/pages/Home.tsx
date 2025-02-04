@@ -91,7 +91,7 @@ const Home: React.FC = () => {
       <Navbar />
 
       {/* MAIN BODY */}
-      <div className="max-w-[1280px] mx-auto mt-[80px]">
+      <div className="max-w-[1280px] mx-auto mt-[50px]">
         {/* BANNER SECTION */}
 
         {/* BANNER BODY */}
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
           </div>
           {/* right */}
           <div className="p-2">
-            <h1 className="lg:text-6xl md:text-4xl text-xl lg:text-left text-center font-black text-[#212121]">
+            <h1 className="lg:text-6xl md:text-4xl text-2xl lg:text-left text-center font-black text-[#212121]">
               Connecting <span className="text-[#0D47A1]">minds</span>{' '}
               Redefining <span className="text-[#0D47A1]">Learning</span> and{' '}
               <span className="text-[#0D47A1]">Collaboration</span>
