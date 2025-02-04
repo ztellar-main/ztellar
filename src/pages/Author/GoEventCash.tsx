@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import AuthorSidebar from '../../components/Author/AuthorSidebar';
-import { FaArrowRightLong } from 'react-icons/fa6';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppSelector } from '../../state/store';
-import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { useLocation } from 'react-router-dom';
-import toas from '../../utils/toas';
 import ScanId from '../../components/Author/Cash-lane/ScanId';
 import ChooseRegType from '../../components/Author/Cash-lane/ChooseRegType';
 
