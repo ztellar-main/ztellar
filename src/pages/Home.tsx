@@ -19,6 +19,7 @@ import { FaPhoneAlt } from 'react-icons/fa';
 import { RiChat1Line } from 'react-icons/ri';
 import { MdLocationOn } from 'react-icons/md';
 import Footer from '../components/Home/Footer';
+import { useNavigate } from 'react-router-dom';
 
 // VIDEOS IMPORTS
 // import HostAds from '../videos/host-ads.mp4';
@@ -62,6 +63,7 @@ const Home: React.FC = () => {
     CertificateVid,
   ];
   const [currentVideo, setCurrentVideo] = useState(0);
+  const navigate = useNavigate();
 
   // NEXT BUTTON FUNCTION
   const handleNext = () => {
@@ -103,25 +105,34 @@ const Home: React.FC = () => {
             />
           </div>
           {/* right */}
-          <div className="">
+          <div className="p-2">
             <h1 className="lg:text-6xl md:text-4xl text-xl lg:text-left text-center font-black text-[#212121]">
               Connecting <span className="text-[#0D47A1]">minds</span>{' '}
               Redefining <span className="text-[#0D47A1]">Learning</span> and{' '}
               <span className="text-[#0D47A1]">Collaboration</span>
             </h1>
 
-            <p className="text-[#37474F] lg:text-2xl text-xl mt-[16px] lg:p-0 md:px-[80px] px-[20px] lg:text-left text-center">
+            <p className="text-[#37474F] lg:text-2xl text-xl mt-[16px] lg:p-0 md:px-[80px] px-[20px] lg:text-left text-center mb-4">
               Learn at your pace, earn your CPD points, and advance your career
               - all in one place!
             </p>
 
-            <div className="mt-[20px] flex sm:flex-row flex-col xl:justify-start justify-center">
-              <button className="bg-[#1A1F71] md:h-[56px] h-[48px] sm:w-[300px] text-white rounded-[8px] flex justify-center items-center text-[18px] mx-[20px] sm:m-0 mb-[12px]">
+            <div className="grid gap-4 p-2 lg:p-0 md:grid-cols-2">
+              <button
+                onClick={() => navigate('/search?query=')}
+                className="bg-[#1A1F71] text-white rounded px-4 py-2"
+              >
                 Explore
               </button>
-              <button className="border border-[#0D47A1] md:h-[56px] h-[48px] sm:w-[300px] text-[#1A1F71] rounded-[8px] flex justify-center items-center text-[18px] mx-[20px]">
-                Set an Appointment
-              </button>
+
+              <a
+                href="https://appt.link/meet-with-jeferson-binay-IoPHlS4K/web-conference"
+                className="w-full"
+              >
+                <button className="border border-[#0D47A1] w-full rounded px-4 py-2">
+                  Set an Appointment
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -255,7 +266,7 @@ const Home: React.FC = () => {
           <p className="font-black md:text-4xl text-[24px] text-[#f4f4f4] text-center mb-[56px]">
             The possibilities are endless — you can be...
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 ">
             {[
               {
                 imageSrc: LearnImage,
@@ -288,21 +299,20 @@ const Home: React.FC = () => {
                   'Watch exclusive content with Pay-Per-View—no subscriptions, just pay for what you want to see. Get instant access.',
               },
             ].map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center max-w-[320px]"
-              >
-                <img src={item.imageSrc} className="mb-[8px]" />
-                <p className="text-2xl text-[#FFD700] font-black pt-[16px] pb-[12px]">
-                  {item.title}
-                </p>
-                <p className="text-base text-white font-normal">
-                  {item.description}
-                </p>
+              <div key={index} className='flex justify-center'>
+                <div className="flex flex-col items-center text-center max-w-[320px]">
+                  <img src={item.imageSrc} className="mb-[8px]" />
+                  <p className="text-2xl text-[#FFD700] font-black pt-[16px] pb-[12px]">
+                    {item.title}
+                  </p>
+                  <p className="text-base text-white font-normal">
+                    {item.description}
+                  </p>
 
-                <button className="bg-[#F4F4F4] px-[32px] py-[10px] rounded-[4px] mt-[36px] font-medium text-[#2F2F2F]">
-                  Book an appointment
-                </button>
+                  <button className="bg-[#F4F4F4] px-[32px] py-[10px] rounded-[4px] mt-[36px] font-medium text-[#2F2F2F]">
+                    Book an appointment
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -310,7 +320,7 @@ const Home: React.FC = () => {
         <hr className="w-full border-t-1 border-[#00D4D4] my-[75px]" />
 
         {/* EVENT CARDS SECTION */}
-        <div>
+        <div className="p-4">
           <div className="flex justify-between items-center">
             <p className="text-[32px] font-bold text-[#1A1F71]">Events</p>
             <button className="text-[16px] text-[#2D3648]">See more</button>
@@ -350,7 +360,7 @@ const Home: React.FC = () => {
         <hr className="w-full border-t-1 border-[#00D4D4] my-[75px]" />
 
         {/* COURSE CARDS SECTION */}
-        <div>
+        <div className="p-4">
           <div className="flex justify-between items-center">
             <p className="text-[32px] font-bold text-[#1A1F71]">Courses</p>
             <button className="text-[16px] text-[#2D3648]">See more</button>
