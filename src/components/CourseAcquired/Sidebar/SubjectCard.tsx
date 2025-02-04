@@ -1,16 +1,34 @@
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import VideoCard from './VideoCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Quizcard from './Quizcard';
 
 type Props = {
   subjectData: any;
   userStates: any;
   setUserStates: any;
+  index: any;
+  courseId: any;
+  width: any;
+  setShowSidebar: any;
 };
 
-const SubjectCard = ({ subjectData, userStates, setUserStates }: Props) => {
+const SubjectCard = ({
+  subjectData,
+  userStates,
+  setUserStates,
+  index,
+  courseId,
+  width,
+  setShowSidebar,
+}: Props) => {
   const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (subjectData?._id === userStates?.subject?.subjectId) {
+      setShowVideo(true);
+    }
+  }, [userStates]);
 
   return (
     <>
@@ -19,7 +37,7 @@ const SubjectCard = ({ subjectData, userStates, setUserStates }: Props) => {
         className="h-[72px] w-full  flex justify-between items-center px-2 cursor-pointer bg-gray-50"
       >
         <div className="line-clamp-2  font-semibold text-blue-gray-900">
-          Subject 1: {subjectData?.data?.title}
+          Subject {index + 1}: {subjectData?.data?.title}
         </div>
 
         <MdOutlineKeyboardArrowDown
@@ -42,14 +60,25 @@ const SubjectCard = ({ subjectData, userStates, setUserStates }: Props) => {
                   userStates={userStates}
                   setUserStates={setUserStates}
                   subjectTitle={subjectData?.data?.title}
+                  courseId={courseId}
+                  width={width}
+                  setShowSidebar={setShowSidebar}
                 />
               );
             })}
-            <Quizcard
-              questionId={subjectData?.questions}
-              subjectId={subjectData?._id}
-              setUserStates={setUserStates}
-            />
+            {subjectData?.questions && (
+              <Quizcard
+                questionId={subjectData?.questions}
+                subjectId={subjectData?._id}
+                setUserStates={setUserStates}
+                subjectMainId={subjectData?.data?._id}
+                userStates={userStates}
+                courseId={courseId}
+                width={width}
+                setShowSidebar={setShowSidebar}
+                subjectTitle={subjectData?.data?.title}
+              />
+            )}
           </>
         )}
       </div>

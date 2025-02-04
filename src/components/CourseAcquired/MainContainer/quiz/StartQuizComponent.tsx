@@ -1,18 +1,21 @@
 import axios from 'axios';
 import { useAppSelector } from '../../../../state/store';
+import QuizAnswerRow from './QuizAnswerRow';
 
 type Props = {
   setStartQuizRefresher: any;
   questionId: any;
   answersList: any;
-
+  courseId: any;
+  userStates: any;
 };
 
 const StartQuizComponent = ({
   setStartQuizRefresher,
   questionId,
   answersList,
-
+  courseId,
+  userStates,
 }: Props) => {
   const { token } = useAppSelector((state: any) => state?.user);
   const startQuizSubmitFunction = async () => {
@@ -22,6 +25,8 @@ const StartQuizComponent = ({
         url: '/course/take-quiz',
         data: {
           questionId,
+          courseId,
+          subjectId: userStates?.subject?.subjectMainId,
         },
         headers: {
           authorization: `Token ${token}`,
@@ -32,6 +37,11 @@ const StartQuizComponent = ({
       console.log(err);
     }
   };
+
+  const passed = answersList?.find((data: any) => {
+    return data?.passed === true;
+  });
+
   return (
     <div className="ml-[50%] translate-x-[-50%] w-[95%] lg:w-[70%] py-4">
       <div className="">
@@ -39,8 +49,7 @@ const StartQuizComponent = ({
         <p className="text-blue-gray-900 text-sm">
           Make sure to watch the entire course video before beginning the quiz.
           The quiz is time-sensitive, and once you start, you may not be able
-          return to it. You will only have one additional attempt to pass after
-          completing the quiz, so take your time and answer carefully.
+          return to it, so take your time and answer carefully.
         </p>
 
         <hr className="border-b border-b-blue-gray-50 my-4" />
@@ -57,20 +66,8 @@ const StartQuizComponent = ({
 
           <tbody>
             {answersList?.map((answerData: any, i: any) => {
-              console.log(answerData);
               return (
-                <tr key={i} className="border">
-                  <td className="text-xs p-2 tracking-wider border">{i + 1}</td>
-                  <td className="text-xs p-2 tracking-wider border">
-                    {answerData?.score}/{answerData?.quiz_length}
-                  </td>
-                  <td className="text-xs p-2 tracking-wider border text-red-600">
-                    {answerData?.passed ? 'passed' : 'failed'}
-                  </td>
-                  <td className="cursor-pointer text-xs p-2 tracking-wider border">
-                    Show Details
-                  </td>
-                </tr>
+                <QuizAnswerRow key={i} answerData={answerData} index={i} />
               );
             })}
           </tbody>
@@ -78,12 +75,28 @@ const StartQuizComponent = ({
 
         <hr className="border-b border-b-blue-gray-50 my-4" />
 
-        <button
-          onClick={startQuizSubmitFunction}
-          className="bg-blue-gray-600 px-4 py-2 rounded text-white ml-[50%] translate-x-[-50%] mb-2"
-        >
-          Take the quiz
-        </button>
+        {passed && (
+          <div className="flex items-center gap-4">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar%2Ffirework.png?alt=media&token=1c1770fe-057c-4e5f-a9f9-96cab016f10f"
+              alt=""
+              className="w-8"
+            />
+
+            <p className="text-green-600">
+              Congratulations! You have passed this subject's quiz.
+            </p>
+          </div>
+        )}
+
+        {!passed && (
+          <button
+            onClick={startQuizSubmitFunction}
+            className="bg-blue-gray-600 px-4 py-2 rounded text-white ml-[50%] translate-x-[-50%] mb-2"
+          >
+            Take the quiz
+          </button>
+        )}
       </div>
     </div>
   );

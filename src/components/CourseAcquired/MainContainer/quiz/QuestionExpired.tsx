@@ -22,7 +22,7 @@ const QuestionExpired = ({
   const nextQuestionSubmitButton = async () => {
     try {
       setLoading(true);
-      const res = await axios({
+      await axios({
         method: 'post',
         url: '/course/submit-answer',
         data: {
@@ -37,10 +37,8 @@ const QuestionExpired = ({
       });
 
       await refetch();
-      setLoading(false);
       setAnswer('');
-
-      console.log(res?.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);

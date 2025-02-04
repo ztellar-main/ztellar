@@ -15,7 +15,7 @@ const QuizComponent = ({
   userStates,
   quizNumber,
   questionExpiry,
-  refetch
+  refetch,
 }: Props) => {
   const [answer, setAnswer] = useState('');
   const [timeLeft, setTimeLeft] = useState<number>(questionExpiry);
@@ -45,7 +45,6 @@ const QuizComponent = ({
           answer={answer}
           userStates={userStates}
           quizNumber={quizNumber}
-
           questionExpiry={questionExpiry}
           timeLeft={timeLeft}
           setTimeLeft={setTimeLeft}
@@ -57,7 +56,6 @@ const QuizComponent = ({
       {timeLeft <= 0 && (
         <QuestionExpired
           quizNumber={quizNumber}
-      
           setAnswer={setAnswer}
           userStates={userStates}
           quizData={quizData}

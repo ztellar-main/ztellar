@@ -19,7 +19,8 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
     return e.user === user._id;
   });
 
-  console.log(data?._id?.type);
+  const expiry = new Date(data?.expiry);
+  const dateNow = new Date(Date.now());
 
   return (
     <>
@@ -68,17 +69,39 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
         </div>
 
         {/* TYPE */}
-        <button
-          onClick={() => {
-            if (data?._id?.type === 'course') {
-              return navigate(`/acquired/course?id=${data?._id?._id}`);
-            }
-            navigate(`/owned/event/credentials?id=${data?._id?._id}`);
-          }}
-          className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900"
-        >
-          OPEN EVENT
-        </button>
+        {/* event */}
+        {data?.product_type === 'event' && (
+          <button
+            onClick={() => {
+              if (data?._id?.type === 'course') {
+                return navigate(`/acquired/course?id=${data?._id?._id}`);
+              }
+              navigate(`/owned/event/credentials?id=${data?._id?._id}`);
+            }}
+            className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900"
+          >
+            OPEN EVENT
+          </button>
+        )}
+
+        {data?.product_type === 'course' && (
+          <>
+            {expiry?.getTime() < dateNow?.getTime() ? (
+              <button className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900">
+                Subscription Expired
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  navigate(`/acquired/course?id=${data?._id?._id}`);
+                }}
+                className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900"
+              >
+                OPEN COURSE
+              </button>
+            )}
+          </>
+        )}
 
         {feedbackExist ? (
           <button

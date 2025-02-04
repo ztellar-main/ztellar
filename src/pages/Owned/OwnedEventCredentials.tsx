@@ -12,6 +12,8 @@ import { PiCertificateLight } from 'react-icons/pi';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import EventPdfCertificate from '../../components/Owned/EventPdfCertificate';
 
+import EventCertificate from '../../components/Owned/Certificate/EventCertificate';
+
 const OwnedEventCredentials = () => {
   const token = useAppSelector((state) => state.user.token);
   const location = useLocation();
@@ -19,13 +21,6 @@ const OwnedEventCredentials = () => {
   const productId = query.get('id') || '';
 
   const [openSidebar, setOpenSide] = useState(true);
-
-  const formButtonFunction = (url: any) => {
-    console.log('sample');
-    window.open(`${url}`, '_blank');
-    // window.location.href =
-    //   'https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/event-downloadable-forms%2FAction-Sheet-Editable.pdf?alt=media&token=217313ef-50bb-4b1b-95d1-ecb62c00fee6';
-  };
 
   const {
     data: eventdata,
@@ -60,7 +55,7 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  console.log(eventdata?.eventData?._id);
+  // console.log(eventdata?.eventData?._id);
 
   return (
     <div>
@@ -186,50 +181,15 @@ const OwnedEventCredentials = () => {
                 }
               )}
 
-              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
-                Forms
+              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px] mb-4">
+                Certificates
               </div>
-              <div className="">
-                {eventdata?.eventData?._id?.download_forms?.map(
-                  (downloadableForms: any, i: any) => {
-                    return (
-                      <div key={i}>
-                        <p className="text-center font-semibold text-lg mb-[5px]">
-                          {downloadableForms?.title}
-                        </p>
-                        <button
-                          onClick={() =>
-                            formButtonFunction(downloadableForms?.url)
-                          }
-                          className="ml-[50%] translate-x-[-50%] bg-blue-900 p-[10px] rounded text-white hover:opacity-[80%] active:opacity-[100%] flex items-center justify-center mobile:w-[80%]"
-                        >
-                          Download Form
-                        </button>
-                      </div>
-                    );
-                  }
-                )}
-              </div>
-
-              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
-                Attendance
-              </div>
-
-              {eventdata?.eventData?._id?.attendance?.map(
-                (attendanceData: any, i: any) => {
+              {/* certificate button */}
+              {eventdata?.eventData?._id?.event_certificate_data?.map(
+                (certData: any, i: any) => {
                   return (
-                    <div
-                      key={i}
-                      className="w-100 p-[10px] flex flex-col items-center mt-[10px]"
-                    >
-                      <p className="text-center font-semibold">
-                        {attendanceData?.title}
-                      </p>
-                      <a href={attendanceData?.link} target="_blank">
-                        <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
-                          Day {i + 1}
-                        </button>
-                      </a>
+                    <div key={i} className="mb-4">
+                      <EventCertificate key={i} certData={certData} />
                     </div>
                   );
                 }
@@ -238,55 +198,6 @@ const OwnedEventCredentials = () => {
               <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
                 Quiz
               </div>
-
-              {/* QUIZ */}
-
-              {eventdata?.eventData?._id?.quiz?.map((quizData: any, i: any) => {
-                return (
-                  <div
-                    key={i}
-                    className="w-100 p-[10px] flex flex-col items-center mt-[10px] border-b border-gray-300"
-                  >
-                    <p className="text-center font-semibold text-xl">
-                      {quizData?.title}
-                    </p>
-
-                    {quizData?.subtitle && (
-                      <p className="text-center font-semibold">
-                        TITLE: {quizData?.subtitle}
-                      </p>
-                    )}
-
-                    {quizData?.speaker && (
-                      <p className="text-center font-semibold">
-                        SPEAKER: {quizData?.speaker}
-                      </p>
-                    )}
-
-                    <a href={quizData?.link} target="_blank">
-                      <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
-                        Quiz {i + 1}
-                      </button>
-                    </a>
-                  </div>
-                );
-              })}
-
-              {/* GENERAL */}
-              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
-                General
-              </div>
-
-              {/* <div className="w-100 p-[10px] flex flex-col items-center mt-[10px]">
-              <p className="text-center font-semibold">
-                Evaluation form for all speakers
-              </p>
-              <a href="" target="_blank">
-                <button className="bg-indigo-900 text-white p-[10px] rounded px-[20px]">
-                  Go to link
-                </button>
-              </a>
-            </div> */}
             </div>
           </div>
         )}

@@ -212,14 +212,6 @@ const ChoosePaymentMethodComponents = ({
     setLoading(true);
     const transactionFee = Number(amount) * Number(fee);
     try {
-      console.log({
-        amount,
-        title,
-        id,
-        authorId,
-        registrationType,
-        paymentMethod,
-      });
       const res = await axios({
         method: 'post',
         url: '/paymongo/create-payment-intent-for-event',

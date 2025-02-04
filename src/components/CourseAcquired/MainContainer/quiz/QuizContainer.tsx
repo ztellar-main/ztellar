@@ -3,13 +3,14 @@ import QuizComponent from './QuizComponent';
 import StartQuizComponent from './StartQuizComponent';
 import axios from 'axios';
 import { useAppSelector } from '../../../../state/store';
-import {  useState } from 'react';
+import { useState } from 'react';
 
 type Props = {
   userStates: any;
+  courseId: any;
 };
 
-const QuizContainer = ({ userStates }: Props) => {
+const QuizContainer = ({ userStates, courseId }: Props) => {
   const { token } = useAppSelector((state: any) => state?.user);
   const [startQuizRefresher, setStartQuizRefresher] = useState(false);
 
@@ -17,9 +18,9 @@ const QuizContainer = ({ userStates }: Props) => {
     data: quizData,
     isLoading,
     isFetched,
-    refetch
+    refetch,
   } = useQuery({
-    queryKey: ['course-quiz-data', startQuizRefresher],
+    queryKey: ['course-quiz-data', startQuizRefresher, userStates],
     queryFn: async () => {
       const res = await axios({
         method: 'get',
@@ -44,12 +45,14 @@ const QuizContainer = ({ userStates }: Props) => {
   return (
     <>
       {isFetched && (
-        <div className="w-full h-[500px] overflow-scroll overflow-x-hidden">
+        <div className="w-full h-[500px] overflow-scroll overflow-x-hidden shadow-lg">
           {quizData?.message === 'no-answer' && (
             <StartQuizComponent
               setStartQuizRefresher={setStartQuizRefresher}
               questionId={userStates?.quizId}
               answersList={quizData?.answersList}
+              courseId={courseId}
+              userStates={userStates}
             />
           )}
 
