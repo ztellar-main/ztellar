@@ -55,8 +55,11 @@ const OwnedEventCredentials = () => {
     return <Navigate to="/owned" />;
   }
 
-  // console.log(eventdata?.eventData?._id);
+  const eventCertDownloadDate = new Date(
+    eventdata?.eventData?._id?.event_certificate_download_date
+  );
 
+  const dateNow = new Date(Date.now());
   return (
     <div>
       <div className="flex">
@@ -185,14 +188,18 @@ const OwnedEventCredentials = () => {
                 Certificates
               </div>
               {/* certificate button */}
-              {eventdata?.eventData?._id?.event_certificate_data?.map(
-                (certData: any, i: any) => {
-                  return (
-                    <div key={i} className="mb-4">
-                      <EventCertificate key={i} certData={certData} />
-                    </div>
-                  );
-                }
+              {dateNow.getTime() < eventCertDownloadDate.getTime() && (
+                <>
+                  {eventdata?.eventData?._id?.event_certificate_data?.map(
+                    (certData: any, i: any) => {
+                      return (
+                        <div key={i} className="mb-4">
+                          <EventCertificate key={i} certData={certData} />
+                        </div>
+                      );
+                    }
+                  )}
+                </>
               )}
 
               <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">

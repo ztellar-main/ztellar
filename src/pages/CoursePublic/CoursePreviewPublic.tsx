@@ -9,6 +9,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../state/store';
 
+const formatToPeso = (amount: number) => {
+  return new Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+  }).format(amount);
+};
+
 type VideoProps = {
   videoData: any;
 };
@@ -313,7 +320,9 @@ const CoursePreviewPublic = () => {
         <div className="w-100 max-w-[1280px] bg-blue-gray-900 p-[15px] laptop:p-[10px] mobile:p-[15px] ml-[50%] translate-x-[-50%] fixed bottom-0 laptopMin:rounded-t-[20px] font-semibold text-white flex items-center justify-center">
           {courseData?.registered
             ? 'You already acquired this course'
-            : `Get this course for only P${courseData?.data?.course_price}`}
+            : `Kickstart Your Learning Journey Today for Just ${formatToPeso(
+                Number(courseData?.data?.course_price)
+              )}`}
           <button
             onClick={acquireButtonFunction}
             className="bg-blue-800 p-[10px] rounded ml-[10px] px-[20px]"
