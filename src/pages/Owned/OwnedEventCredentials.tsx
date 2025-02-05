@@ -236,19 +236,24 @@ const OwnedEventCredentials = () => {
                   return (
                     <>
                       {dateNow.getTime() > dateView.getTime() && (
-                        <div
-                          key={i}
-                          className="mb-4 border-b py-2 border-b-blue-gray-200"
-                        >
-                          <h1 className="text-center mb-2">
-                            Title: {data?.title}
-                          </h1>
-                          <a href={data?.url}>
-                            <button className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded">
-                              Go to Quiz
-                            </button>
-                          </a>
-                        </div>
+                        <>
+                          {eventdata?.eventData?.reg_type === data?.reg_type ||
+                            (eventdata?.eventData?.reg_type === 'both' && (
+                              <div
+                                key={i}
+                                className="mb-4 border-b py-2 border-b-blue-gray-200"
+                              >
+                                <h1 className="text-center mb-2">
+                                  Title: {data?.title}
+                                </h1>
+                                <a href={data?.url}>
+                                  <button className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded">
+                                    Go to Quiz
+                                  </button>
+                                </a>
+                              </div>
+                            ))}
+                        </>
                       )}
                     </>
                   );
