@@ -193,7 +193,7 @@ const CoursePreviewPublic = () => {
             </p>
             {/* published */}
             <p className="text-blue-gray-900 text-lg  tracking-wide">
-              Published: August 17, 2024
+              {/* Published: August 17, 2024 */}
             </p>
           </div>
 
