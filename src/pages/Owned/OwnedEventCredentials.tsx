@@ -22,6 +22,25 @@ const OwnedEventCredentials = () => {
 
   const [openSidebar, setOpenSide] = useState(true);
 
+  const downloadImageAsBlob = async (imageUrl: string, fileName: string) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading the image:', error);
+    }
+  };
+
   const {
     data: eventdata,
     isLoading,
@@ -213,11 +232,14 @@ const OwnedEventCredentials = () => {
                 (data: any, i: any) => {
                   const dateNow = new Date(Date.now());
                   const dateView = new Date(data?.quiz_date_start);
-          
+
                   return (
                     <>
                       {dateNow.getTime() > dateView.getTime() && (
-                        <div key={i} className="mb-4 border-b py-2 border-b-blue-gray-200">
+                        <div
+                          key={i}
+                          className="mb-4 border-b py-2 border-b-blue-gray-200"
+                        >
                           <h1 className="text-center mb-2">
                             Title: {data?.title}
                           </h1>
@@ -232,6 +254,29 @@ const OwnedEventCredentials = () => {
                   );
                 }
               )}
+
+              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px] mb-4">
+                Programs
+              </div>
+
+              {eventdata?.eventData?._id?.programs?.map((data: any, i: any) => {
+                return (
+                  <div
+                    key={i}
+                    className="mb-4 border-b py-2 border-b-blue-gray-200"
+                  >
+                    <h1 className="text-center mb-2">Title: {data?.title}</h1>
+                    <button
+                      onClick={() =>
+                        downloadImageAsBlob(data.url, `${data?.title}.jpg`)
+                      }
+                      className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded"
+                    >
+                      Download
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
