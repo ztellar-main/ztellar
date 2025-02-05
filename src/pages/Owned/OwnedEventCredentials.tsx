@@ -214,11 +214,16 @@ const OwnedEventCredentials = () => {
                 <>
                   {eventdata?.eventData?._id?.event_certificate_data?.map(
                     (certData: any, i: any) => {
-                      return (
-                        <div key={i} className="mb-4">
-                          <EventCertificate key={i} certData={certData} />
-                        </div>
-                      );
+                      if (
+                        certData?.reg_type === 'both' ||
+                        certData?.reg_type === eventdata?.eventData?.reg_type
+                      ) {
+                        return (
+                          <div key={i} className="mb-4">
+                            <EventCertificate key={i} certData={certData} />
+                          </div>
+                        );
+                      }
                     }
                   )}
                 </>
@@ -236,24 +241,19 @@ const OwnedEventCredentials = () => {
                   return (
                     <>
                       {dateNow.getTime() > dateView.getTime() && (
-                        <>
-                          {eventdata?.eventData?.reg_type === data?.reg_type ||
-                            (eventdata?.eventData?.reg_type === 'both' && (
-                              <div
-                                key={i}
-                                className="mb-4 border-b py-2 border-b-blue-gray-200"
-                              >
-                                <h1 className="text-center mb-2">
-                                  Title: {data?.title}
-                                </h1>
-                                <a href={data?.url}>
-                                  <button className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded">
-                                    Go to Quiz
-                                  </button>
-                                </a>
-                              </div>
-                            ))}
-                        </>
+                        <div
+                          key={i}
+                          className="mb-4 border-b py-2 border-b-blue-gray-200"
+                        >
+                          <h1 className="text-center mb-2">
+                            Title: {data?.title}
+                          </h1>
+                          <a href={data?.url}>
+                            <button className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded">
+                              Go to Quiz
+                            </button>
+                          </a>
+                        </div>
                       )}
                     </>
                   );
