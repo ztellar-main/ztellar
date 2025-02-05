@@ -28,7 +28,6 @@ const BuyCourse = () => {
   const [paymentIntentId, setPaymentIntentId] = useState('');
   const [clientKey, setClientKey] = useState('');
 
-
   // query but course credentials
   const { data: courseData, isLoading } = useQuery({
     queryKey: ['get-buy-course-credentials'],
@@ -63,13 +62,15 @@ const BuyCourse = () => {
 
             <div className="w-full flex justify-center bg-gray-100 mb-1">
               <img
-                src="https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/course%2Fcover-photo%2Fasd%20asda%20sda%20sd%20as-7dc072d6-e7d2-4a61-abd2-376e4a2bf367.jpeg?alt=media&token=c28d6c71-a3d9-412a-9882-c6ebf9fc9e78"
+                src={courseData?.image_url}
                 alt=""
                 className="w-full  max-w-[500px]"
               />
             </div>
 
-            <h1 className="text-[#333333] text-xl font-bold">Sample title</h1>
+            <h1 className="text-[#333333] text-xl font-bold">
+              {courseData?.title}
+            </h1>
 
             <table className="w-full border text-sm tracking-wide">
               <thead>

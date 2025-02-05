@@ -195,7 +195,7 @@ const CoursePreviewPublic = () => {
             </div>
             {/* enrolees */}
             <p className="text-blue-gray-900 text-lg tracking-wide">
-              Enrolees: 100
+              Enrollees: 100
             </p>
             {/* published */}
             <p className="text-blue-gray-900 text-lg  tracking-wide">
