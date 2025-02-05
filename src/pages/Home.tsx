@@ -165,7 +165,7 @@ const Home: React.FC = () => {
                 support: 'Basic support',
                 capability: 'Up to 1,000',
                 dataStorage: '7 months',
-                bgColor: 'bg-[#DCF6F4]',
+                bgColor: 'bg-[#82badd]',
               },
               {
                 title: 'Gold',
@@ -183,7 +183,7 @@ const Home: React.FC = () => {
                 support: '500 hours',
                 capability: 'Up to 50,000',
                 dataStorage: 'Up to 2 years',
-                bgColor: 'bg-[#FCE2E2]',
+                bgColor: 'bg-[#E5E4E2]',
               },
             ].map((item, index) => (
               // SUBSCRIPTION PLAN CONTAINER
@@ -213,16 +213,21 @@ const Home: React.FC = () => {
                   Event Data Storage:{' '}
                   <span className="font-bold"> {item.dataStorage}</span>
                 </p>
-                <div className="flex flex-col justify-center items-center mt-[32px]">
+                {/* <div className="flex flex-col justify-center items-center mt-[32px]">
                   <button className="bg-[#1A1F71] w-full py-[10px] rounded-[4px] my-[8px] font-medium text-white">
                     Subscribe
                   </button>
                   <button className="bg-white w-full py-[10px] rounded-[4px] mt-[8px] font-medium text-[#1A1F71] border border-[#1A1F71]">
                     Book an Appointment
                   </button>
-                </div>
+                </div> */}
               </div>
             ))}
+          </div>
+          <div className="flex justify-center items-center p-8 ">
+            <button className="px-14 py-2 bg-white rounded-md text-xs">
+              Book an Appointment to Subscribe
+            </button>
           </div>
         </div>
 
@@ -299,7 +304,7 @@ const Home: React.FC = () => {
                   'Watch exclusive content with Pay-Per-View—no subscriptions, just pay for what you want to see. Get instant access.',
               },
             ].map((item, index) => (
-              <div key={index} className='flex justify-center'>
+              <div key={index} className="flex justify-center">
                 <div className="flex flex-col items-center text-center max-w-[320px]">
                   <img src={item.imageSrc} className="mb-[8px]" />
                   <p className="text-2xl text-[#FFD700] font-black pt-[16px] pb-[12px]">
@@ -309,12 +314,17 @@ const Home: React.FC = () => {
                     {item.description}
                   </p>
 
-                  <button className="bg-[#F4F4F4] px-[32px] py-[10px] rounded-[4px] mt-[36px] font-medium text-[#2F2F2F]">
+                  {/* <button className="bg-[#F4F4F4] px-[32px] py-[10px] rounded-[4px] mt-[36px] font-medium text-[#2F2F2F]">
                     Book an appointment
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))}
+          </div>
+          <div className="flex justify-center items-center p-8 ">
+            <button className="bg-[#F4F4F4] px-[32px] py-[10px] rounded-[4px] mt-[36px] font-medium text-[#2F2F2F]">
+              Book an appointment
+            </button>
           </div>
         </div>
         <hr className="w-full border-t-1 border-[#00D4D4] my-[75px]" />

@@ -60,6 +60,9 @@ const OwnedEventCredentials = () => {
   );
 
   const dateNow = new Date(Date.now());
+
+  console.log(eventdata?.eventData?._id?.event_quiz_form);
+
   return (
     <div>
       <div className="flex">
@@ -188,7 +191,7 @@ const OwnedEventCredentials = () => {
                 Certificates
               </div>
               {/* certificate button */}
-              {dateNow.getTime() < eventCertDownloadDate.getTime() && (
+              {dateNow.getTime() > eventCertDownloadDate.getTime() && (
                 <>
                   {eventdata?.eventData?._id?.event_certificate_data?.map(
                     (certData: any, i: any) => {
@@ -202,9 +205,33 @@ const OwnedEventCredentials = () => {
                 </>
               )}
 
-              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px]">
+              <div className="w-100 p-[10px] bg-indigo-800 text-center text-2xl font-semibold text-white mt-[20px] mb-4">
                 Quiz
               </div>
+
+              {eventdata?.eventData?._id?.event_quiz_form?.map(
+                (data: any, i: any) => {
+                  const dateNow = new Date(Date.now());
+                  const dateView = new Date(data?.quiz_date_start);
+          
+                  return (
+                    <>
+                      {dateNow.getTime() > dateView.getTime() && (
+                        <div key={i} className="mb-4 border-b py-2 border-b-blue-gray-200">
+                          <h1 className="text-center mb-2">
+                            Title: {data?.title}
+                          </h1>
+                          <a href={data?.url}>
+                            <button className="bg-indigo-800 text-white py-2 px-4 ml-[50%] translate-x-[-50%] rounded">
+                              Go to Quiz
+                            </button>
+                          </a>
+                        </div>
+                      )}
+                    </>
+                  );
+                }
+              )}
             </div>
           </div>
         )}
