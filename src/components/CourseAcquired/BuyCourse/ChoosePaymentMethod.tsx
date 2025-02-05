@@ -73,10 +73,10 @@ const ChoosePaymentMethod = ({
 }: Props) => {
   const token = useAppSelector((e: any) => e.user.token);
   const [loading, setLoading] = useState(false);
+  const priceAmountNumber = Number(priceData.split('/')[1]);
+  const transactionFee = priceAmountNumber * Number(fee);
 
-  const transactionFee = Number(priceData.split('/')[1]) * Number(fee);
-
-  console.log(priceData.split('/')[1]);
+  console.log({ a: priceAmountNumber, b: transactionFee });
 
   const nextFunction = async () => {
     try {
@@ -84,7 +84,7 @@ const ChoosePaymentMethod = ({
         method: 'post',
         url: '/paymongo/create-payment-intent-for-course',
         data: {
-          amount: transactionFee + Number(priceData.split('/')[1]),
+          amount: transactionFee + priceAmountNumber,
           courseId: courseId,
           authorId: courseData?.author_id,
           months: priceData.split('/')[0],

@@ -28,7 +28,6 @@ const BuyCourse = () => {
   const [paymentIntentId, setPaymentIntentId] = useState('');
   const [clientKey, setClientKey] = useState('');
 
-  console.log({ priceData });
 
   // query but course credentials
   const { data: courseData, isLoading } = useQuery({
