@@ -24,12 +24,11 @@ const BuyCourse = () => {
     name: 'GCash',
     value: 'gcash',
   });
-  console.log(selectedOption?.value);
   const [fee, setFee] = useState('');
   const [paymentIntentId, setPaymentIntentId] = useState('');
   const [clientKey, setClientKey] = useState('');
 
-  console.log({ paymentIntentId, clientKey });
+  console.log({ priceData });
 
   // query but course credentials
   const { data: courseData, isLoading } = useQuery({
@@ -119,7 +118,6 @@ const BuyCourse = () => {
 
             {componentsState === 'choose-payment-method' && (
               <ChoosePaymentMethod
-     
                 selectedOption={selectedOption}
                 setSelectedOption={setSelectedOption}
                 fee={fee}
