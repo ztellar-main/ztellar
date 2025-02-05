@@ -76,7 +76,7 @@ const ChoosePaymentMethod = ({
   const priceAmountNumber = Number(priceData.split('/')[1]);
   const transactionFee = priceAmountNumber * Number(fee);
 
-  console.log({ a: priceAmountNumber, b: transactionFee });
+ 
 
   const nextFunction = async () => {
     try {

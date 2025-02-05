@@ -35,12 +35,7 @@ const SetupSubjectQuestions = () => {
           choiceId: 2,
           label: '',
           description: '',
-        },
-        {
-          choiceId: 3,
-          label: '',
-          description: '',
-        },
+        }
       ],
       answer: '',
     },
@@ -69,12 +64,12 @@ const SetupSubjectQuestions = () => {
     const firstChoiceLabel = questions[questionIndex].choices[0].label;
     const secondChoiceLabel = questions[questionIndex].choices[1].label;
     const thirdChoiceLabel = questions[questionIndex].choices[2].label;
-    const fourthChoiceLabel = questions[questionIndex].choices[3].label;
+
 
     const firstChoiceDesc = questions[questionIndex].choices[0].description;
     const secondChoiceDesc = questions[questionIndex].choices[1].description;
     const thirdChoiceDesc = questions[questionIndex].choices[2].description;
-    const fourthChoiceDesc = questions[questionIndex].choices[3].description;
+
 
     if (
       !questionExist ||
@@ -82,11 +77,9 @@ const SetupSubjectQuestions = () => {
       !firstChoiceLabel ||
       !secondChoiceLabel ||
       !thirdChoiceLabel ||
-      !fourthChoiceLabel ||
       !firstChoiceDesc ||
       !secondChoiceDesc ||
-      !thirdChoiceDesc ||
-      !fourthChoiceDesc
+      !thirdChoiceDesc
     ) {
       return setQuestionErrorHandler({
         message:
@@ -114,11 +107,6 @@ const SetupSubjectQuestions = () => {
           label: '',
           description: '',
         },
-        {
-          choiceId: 3,
-          label: '',
-          description: '',
-        },
       ],
       answer: '',
     });
@@ -136,12 +124,12 @@ const SetupSubjectQuestions = () => {
     const firstChoiceLabel = questions[questionIndex].choices[0].label;
     const secondChoiceLabel = questions[questionIndex].choices[1].label;
     const thirdChoiceLabel = questions[questionIndex].choices[2].label;
-    const fourthChoiceLabel = questions[questionIndex].choices[3].label;
+
 
     const firstChoiceDesc = questions[questionIndex].choices[0].description;
     const secondChoiceDesc = questions[questionIndex].choices[1].description;
     const thirdChoiceDesc = questions[questionIndex].choices[2].description;
-    const fourthChoiceDesc = questions[questionIndex].choices[3].description;
+
 
     if (
       !questionExist ||
@@ -149,11 +137,11 @@ const SetupSubjectQuestions = () => {
       !firstChoiceLabel ||
       !secondChoiceLabel ||
       !thirdChoiceLabel ||
-      !fourthChoiceLabel ||
+
       !firstChoiceDesc ||
       !secondChoiceDesc ||
-      !thirdChoiceDesc ||
-      !fourthChoiceDesc
+      !thirdChoiceDesc
+
     ) {
       toas(
         'Please fill up all the fields on the last section of question',
