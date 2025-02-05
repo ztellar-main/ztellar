@@ -167,9 +167,7 @@ const CoursePreviewPublic = () => {
             </div>
             {/* rating */}
             <div className="flex items-center mb-[10px]">
-              <p className="text-lg mr-[5px] text-blue-gray-800">
-                {courseData?.data?.average_rating}
-              </p>
+              <p className="text-lg mr-[5px] text-blue-gray-800">{0}</p>
               <div className="flex">
                 {stars.map((_, index) => {
                   return (
@@ -180,22 +178,18 @@ const CoursePreviewPublic = () => {
                         marginRight: '10',
                         cursor: 'pointer',
                       }}
-                      color={
-                        courseData?.data?.average_rating > index
-                          ? colors.orange
-                          : colors.gray
-                      }
+                      color={0 > index ? colors.orange : colors.gray}
                     />
                   );
                 })}
               </div>
               <p className="text-lg mr-[5px] text-blue-gray-800 tracking-wider">
-                (100 ratings)
+                (0 ratings)
               </p>
             </div>
             {/* enrolees */}
             <p className="text-blue-gray-900 text-lg tracking-wide">
-              Enrollees: 100
+              Enrollees: 0
             </p>
             {/* published */}
             <p className="text-blue-gray-900 text-lg  tracking-wide">
@@ -209,7 +203,7 @@ const CoursePreviewPublic = () => {
           {/* outline */}
           <p className="text-xl font-semibold text-blue-gray-900">Outline</p>
           <p className="text-blue-gray-800 tracking-wide mb-[10px]">
-            5 subjects, with a total of 20 videos
+            {/* subjects, with a total of 20 videos */}
           </p>
 
           {courseData?.data?.course_subjects?.map(
@@ -230,12 +224,12 @@ const CoursePreviewPublic = () => {
           {/* feedback */}
           <p className="text-xl font-semibold text-blue-gray-900">Feedback</p>
           <p className="text-blue-gray-800 tracking-wide mb-[10px]">
-            Total of 20 feedbacks
+            Total of 0 feedbacks
           </p>
           {/* feedback card */}
-          <div className="border-b">
+          {/* <div className="border-b">
             <div className="w-100 p-[15px] flex items-center justify-between">
-              {/* 1 */}
+           
               <div className="flex">
                 <div className="w-[50px] h-[50px] bg-blue-gray-800 rounded-[50%] mr-[10px]"></div>
                 <div className="class">
@@ -257,7 +251,7 @@ const CoursePreviewPublic = () => {
                   </div>
                 </div>
               </div>
-              {/* time */}
+         
               <p className="text-sm text-blue-gray-800">
                 Aug 17, 2024 10:00 am
               </p>
@@ -267,12 +261,12 @@ const CoursePreviewPublic = () => {
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to mak
             </div>
-          </div>
+          </div> */}
 
           {/* 22 */}
-          <div className="class">
+          {/* <div className="class">
             <div className="w-100 p-[15px] flex items-center justify-between">
-              {/* 1 */}
+   
               <div className="flex">
                 <div className="w-[50px] h-[50px] bg-blue-gray-800 rounded-[50%] mr-[10px]"></div>
                 <div className="class">
@@ -294,7 +288,7 @@ const CoursePreviewPublic = () => {
                   </div>
                 </div>
               </div>
-              {/* time */}
+     
               <p className="text-sm text-blue-gray-800">
                 Aug 17, 2024 10:00 am
               </p>
@@ -304,7 +298,7 @@ const CoursePreviewPublic = () => {
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to mak
             </div>
-          </div>
+          </div> */}
 
           <p className="my-[10px] text-blue-gray-800 text-center font-semibold underline tracking-wide cursor-pointer hover:text-blue-gray-500">
             Show more feedback
