@@ -10,7 +10,10 @@ type Props = {
 
 const PopupCertificate = ({ certData, setShowCertificate }: Props) => {
   const { currentUser } = useAppSelector((state: any) => state?.user);
-  const name = `${currentUser?.fname} ${currentUser?.mname} ${currentUser?.lname}`;
+  const middleName = currentUser?.mname
+    ? `${currentUser?.mname?.charAt(0).toUpperCase()}`
+    : '';
+  const name = `${currentUser?.fname} ${middleName}. ${currentUser?.lname}`;
   const position = {
     left: certData?.left,
     top: certData?.top,
@@ -68,7 +71,7 @@ const PopupCertificate = ({ certData, setShowCertificate }: Props) => {
           />
         </div>
         <p className="text-blue-gray-900 mb-2">
-          Description: This is a sample description
+          Description: {certData?.title}
         </p>
         <button
           onClick={() => {
