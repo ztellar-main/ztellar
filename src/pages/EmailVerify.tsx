@@ -46,6 +46,7 @@ const EmailVerify = () => {
   const lname = userData?.lname;
   const mobileNumber = userData?.mobileNumber;
   const password = userData?.password;
+  const mname = userData?.mname;
 
   // GET EXPIRED AT TIME
   const { data: time, isLoading } = useQuery({
@@ -102,7 +103,7 @@ const EmailVerify = () => {
       const res = await axios({
         method: 'post',
         url: '/users/verify-email-and-signup',
-        data: { otp, email, fname, lname, mobileNumber, password },
+        data: { otp, email, fname, lname, mobileNumber, password, mname },
       });
       setLoading(false);
       setResendCodeError({ message: 'successful', status: 'success' });

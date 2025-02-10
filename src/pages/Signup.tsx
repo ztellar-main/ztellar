@@ -1,34 +1,35 @@
-import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import axios from "axios";
-import { AxiosError } from "axios";
-import * as EmailValidator from "email-validator";
-import toas from "../utils/toas";
-import { useNavigate } from "react-router-dom";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import { MdOutlineCheckCircle } from "react-icons/md";
-import { PiWarningCircleFill } from "react-icons/pi";
-import TermsOfUse from "../components/TermsOfUse";
-import PrivacyPolicy from "../components/PrivacyPolicy";
-import Footer from "../components/Footer";
+import { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
+import axios from 'axios';
+import { AxiosError } from 'axios';
+import * as EmailValidator from 'email-validator';
+import toas from '../utils/toas';
+import { useNavigate } from 'react-router-dom';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { MdOutlineCheckCircle } from 'react-icons/md';
+import { PiWarningCircleFill } from 'react-icons/pi';
+import TermsOfUse from '../components/TermsOfUse';
+import PrivacyPolicy from '../components/PrivacyPolicy';
+import Footer from '../components/Footer';
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [mobileNumber, setMobileNUmber] = useState("09");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [mname, setMname] = useState('');
+  const [mobileNumber, setMobileNUmber] = useState('09');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
   const [agreement, setAgreement] = useState(false);
 
-  const [fnameError, setFnameError] = useState("");
-  const [lnameError, setLnameError] = useState("");
-  const [mobileNumberError, setMobileNumberError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [rePasswordError, setRePasswordError] = useState("");
+  const [fnameError, setFnameError] = useState('');
+  const [lnameError, setLnameError] = useState('');
+  const [mobileNumberError, setMobileNumberError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [rePasswordError, setRePasswordError] = useState('');
 
   const [loading, setLoading] = useState(false);
 
@@ -39,16 +40,16 @@ const Signup = () => {
     const res = () => {
       if (!rePassword) {
         return setRePasswordError(
-          "This field should not be empty. Please re type your password."
+          'This field should not be empty. Please re type your password.'
         );
       }
 
       if (rePassword !== password) {
         setRePasswordError(
-          "Password are not the same. Please type the same password."
+          'Password are not the same. Please type the same password.'
         );
       } else {
-        setRePasswordError("success");
+        setRePasswordError('success');
       }
     };
     res();
@@ -62,15 +63,15 @@ const Signup = () => {
       const regexFname = new RegExp(/[${}<>/]/g);
       const m = fname.match(regexFname);
       if (!fname) {
-        return setFnameError("Please enter your first name.");
+        return setFnameError('Please enter your first name.');
       }
 
       if (m) {
         return setFnameError(
-          "Please avoid using this characters $ , { , } , < , > , /"
+          'Please avoid using this characters $ , { , } , < , > , /'
         );
       }
-      return setFnameError("success");
+      return setFnameError('success');
     };
 
     fnameErrorFunction();
@@ -80,24 +81,24 @@ const Signup = () => {
       const m = lname.match(regexFname);
 
       if (!lname) {
-        return setLnameError("Please enter your last name.");
+        return setLnameError('Please enter your last name.');
       }
 
       if (m) {
         return setLnameError(
-          "Please avoid using this characters $ , { , } , < , > , /"
+          'Please avoid using this characters $ , { , } , < , > , /'
         );
       }
 
-      return setLnameError("success");
+      return setLnameError('success');
     };
 
     lnameErrorFunction();
 
     if (Number(mobileNumber.length) < 11) {
-      setMobileNumberError("Invalid mobile number.");
+      setMobileNumberError('Invalid mobile number.');
     } else {
-      setMobileNumberError("success");
+      setMobileNumberError('success');
     }
 
     const avoidRegex = new RegExp(/[${}<>/]/g);
@@ -110,40 +111,40 @@ const Signup = () => {
 
     if (!test) {
       setPasswordError(
-        "Password must be 8 characters and above. Atleast one uppercase letter and one number."
+        'Password must be 8 characters and above. Atleast one uppercase letter and one number.'
       );
     } else {
-      setPasswordError("success");
+      setPasswordError('success');
     }
 
     if (avoid) {
       return setPasswordError(
-        "Please avoid using this characters $ , { , } , < , > , /"
+        'Please avoid using this characters $ , { , } , < , > , /'
       );
     }
 
     if (rePassword !== password) {
       setRePasswordError(
-        "Password are not the same. Please type the same password."
+        'Password are not the same. Please type the same password.'
       );
     } else {
-      setRePasswordError("success");
+      setRePasswordError('success');
     }
 
     if (!rePassword) {
       setRePasswordError(
-        "This field should not be empty. Please re type your password."
+        'This field should not be empty. Please re type your password.'
       );
     }
 
     if (!EmailValidator.validate(email)) {
-      return setEmailError("Invalid email.");
+      return setEmailError('Invalid email.');
     }
 
     try {
       const res = await axios({
-        method: "post",
-        url: "/users/get-email",
+        method: 'post',
+        url: '/users/get-email',
         data: { email },
       });
       console.log(res);
@@ -155,18 +156,18 @@ const Signup = () => {
     }
 
     if (
-      fnameError !== "success" ||
-      lnameError !== "success" ||
-      mobileNumberError !== "success" ||
-      emailError !== "success" ||
-      passwordError !== "success" ||
-      rePasswordError !== "success"
+      fnameError !== 'success' ||
+      lnameError !== 'success' ||
+      mobileNumberError !== 'success' ||
+      emailError !== 'success' ||
+      passwordError !== 'success' ||
+      rePasswordError !== 'success'
     ) {
-      return toas("There is someting wrong in your information.", "error");
+      return toas('There is someting wrong in your information.', 'error');
     }
 
     if (!agreement) {
-      return toas("Please agree to the terms and conditions.", "error");
+      return toas('Please agree to the terms and conditions.', 'error');
     }
 
     // SUCCESSFUL
@@ -174,20 +175,20 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await axios({
-        method: "post",
-        url: "/users/send-otp",
+        method: 'post',
+        url: '/users/send-otp',
         data: { email },
       });
       setLoading(false);
-      toas("Successful. Please verify your email.", "success");
-      navigate("/email-verify", {
-        state: { fname, lname, mobileNumber, email, password },
+      toas('Successful. Please verify your email.', 'success');
+      navigate('/email-verify', {
+        state: { fname, lname, mobileNumber, email, password, mname },
       });
       console.log(res?.data);
     } catch (err) {
       setLoading(false);
       if (err instanceof AxiosError) {
-        return toas("OTP did not send. Please signup again.", "error");
+        return toas('OTP did not send. Please signup again.', 'error');
       }
     }
   };
@@ -202,14 +203,14 @@ const Signup = () => {
 
     if (m) {
       return setFnameError(
-        "Please avoid using this characters $ , { , } , < , > , /"
+        'Please avoid using this characters $ , { , } , < , > , /'
       );
     }
 
     if (!fname) {
-      setFnameError("Please enter your first name.");
+      setFnameError('Please enter your first name.');
     } else {
-      setFnameError("success");
+      setFnameError('success');
     }
   };
 
@@ -223,13 +224,13 @@ const Signup = () => {
 
     if (m) {
       return setLnameError(
-        "Please avoid using this characters $ , { , } , < , > , /"
+        'Please avoid using this characters $ , { , } , < , > , /'
       );
     }
     if (!lname) {
-      setLnameError("Please enter your last name.");
+      setLnameError('Please enter your last name.');
     } else {
-      setLnameError("success");
+      setLnameError('success');
     }
   };
 
@@ -239,9 +240,9 @@ const Signup = () => {
     const mobileNumber: string = e.target.value;
 
     if (Number(mobileNumber.length) < 11) {
-      setMobileNumberError("Invalid mobile number.");
+      setMobileNumberError('Invalid mobile number.');
     } else {
-      setMobileNumberError("success");
+      setMobileNumberError('success');
     }
   };
 
@@ -251,13 +252,13 @@ const Signup = () => {
     const email: string = e.target.value;
 
     if (!EmailValidator.validate(email)) {
-      return setEmailError("Invalid email.");
+      return setEmailError('Invalid email.');
     }
 
     try {
       const res = await axios({
-        method: "post",
-        url: "/users/get-email",
+        method: 'post',
+        url: '/users/get-email',
         data: { email },
       });
       console.log(res);
@@ -284,16 +285,16 @@ const Signup = () => {
     const test = regex.test(password);
     if (avoid) {
       return setPasswordError(
-        "Please avoid using this characters $ , { , } , < , > , /"
+        'Please avoid using this characters $ , { , } , < , > , /'
       );
     }
 
     if (!test) {
       setPasswordError(
-        "Password must be 8 characters and above. Atleast one uppercase letter and one number."
+        'Password must be 8 characters and above. Atleast one uppercase letter and one number.'
       );
     } else {
-      setPasswordError("success");
+      setPasswordError('success');
     }
   };
 
@@ -331,7 +332,7 @@ const Signup = () => {
             </p>
 
             <p
-              onClick={() => navigate("/company-signup")}
+              onClick={() => navigate('/company-signup')}
               className="text-sm mb-[10px] ml-[5px] text-blue-600 underline hover:cursor-pointer hover:text-blue-400"
             >
               Create company account
@@ -349,20 +350,20 @@ const Signup = () => {
               />
             </div>
             <div className="flex items-center mb">
-              {emailError !== "success" &&
-                (emailError === "" ? (
-                  ""
+              {emailError !== 'success' &&
+                (emailError === '' ? (
+                  ''
                 ) : (
                   <PiWarningCircleFill className="text-red-600" />
                 ))}
-              {emailError === "success" && (
+              {emailError === 'success' && (
                 <MdOutlineCheckCircle className="text-green-600" />
               )}
               <p
                 className={`text-[12px] ml-[4px] ${
-                  emailError === "success"
-                    ? "text-green-600 font-semibold"
-                    : "text-red-600 "
+                  emailError === 'success'
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 '
                 } laptop:text-xs mobile:text-sm `}
               >
                 {emailError}
@@ -384,20 +385,20 @@ const Signup = () => {
                 />
 
                 <div className="flex items-center mb">
-                  {fnameError !== "success" &&
-                    (fnameError === "" ? (
-                      ""
+                  {fnameError !== 'success' &&
+                    (fnameError === '' ? (
+                      ''
                     ) : (
                       <PiWarningCircleFill className="text-red-600" />
                     ))}
-                  {fnameError === "success" && (
+                  {fnameError === 'success' && (
                     <MdOutlineCheckCircle className="text-green-600" />
                   )}
                   <p
                     className={`text-[12px] ml-[4px] ${
-                      fnameError === "success"
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 "
+                      fnameError === 'success'
+                        ? 'text-green-600 font-semibold'
+                        : 'text-red-600 '
                     } laptop:text-xs mobile:text-sm `}
                   >
                     {fnameError}
@@ -418,20 +419,20 @@ const Signup = () => {
                 />
 
                 <div className="flex items-center mb">
-                  {lnameError !== "success" &&
-                    (lnameError === "" ? (
-                      ""
+                  {lnameError !== 'success' &&
+                    (lnameError === '' ? (
+                      ''
                     ) : (
                       <PiWarningCircleFill className="text-red-600" />
                     ))}
-                  {lnameError === "success" && (
+                  {lnameError === 'success' && (
                     <MdOutlineCheckCircle className="text-green-600" />
                   )}
                   <p
                     className={`text-[12px] ml-[4px] ${
-                      lnameError === "success"
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 "
+                      lnameError === 'success'
+                        ? 'text-green-600 font-semibold'
+                        : 'text-red-600 '
                     } laptop:text-xs mobile:text-sm `}
                   >
                     {lnameError}
@@ -439,6 +440,39 @@ const Signup = () => {
                 </div>
               </div>
             </div>
+
+            {/* MIDDLE NAME */}
+            <p className="text-sm text-gray-600 mb-[2px] ml-[2px] laptop:text-xs mobile:text-sm font-semibold">
+              Middle name
+            </p>
+            <input
+              type="number"
+              value={mname}
+              onChange={(e: any) => setMname(e.target.value)}
+              placeholder="Please enter your middle name."
+              className="w-100 text-base border p-[5px] rounded border-gray-300 pl-[10px] mb-[2px] outline-blue-600 laptop:text-sm mobile:text-base"
+            />
+
+            {/* <div className="flex items-center mb">
+              {mobileNumberError !== 'success' &&
+                (mobileNumberError === '' ? (
+                  ''
+                ) : (
+                  <PiWarningCircleFill className="text-red-600" />
+                ))}
+              {mobileNumberError === 'success' && (
+                <MdOutlineCheckCircle className="text-green-600" />
+              )}
+              <p
+                className={`text-[12px] ml-[4px] ${
+                  mobileNumberError === 'success'
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 '
+                } laptop:text-xs mobile:text-sm `}
+              >
+                {mobileNumberError}
+              </p>
+            </div> */}
 
             {/* MOBILE NUMBER */}
             <p className="text-sm text-gray-600 mb-[2px] ml-[2px] laptop:text-xs mobile:text-sm font-semibold">
@@ -453,20 +487,20 @@ const Signup = () => {
             />
 
             <div className="flex items-center mb">
-              {mobileNumberError !== "success" &&
-                (mobileNumberError === "" ? (
-                  ""
+              {mobileNumberError !== 'success' &&
+                (mobileNumberError === '' ? (
+                  ''
                 ) : (
                   <PiWarningCircleFill className="text-red-600" />
                 ))}
-              {mobileNumberError === "success" && (
+              {mobileNumberError === 'success' && (
                 <MdOutlineCheckCircle className="text-green-600" />
               )}
               <p
                 className={`text-[12px] ml-[4px] ${
-                  mobileNumberError === "success"
-                    ? "text-green-600 font-semibold"
-                    : "text-red-600 "
+                  mobileNumberError === 'success'
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 '
                 } laptop:text-xs mobile:text-sm `}
               >
                 {mobileNumberError}
@@ -485,20 +519,20 @@ const Signup = () => {
             />
 
             <div className="flex items-center mb">
-              {passwordError !== "success" &&
-                (passwordError === "" ? (
-                  ""
+              {passwordError !== 'success' &&
+                (passwordError === '' ? (
+                  ''
                 ) : (
                   <PiWarningCircleFill className="text-red-600" />
                 ))}
-              {passwordError === "success" && (
+              {passwordError === 'success' && (
                 <MdOutlineCheckCircle className="text-green-600" />
               )}
               <p
                 className={`text-[12px] ml-[4px] ${
-                  passwordError === "success"
-                    ? "text-green-600 font-semibold"
-                    : "text-red-600 "
+                  passwordError === 'success'
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 '
                 } laptop:text-xs mobile:text-sm `}
               >
                 {passwordError}
@@ -517,20 +551,20 @@ const Signup = () => {
             />
 
             <div className="flex items-center mb">
-              {rePasswordError !== "success" &&
-                (rePasswordError === "" ? (
-                  ""
+              {rePasswordError !== 'success' &&
+                (rePasswordError === '' ? (
+                  ''
                 ) : (
                   <PiWarningCircleFill className="text-red-600" />
                 ))}
-              {rePasswordError === "success" && (
+              {rePasswordError === 'success' && (
                 <MdOutlineCheckCircle className="text-green-600" />
               )}
               <p
                 className={`text-[12px] ml-[4px] ${
-                  rePasswordError === "success"
-                    ? "text-green-600 font-semibold"
-                    : "text-red-600 "
+                  rePasswordError === 'success'
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 '
                 } laptop:text-xs mobile:text-sm `}
               >
                 {rePasswordError}
