@@ -11,9 +11,9 @@ type Props = {
 const PopupCertificate = ({ certData, setShowCertificate }: Props) => {
   const { currentUser } = useAppSelector((state: any) => state?.user);
   const middleName = currentUser?.mname
-    ? `${currentUser?.mname?.charAt(0).toUpperCase()}`
+    ? `${currentUser?.mname?.charAt(0).toUpperCase()}.`
     : '';
-  const name = `${currentUser?.fname} ${middleName}. ${currentUser?.lname}`;
+  const name = `${currentUser?.fname} ${middleName} ${currentUser?.lname}`;
   const position = {
     left: certData?.left,
     top: certData?.top,
