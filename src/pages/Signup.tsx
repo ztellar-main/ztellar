@@ -446,7 +446,7 @@ const Signup = () => {
               Middle name
             </p>
             <input
-              type="number"
+              type="text"
               value={mname}
               onChange={(e: any) => setMname(e.target.value)}
               placeholder="Please enter your middle name."
