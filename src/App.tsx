@@ -140,11 +140,11 @@ function App() {
                 path="/process-payment"
                 element={<CoursePaymongoSuccessRedirect />}
               />
-                <Route
+              <Route
                 path="/process-payment/e"
                 element={<EventPaymongoSuccessRedirect />}
               />
-              
+
               {/* OWNED */}
               <Route path="/owned" element={<Owned />} />
               <Route path="/owned/event/live" element={<OwnedEventLive />} />

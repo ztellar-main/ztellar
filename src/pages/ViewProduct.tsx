@@ -141,7 +141,7 @@ const ViewProduct = () => {
 
         {/* COURSE TITLE */}
         <p className="py-3 text-xl font-semibold text-[#333333] tracking-[1px] pl-3">
-          APEP NATIONAL CONVENTION
+          {eventData?.title}
         </p>
 
         {/* COURSE DESCRIPTION */}
