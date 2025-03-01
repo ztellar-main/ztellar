@@ -324,7 +324,8 @@ const ChoosePriceComponent = ({
         {prices?.map((price: any, i: any) => {
           return (
             <option key={i} value={`${price?.priceType}/${price?.price}`}>
-              {price?.priceType} - {formatToPeso(price?.price)}
+              {price?.priceType} - {formatToPeso(price?.price)} -{' '}
+              {price?.priceName}
             </option>
           );
         })}
