@@ -55,8 +55,7 @@ const EditReminder = ({
 
   const UTCTime = `${utcHours}:${utcMinutes} `;
 
-  console.log(UTCTime)
-
+  
 
   // FUNCTION TO SELECT DAY
   const toggleDaySelection = (day: string) => {

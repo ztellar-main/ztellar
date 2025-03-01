@@ -33,13 +33,21 @@ const SetReminder = ({ courseTitle, courseId, refetch }: SetReminderProps) => {
   const [isDurationOpen, setIsDurationOpen] = useState(false);
   const [showCustomDays, setShowCustomDays] = useState(false);
 
-  console.log({
-    selectedDays,
-    selectedTime,
-    selectedDuration,
-    courseTitle,
-    courseId,
-  });
+  const [hours, minutes] = selectedTime.split(':').map(Number);
+
+  const now1 = new Date();
+  const localDate = new Date(
+    now1.getFullYear(),
+    now1.getMonth(),
+    now1.getDate(),
+    hours,
+    minutes
+  );
+  // Convert to UTC
+  const utcHours = localDate.getUTCHours();
+  const utcMinutes = localDate.getUTCMinutes();
+
+  const UTCTime = `${utcHours}:${utcMinutes} `;
 
   // FUNCTION TO SELECT DAY
   const toggleDaySelection = (day: string) => {
@@ -73,7 +81,7 @@ const SetReminder = ({ courseTitle, courseId, refetch }: SetReminderProps) => {
         url: '/reminder/create-reminder',
         data: {
           days: selectedDays,
-          time: selectedTime,
+          time: UTCTime,
           expiry: selectedDuration,
           courseTitle,
           courseId,
