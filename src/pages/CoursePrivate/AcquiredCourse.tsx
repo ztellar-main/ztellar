@@ -8,6 +8,9 @@ import axios from 'axios';
 import { useAppSelector } from '../../state/store';
 import DownloadCertificate from '../../components/CourseAcquired/MainContainer/DownloadCertificate';
 import { Navigate } from 'react-router-dom';
+import SetReminder from '../../components/CourseAcquired/MainContainer/SetReminder';
+import ViewReminder from '../../components/CourseAcquired/MainContainer/ViewReminder';
+import EditReminder from '../../components/CourseAcquired/MainContainer/EditReminder';
 
 // Main component
 const AcquiredCourse = () => {
@@ -47,6 +50,7 @@ const AcquiredCourse = () => {
     isLoading,
     isFetched,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ['get-owned-course-data'],
     queryFn: async () => {
@@ -71,6 +75,7 @@ const AcquiredCourse = () => {
   if (isError) {
     return <Navigate to="/" />;
   }
+  console.log(courseData?.reminder);
 
   return (
     <>
@@ -135,6 +140,34 @@ const AcquiredCourse = () => {
                     </h1>
                   </div>
                 </div>
+              )}
+
+              {userStates?.component === 'set-reminder' && (
+                <>
+                  {!courseData?.reminder ? (
+                    <SetReminder
+                      courseTitle={courseData?.course?.title}
+                      courseId={courseData?.course?._id}
+                      refetch={refetch}
+                    />
+                  ) : (
+                    <ViewReminder
+                      reminder={courseData?.reminder}
+                      userStates={userStates}
+                      setUserStates={setUserStates}
+                      refetch={refetch}
+                    />
+                  )}
+                </>
+              )}
+
+              {userStates?.component === 'edit-reminder' && (
+                <EditReminder
+                  courseTitle={courseData?.course?.title}
+                  courseId={courseData?.course?._id}
+                  refetch={refetch}
+                  reminder={courseData?.reminder}
+                />
               )}
             </div>
           </div>

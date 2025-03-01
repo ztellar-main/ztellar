@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import AuthorSidebar from "../../components/Author/AuthorSidebar";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { useEffect, useState } from 'react';
+import AuthorSidebar from '../../components/Author/AuthorSidebar';
+import { FaArrowRightLong } from 'react-icons/fa6';
 // import { useAppSelector } from "../../state/store";
 
-import { useLocation } from "react-router-dom";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { useLocation } from 'react-router-dom';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 // COMPONENTS
-import AddSubjectOnEventPopup from "../../components/Author/AddSubjectOnEventPopup";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAppSelector } from "../../state/store";
-import EventSubjectCard from "../../components/Author/EventSubjectCard";
+import AddSubjectOnEventPopup from '../../components/Author/AddSubjectOnEventPopup';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useAppSelector } from '../../state/store';
+import EventSubjectCard from '../../components/Author/EventSubjectCard';
 
 const EventSetup = () => {
   const token = useAppSelector((e) => e.user.token);
@@ -22,7 +22,7 @@ const EventSetup = () => {
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const eventId = query.get("id") || "";
+  const eventId = query.get('id') || '';
 
   useEffect(() => {
     function handleResize() {
@@ -31,7 +31,7 @@ const EventSetup = () => {
       }
     }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     handleResize();
   }, []);
@@ -40,7 +40,7 @@ const EventSetup = () => {
     queryKey: [refresher],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `/product/get-single-author-event?id=${eventId}`,
         headers: {
           authorization: `Token ${token}`,
@@ -60,7 +60,7 @@ const EventSetup = () => {
     }
   };
 
-
+  console.log(eventData);
 
   return (
     <>

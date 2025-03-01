@@ -55,7 +55,6 @@ const Footer: React.FC = () => {
 
   // CONTACT DATA
   const Contact = [
-    { name: 'Address:', title: '1736-B Dian St. Brgy. Palanan, Makati City' },
     { name: 'Mobile:', title: '0956 - 448 - 4530' },
     { name: 'Email:', title: 'admin@ztellar.tech' },
   ];
@@ -63,7 +62,7 @@ const Footer: React.FC = () => {
   return (
     <div className="bg-[#071C34] p-[20px]">
       <div className="flex justify-between flex-wrap flex-row">
-        {/* ZTELLAR AND TAGLINE SECTION */}
+        {/* ZTELLAR SECTION */}
         <div>
           <p className="text-[48px] font-extrabold text-[#EFEFEF]">
             Ztellar.tech

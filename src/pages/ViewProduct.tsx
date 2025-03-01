@@ -1,44 +1,71 @@
-// COMPONENTS
-import Navbar from "../components/Navbar";
-import { GoStarFill } from "react-icons/go";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { CgSpinnerTwoAlt } from "react-icons/cg";
-import EventViewSubjectCard from "../components/EventViewSubjectCard";
-import ProductViewReviewCard from "../components/ProductViewReviewCard";
-import EventFeedbackPopup from "../components/EventFeedbackPopup";
-import { useAppSelector } from "../state/store";
-import toas from "../utils/toas";
-import Footer from "../components/Footer";
-import { useState } from "react";
+import { useState } from 'react';
 
-import Carousels from "../components/Carousel";
+// IMAGES IMPORT
+// import Logo1 from "../icons/logo1.png";
+// import Logo2 from "../icons/logo2.png";
+// import Logo3 from "../icons/logo3.png";
+// import Logo4 from "../icons/logo4.png";
+// import Logo5 from "../icons/logo5.png";
+// import Logo6 from "../icons/logo6.png";
+// import Logo7 from "../icons/logo7.png";
+// import ProfileAuthor from "../icons/AuthorProf.png";
+// import Prog1 from "../icons/Day1.png";
+// import Prog2 from "../icons/Day2.png";
+
+// REACT ICONS IMPORT
+
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { useAppSelector } from '../state/store';
+import SubjectCard from '../components/ViewEventComponents/SubjectCard';
+import Navbar from '../components/Navbar';
+import FullscreenModal from '../components/ViewEventComponents/FullscreenModal';
+import { GoStarFill } from 'react-icons/go';
+import Footer from '../components/Home/Footer';
+import FeedbackModal from '../components/ViewEventComponents/FeedbackModal';
+import toas from '../utils/toas';
 
 const ViewProduct = () => {
+  // const logos = [Logo1, Logo2, Logo3, Logo4, Logo5, Logo6, Logo7];
+  const [selectedImage, setSelectedImage] = useState('');
+  const [openProgram, setOpenProgram] = useState(false);
+  console.log(openProgram);
+
+  // START
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const productId = query.get("id") || "";
+  const productId = query.get('id') || '';
   const token = useAppSelector((state) => state.user.token);
   const user = useAppSelector((state) => state.user.currentUser);
   const stars = Array(5).fill(0);
   const colors = {
-    orange: "#FFD600",
-    gray: "#a9a9a9",
+    orange: '#FFD600',
+    gray: '#a9a9a9',
   };
 
-  const [reviewPopupOpen, setReviewPopupOpen] = useState(false);
+  // const [reviewPopupOpen, setReviewPopupOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleShowAllFeedbacks = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const {
     data: eventData,
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["view product"],
+    queryKey: ['view product'],
     queryFn: async () => {
       const res = await axios({
-        method: "get",
+        method: 'get',
         url: `/product/get-view-event-product?id=${productId}`,
       });
       return res?.data;
@@ -63,282 +90,330 @@ const ViewProduct = () => {
     return data?._id === user?._id;
   });
 
+  // END
+
+  // FUNCTION FOR THE SPONSOR IMAGE
+  // const sliderRef = useRef<HTMLDivElement | null>(null);
+
+  // useEffect(() => {
+  //   let animationFrameId: number;
+  //   let position = 0;
+
+  //   // FUNCTION FOR ANIMATION
+  //   const animate = () => {
+  //     if (sliderRef.current) {
+  //       position -= 1;
+  //       sliderRef.current.style.transform = `translateX(${position}px)`;
+
+  //       if (Math.abs(position) >= sliderRef.current.scrollWidth / 2) {
+  //         position = 0;
+  //       }
+
+  //       animationFrameId = requestAnimationFrame(animate);
+  //     }
+  //   };
+
+  //   animationFrameId = requestAnimationFrame(animate);
+
+  //   return () => cancelAnimationFrame(animationFrameId);
+  // }, []);
+
+  console.log(eventData?.subjects);
+
   return (
-    <div className="w-100 ">
+    <div>
+      {/* NAVBAR SECTION */}
       <Navbar />
-      <div className="w-100 bg-blue-900 text-white text-lg p-[10px] font-semibold tracking-wider">
-        {eventData?.title}
-      </div>
+
       {/* MAIN BODY */}
-      <div className="w-100 bg-white flex flex-col">
-        {/* LEFT */}
-        <div className="grow">
-          {/* VIDEO CONTAINER */}
+      <div className="max-w-7xl mx-auto bg-[#FAFBFC]">
+        {/* PREVIEW VIDEO CONTAINER */}
+        <div className="w-full  bg-black">
           <div
             key={eventData?.video_url}
-            className="w-100 h-[400px] bg-black flex justify-center "
+            className="w-100 h-[100%] md:h-[400px] bg-black flex justify-center "
           >
-            <video className="h-[400px] w-100" autoPlay controls>
+            <video className="h-[100%] w-100" autoPlay controls>
               <source src={eventData?.video_url} />
             </video>
           </div>
-          {/* REG BUTTON TOP */}
-          <div className="w-100 p-[10px] pb-0">
-            {registered !== undefined ? (
-              <button
-                onClick={() => {
-                  if (!token) {
-                    return navigate("/login");
-                  }
-                  navigate(`/owned/event/credentials?id=${productId}`);
-                }}
-                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold mb-[10px]"
-              >
-                View
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  if (new Date(eventData?.date_end) < new Date(Date.now())) {
-                    return toas(
-                      "Event ended. Please check SDL equivalent in your dashboard",
-                      "error"
-                    );
-                  }
-                  if (!token) {
-                    return navigate("/login");
-                  }
-                  navigate(`/buy/product?id=${productId}`);
-                }}
-                className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold mb-[10px]"
-              >
-                {new Date(eventData?.date_end) < new Date(Date.now())
-                  ? "Event ended"
-                  : " Register now"}
-              </button>
-            )}
+        </div>
 
+        {/* COURSE TITLE */}
+        <p className="py-3 text-xl font-semibold text-[#333333] tracking-[1px] pl-3">
+          APEP NATIONAL CONVENTION
+        </p>
+
+        {/* COURSE DESCRIPTION */}
+        <div className="px-6 py-3">
+          <h1 className="text-[#333333] font-semibold text-lg tracking-[1px]">
+            Description
+          </h1>
+          <p className="text-[#333333] font-light tracking-[1px]">
+            {eventData?.description}
+          </p>
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* OBJECTIVES SECTION */}
+        <div className="px-6 py-3">
+          <h1 className="text-[#333333] font-semibold text-lg tracking-[1px]">
+            Objectives
+          </h1>
+          {eventData?.objectives?.map((obData: any, i: any) => (
+            <div key={i} className="flex items-center p-2">
+              <div className="h-2 w-2 max-w-2 max-h-2 rounded-full bg-[#333333] mr-3" />
+              <p className="text-[#333333] font-light tracking-[1px]">
+                {obData?.title}
+              </p>
+            </div>
+          ))}
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* COURSE OUTLINE SECTION */}
+        <div className="w-full mx-auto p-2">
+          <h2 className="text-[#333333] font-semibold text-lg tracking-[1px] mb-2">
+            Course Outline
+          </h2>
+          <table className="w-full border-collapse border border-[#CFD8DC] text-left text-[#333333]">
+            <thead>
+              <tr className="border border-[#CFD8DC] px-2 py-3">
+                <td className="p-2 font-medium text-white bg-[#2F2F2F] tracking-[1px]">
+                  Subject Title
+                </td>
+                <td
+                  className="p-2 font-medium text-white bg-[#2F2F2F] tracking-[1px]"
+                  colSpan={3}
+                >
+                  No. of Videos
+                </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              {eventData?.subjects?.map((subjectData: any, i: any) => {
+                return <SubjectCard key={i} subjectData={subjectData} />;
+              })}
+            </tbody>
+          </table>
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* EVENT PROGRAM SECTION */}
+        <div className="w-full mx-auto p-2">
+          <h2 className="text-[#333333] font-semibold text-lg tracking-[1px] mb-2">
+            Event Program
+          </h2>
+          <div className="flex justify-evenly sm:flex-row flex-col">
+            {eventData?.event_programs?.map((program: any, i: any) => (
+              <img
+                key={i}
+                className="my-1 cursor-pointer"
+                src={program?.url}
+                alt="program image"
+                onClick={() => {
+                  setOpenProgram((e: any) => !e);
+                  setSelectedImage(program?.url);
+                }}
+              />
+            ))}
+          </div>
+
+          {/* THIS IS THE FULLSCREEN POP UP FUNCT */}
+          {openProgram && (
+            <FullscreenModal
+              imageSrc={selectedImage}
+              setOpenProgram={setOpenProgram}
+              // altText={selectedImage.alt}
+              // onClose={handleClose}
+            />
+          )}
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* SPONSOR SLIDING LOGOS SECTION */}
+        <div className="w-full h-80 overflow-hidden relative">
+          {/* <div
+            ref={sliderRef}
+            className="flex h-[auto] max-w-[300px] items-center"
+          > */}
+          {/* {logos.map((logo, index) => (
+              <img
+                key={index}
+                src={logo}
+                alt={`Logo ${index + 1}`}
+                className="h-full w-auto mx-14"
+              />
+            ))} */}
+          {/* FOR SLIDING LOOPING */}
+          {/* {logos.map((logo, index) => (
+              <img
+                key={`duplicate-${index}`}
+                src={logo}
+                alt={`Logo duplicate ${index + 1}`}
+                className="h-full w-auto mx-4"
+              />
+            ))} */}
+          {/* </div> */}
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* AUTHOR AND RATINGS SECTION */}
+        <div className="w-full">
+          <div className="grid sm:grid-cols-2 grid-cols-1 px-8 ">
+            <div className="flex justify-start py-2">
+              <img
+                className="mr-4 max-w-[40px] max-h-[40px] rounded-full"
+                src={eventData?.author_id?.avatar}
+                alt=""
+              />
+
+              <div className="flex flex-col justify-between">
+                <p className="text-xl font-semibold text-[#333333]">
+                  {eventData?.author_id?.fname} {eventData?.author_id?.lname}
+                </p>
+                <p className="text-sm font-light text-[#333333]">Author</p>
+                <p className="text-[#333333] font-light text-sm underline">
+                  See Author Profile
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col lg:flex-row justify-between pl-2">
+              <div className="flex items-center py-2">
+                <p className="text-base text-[#333333] font-normal">
+                  {eventData?.average_rating}
+                </p>
+                <div className="flex items-center mx-5">
+                  <span className="text-yellow-500 flex">
+                    {stars.map((_, index) => {
+                      return (
+                        <GoStarFill
+                          key={index}
+                          size="17"
+                          style={{
+                            marginRight: '10',
+                            cursor: 'pointer',
+                          }}
+                          color={
+                            eventData?.average_rating > index
+                              ? colors.orange
+                              : colors.gray
+                          }
+                        />
+                      );
+                    })}
+                  </span>
+                </div>
+                <p className="text-base text-[#333333] font-normal">
+                  ({eventData?.feedback_count} ratings)
+                </p>
+              </div>
+              <div className="flex items-center py-2">
+                <p className="text-base font-light text-[#333333]">
+                  Number of Registrants:{' '}
+                  <span className="font-bold">
+                    {eventData?.registered?.length}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+
+        {/* FEEDBACKS SECTION */}
+        <div className="relative w-full rounded-lg overflow-hidden p-3">
+          <h1 className="text-[#333333] text-3xl font-bold text-center py-4">
+            FEEDBACKS
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {eventData?.feedback?.map((feedback: any, index: any) => {
+              console.log(feedback);
+              return (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-lg shadow-md  shadow-[#F2F2F2]"
+                >
+                  <p className="mb-4 text-[#333333] font-normal">
+                    {feedback?.comment}
+                  </p>
+                  <div className="flex mb-4 items-center">
+                    <img
+                      src={feedback?.user?.avatar}
+                      className="h-12 w-12 rounded-full mr-4"
+                      alt={`${feedback.name} profile`}
+                    />
+                    <div>
+                      <p className="text-lg text-[#333333] font-semibold mb-2">
+                        {feedback?.user?.fname} {feedback?.user?.fname}
+                      </p>
+                      <div className="flex items-center">
+                        <span className="text-yellow-500 text-2xl flex">
+                          {stars.map((_, index) => {
+                            return (
+                              <GoStarFill
+                                key={index}
+                                size="14"
+                                style={{
+                                  marginRight: '5',
+                                  cursor: 'pointer',
+                                }}
+                                color={
+                                  eventData?.average_rating > index
+                                    ? colors.orange
+                                    : colors.gray
+                                }
+                              />
+                            );
+                          })}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="font-light text-[#333333]">
+                    {date.toLocaleDateString('en-US')}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className=" py-5 flex justify-center items-center">
             <button
-              onClick={() => navigate(`/event/sponsor-now?id=${productId}`)}
-              className="w-100 p-[10px] bg-blue-700 text-white rounded font-semibold"
+              className="text-[#FAFBFC] bg-[#2F2F2F] w-64 py-3 rounded hover:opacity-90 duration-300"
+              onClick={handleShowAllFeedbacks}
             >
-              Sponsor now
+              Show all Feedbacks
             </button>
           </div>
 
-          {/* DETAILS CONTAINER */}
-          <div className="px-[10px]">
-            {/* OUTLINE */}
-            <div className="w-100 bg-blue-50 mt-[10px] rounded shadow border border-gray-300 p-[10px] mb-[10px]">
-              {/* outline title */}
-              <p className="text-blue-800 font-semibold text-lg">
-                Event SDL outline
-              </p>
-
-              {/* SUBJECT CARD */}
-
-              {eventData?.subjects?.map((subjectData: any, i: any) => {
-                return (
-                  <EventViewSubjectCard key={i} data={subjectData} index={i} />
-                );
-              })}
-            </div>
-
-            {/* SPONSORS LOGO */}
-            <div className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300">
-              <p className="text-blue-800 font-semibold text-lg">Partners</p>
-              {/* <div className="grid grid-cols-[repeat(auto-fill,250px)] p-[10px] pl-[0] gap-[10px] justify-around ">
-                {eventData?.sponsors_logo?.map((sponsor: any, i: any) => {
-                  return (
-                    <div key={i} className="flex items-center justify-center">
-                      <img
-                        src={sponsor?.url}
-                        alt="Partner's Logo"
-                        className="rounded w-[200px] h-[auto] mobile:mb-[20px]"
-                      />
-                    </div>
-                  );
-                })}
-              </div> */}
-
-              <div className="w-100 my-[20px]">
-                <Carousels data={eventData?.sponsors_logo} />
-              </div>
-            </div>
-
-            {/* CAROUSEL */}
-
-            {/* SPONSORS VIDEO */}
-            {eventData?.sponsors_videos?.map((sponsorsData: any, i: any) => {
-              return (
-                <div
-                  key={i}
-                  className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300"
-                >
-                  <div className="w-100 bg-blue-50 rounded">
-                    <div className="class">
-                      <div className="flex items-center justify-center mobile:flex-col">
-                        <img
-                          src={sponsorsData?.logo}
-                          alt=""
-                          className="h-[50px] w-[auto] mr-[10px] mobile:mr-[0]"
-                        />
-                        <p className="text-center font-semibold text-2xl text-blue-800">
-                          {sponsorsData?.name}
-                        </p>
-                      </div>
-
-                      <div className="w-100 flex justify-center items-center flex-col">
-                        {sponsorsData?.post_data?.map(
-                          (postData: any, i: any) => {
-                            return (
-                              <>
-                                {postData?.file_type === "video" && (
-                                  <video
-                                    key={i}
-                                    className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
-                                    controls
-                                  >
-                                    <source src={postData?.url} />
-                                  </video>
-                                )}
-
-                                {postData?.file_type === "image" && (
-                                  <img
-                                    key={i}
-                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
-                                    src={postData?.url}
-                                    alt=""
-                                  />
-                                )}
-                              </>
-                            );
-                          }
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* SPONSORS POSTERS */}
-            {eventData?.sponsors_post?.map((sponsorsData: any, i: any) => {
-              return (
-                <div
-                  key={i}
-                  className="w-100 p-[10px] rounded bg-blue-50 mb-[10px] shadow border border-gray-300"
-                >
-                  <div className="w-100 bg-blue-50 rounded">
-                    <div className="class">
-                      <div className="flex items-center justify-center mobile:flex-col">
-                        <img
-                          src={sponsorsData?.logo}
-                          alt=""
-                          className="h-[50px] w-[auto] mr-[10px] mobile:mr-[0]"
-                        />
-                        <p className="text-center font-semibold text-2xl text-blue-800">
-                          {sponsorsData?.name}
-                        </p>
-                      </div>
-
-                      <div className="w-100 flex justify-center items-center flex-col">
-                        {sponsorsData?.post_data?.map(
-                          (postData: any, i: any) => {
-                            return (
-                              <>
-                                {postData?.file_type === "video" && (
-                                  <video
-                                    key={i}
-                                    className="h-[auto] w-[90%] max-h-[400px] rounded mt-[10px] mobile:w-100"
-                                    controls
-                                  >
-                                    <source src={postData?.url} />
-                                  </video>
-                                )}
-
-                                {postData?.file_type === "image" && (
-                                  <img
-                                    key={i}
-                                    className="h-[auto] w-[60%] rounded mt-[10px] bg-red-100 mobile:w-100"
-                                    src={postData?.url}
-                                    alt=""
-                                  />
-                                )}
-                              </>
-                            );
-                          }
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* ALL FEEDBACK SECTION POP UP */}
+          {isModalOpen && (
+            <FeedbackModal
+              feedbackData={eventData?.feedback}
+              onClose={handleCloseModal}
+            />
+          )}
         </div>
+        <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
+      </div>
 
-        {/* RIGHT START */}
-        <div className="w-[100%]  min-w-[350px] p-[10px] tablet:w-100">
-          {/* TOTAL RATINGS */}
-          <div className="p-[10px] bg-blue-50 shadow rounded items-center border border-gray-300 tablet:mb-[10px] mb-[10px]">
-            {/* STARS CONTAINER */}
-            <div className="w-100 flex ">
-              <p className="mr-[5px]  font-semibold">
-                {parseFloat(eventData?.average_rating).toFixed(2)}
-              </p>
-              <div className="flex items-center">
-                {stars.map((_, index) => {
-                  return (
-                    <GoStarFill
-                      key={index}
-                      size="17"
-                      style={{
-                        marginRight: "10",
-                        cursor: "pointer",
-                      }}
-                      color={
-                        eventData?.average_rating > index
-                          ? colors.orange
-                          : colors.gray
-                      }
-                    />
-                  );
-                })}
-              </div>
-              <p className="text-gray-600">
-                ({eventData?.feedback_count} feedbacks)
-              </p>
-            </div>
-            {/* STARS CONTAINER END */}
-
-            {/* NUMBER OF ENROLEES */}
-            <div className="mt-[5px] flex items-center">
-              <p className="text-gray-600">Number of enrolees: </p>
-              <p className="font-semibold">
-                &nbsp; {eventData?.registered?.length}
-              </p>
-            </div>
-
-            {/* DATE PUBLISHED */}
-            <div className="mt-[5px] flex items-center">
-              <p className="text-gray-600">Date published: </p>
-              <p className="font-semibold">
-                &nbsp; {date.toLocaleDateString("en-US")}
-              </p>
-            </div>
-          </div>
-          {/* TOTAL RATINGS DETAILS END */}
-
-          {/* {registered !== undefined ? (
+      {/* FLOATING ACQUIRE COURSE BUTTON */}
+      <div className="w-full max-w-7xl bg-[#2F2F2F] p-4 lg:p-3 sm:flex-row flex-col sm:p-4 ml-[50%] translate-x-[-50%] fixed bottom-0 md:rounded-t-3xl font-semibold text-white flex items-center justify-center">
+        <p className="text-white">Come join us</p>
+        <div className="flex sm:mt-0 mt-4">
+          {/* <button className="bg-[#0D47A1] p-3 rounded ml-3 px-3 text-white hover:opacity-80 duration-300">
+            Acquire now
+          </button> */}
+          {registered !== undefined ? (
             <button
               onClick={() => {
                 if (!token) {
-                  return navigate("/login");
+                  return navigate('/login');
                 }
                 navigate(`/owned/event/credentials?id=${productId}`);
               }}
-              className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+              className="bg-[#0D47A1] p-3 rounded ml-3 px-3 text-white hover:opacity-80 duration-300"
             >
               View
             </button>
@@ -347,84 +422,36 @@ const ViewProduct = () => {
               onClick={() => {
                 if (new Date(eventData?.date_end) < new Date(Date.now())) {
                   return toas(
-                    "Event ended. Please check SDL equivalent in your dashboard",
-                    "error"
+                    'Event ended. Please check SDL equivalent in your dashboard',
+                    'error'
                   );
                 }
-
                 if (!token) {
-                  return navigate("/login");
+                  return navigate('/login');
                 }
                 navigate(`/buy/product?id=${productId}`);
               }}
-              className="w-100 p-[10px] bg-blue-700 text-white mt-[10px] rounded font-semibold mb-[10px] tablet:hidden"
+              className="bg-[#0D47A1] p-3 rounded ml-3 px-3 text-white hover:opacity-80 duration-300"
             >
               {new Date(eventData?.date_end) < new Date(Date.now())
-                ? "Event ended"
-                : " Register now"}
+                ? 'Event ended'
+                : ' Register now'}
             </button>
-          )} */}
+          )}
 
-          {/* AUTHOR CONTAINER */}
-          <div className="w-100 p-[20px] rounded bg-blue-50 flex flex-col items-center shadow border border-gray-300 mb-[10px]">
-            <div className="w-[120px] h-[120px] bg-blue-800 rounded-circle mb-[5px]">
-              <img
-                src={eventData?.author_id?.avatar}
-                alt=""
-                className="h-100 w-100 border-[4px] border-blue-800 rounded-circle "
-              />
-            </div>
-            <p className="text-blue-800 font-semibold text-lg">JSB</p>
-            <p className="text-xs text-gray-700">Author</p>
-          </div>
-          {/* AUTHOR CONTAINER END */}
-
-          {/* FEEDBACK CONTAINER */}
-          <div className="w-100 p-[10px] bg-blue-50 rounded shadow border border-gray-300">
-            <p className="text-center text-blue-900 font-semibold text-lg">
-              Feedback
-            </p>
-
-            {/* REVIEW CARD */}
-
-            {eventData?.feedback?.length === 0 && (
-              <p className="text-center my-[10px]">No feedback yet.</p>
-            )}
-
-            {eventData?.feedback[0] && (
-              <ProductViewReviewCard data={eventData?.feedback[0]} />
-            )}
-
-            {eventData?.feedback[1] && (
-              <ProductViewReviewCard data={eventData?.feedback[1]} />
-            )}
-
-            {eventData?.feedback[2] && (
-              <ProductViewReviewCard data={eventData?.feedback[2]} />
-            )}
-
-            {/* FEEDBACK POPUP */}
-            {reviewPopupOpen && (
-              <>
-                <div
-                  onClick={() => setReviewPopupOpen(false)}
-                  className="fixed w-100 h-[100dvh] bg-gray-900 left-0 top-0 opacity-[30%] z-[9]"
-                />
-                <EventFeedbackPopup
-                  setReviewPopupOpen={setReviewPopupOpen}
-                  data={eventData?.feedback}
-                />
-              </>
-            )}
-            <button
-              onClick={() => setReviewPopupOpen(true)}
-              className="bg-blue-800 text-sm p-[10px] rounded-[20px] px-[20px] text-white ml-[50%] translate-x-[-50%] hover:opacity-[80%] active:opacity-[60%]"
-            >
-              Show all
-            </button>
-          </div>
+          {/* <button className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration">
+            Sponsor Now
+          </button> */}
+          <button
+            onClick={() => navigate(`/event/sponsor-now?id=${productId}`)}
+            className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration"
+          >
+            Sponsor now
+          </button>
         </div>
       </div>
+
+      {/* FOOTER */}
       <Footer />
     </div>
   );

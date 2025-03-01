@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import {
+  SubscriptionPlanType,
+  subscriptionPlans,
+} from '../data/subscriptionData';
 
 // ICONS AND IMAGES IMPORTS
 const LearnImage =
@@ -20,6 +24,8 @@ import { RiChat1Line } from 'react-icons/ri';
 import { MdLocationOn } from 'react-icons/md';
 import Footer from '../components/Home/Footer';
 import { useNavigate } from 'react-router-dom';
+import SubscriptionModal from '../components/Home/SubscriptionModal';
+import SubscriptionPlan from '../components/Home/SubscriptionPlan';
 
 // VIDEOS IMPORTS
 // import HostAds from '../videos/host-ads.mp4';
@@ -55,6 +61,10 @@ const CertificateVid =
   'https://firebasestorage.googleapis.com/v0/b/ztellar-11a4f.appspot.com/o/ztellar-homepage%2Fvideos%2Fcertificatevideo.mp4?alt=media&token=cfa7f432-e814-42bb-98e5-659fbc48ae2a';
 
 const Home: React.FC = () => {
+  // FUNCTION FOR SUBSCRIPTION PLAN MODAL
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanType | null>(
+    null
+  );
   const Adsvideos = [ZtellarAds, HostAds, ZAds];
   const InstructionalVideos = [
     SignupVid,
@@ -120,7 +130,7 @@ const Home: React.FC = () => {
             <div className="grid gap-4 p-2 lg:p-0 md:grid-cols-2">
               <button
                 onClick={() => navigate('/search?query=')}
-                className="bg-[#1A1F71] text-white rounded px-4 py-2"
+                className="bg-[#0D47A1] text-white rounded px-4 py-2"
               >
                 Explore
               </button>
@@ -129,7 +139,7 @@ const Home: React.FC = () => {
                 href="https://appt.link/meet-with-jeferson-binay-IoPHlS4K/web-conference"
                 className="w-full"
               >
-                <button className="border border-[#0D47A1] w-full rounded px-4 py-2">
+                <button className="border border-[#0D47A1] text-[#0D47A1] w-full rounded px-4 py-2">
                   Set an Appointment
                 </button>
               </a>
@@ -143,92 +153,35 @@ const Home: React.FC = () => {
         </div>
 
         {/* SUBSCRIPTION PLAN SECTION */}
-        <div className="bg-[#1A1F71] px-[12px] py-[32px]">
-          <p className="font-black md:text-4xl text-[24px] text-white text-center mb-[40px]">
+        <div className="bg-[#0D47A1] px-3 py-8 flex flex-col justify-center items-center">
+          {/* SECTION TITLE */}
+          <p className="font-black md:text-4xl text-2xl text-white text-center mb-10">
             Subscription Plan
           </p>
+
+          {/* SUBSCRIPTION PLAN CONTAINER */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
-            {[
-              {
-                title: 'Event (Free)',
-                storage: '15GB per month',
-                pages: '1 event page',
-                support: 'Available',
-                capability: 'Up to 1,000',
-                dataStorage: '45 days',
-                bgColor: 'bg-white border border-gray-100',
-              },
-              {
-                title: 'Premium',
-                storage: '30GB per month',
-                pages: 'Up to 2 event pages',
-                support: 'Basic support',
-                capability: 'Up to 1,000',
-                dataStorage: '7 months',
-                bgColor: 'bg-[#82badd]',
-              },
-              {
-                title: 'Gold',
-                storage: '50GB per month',
-                pages: 'Up to 3 event pages',
-                support: '200 hours',
-                capability: 'Up to 10,000',
-                dataStorage: 'Up to 1 year',
-                bgColor: 'bg-[#FBE9C7]',
-              },
-              {
-                title: 'Platinum',
-                storage: '100GB per month',
-                pages: 'Unlimited Event',
-                support: '500 hours',
-                capability: 'Up to 50,000',
-                dataStorage: 'Up to 2 years',
-                bgColor: 'bg-[#E5E4E2]',
-              },
-            ].map((item, index) => (
-              // SUBSCRIPTION PLAN CONTAINER
-              <div
+            {subscriptionPlans.map((plan, index) => (
+              <SubscriptionPlan
                 key={index}
-                className={`${item.bgColor} flex flex-col p-4 rounded-[8px] shadow-md hover:opacity-90`}
-              >
-                <p className="font-bold text-[20px] text-left mb-2">
-                  {item.title}
-                </p>
-                <p className="text-[16px] font-light py-[8px]">
-                  Storage Limit:{' '}
-                  <span className="font-bold">{item.storage}</span>
-                </p>
-                <p className="text-[16px] font-light py-[8px]">
-                  Event Pages: <span className="font-bold"> {item.pages}</span>
-                </p>
-                <p className="text-[16px] font-light py-[8px]">
-                  Customer Support:{' '}
-                  <span className="font-bold"> {item.support}</span>
-                </p>
-                <p className="text-[16px] font-light py-[8px]">
-                  Livestream Capability:{' '}
-                  <span className="font-bold"> {item.capability}</span>
-                </p>
-                <p className="text-[16px] font-light py-[8px]">
-                  Event Data Storage:{' '}
-                  <span className="font-bold"> {item.dataStorage}</span>
-                </p>
-                {/* <div className="flex flex-col justify-center items-center mt-[32px]">
-                  <button className="bg-[#1A1F71] w-full py-[10px] rounded-[4px] my-[8px] font-medium text-white">
-                    Subscribe
-                  </button>
-                  <button className="bg-white w-full py-[10px] rounded-[4px] mt-[8px] font-medium text-[#1A1F71] border border-[#1A1F71]">
-                    Book an Appointment
-                  </button>
-                </div> */}
-              </div>
+                plan={plan}
+                onMoreDetails={() => setSelectedPlan(plan)}
+              />
             ))}
           </div>
-          <div className="flex justify-center items-center p-8 ">
-            <button className="px-14 py-2 bg-white rounded-md text-xs">
-              Book an Appointment to Subscribe
-            </button>
-          </div>
+
+          {/* BOOK AN APPOINTMENT BUTTON */}
+          <button className="bg-white w-52 py-3 rounded-sm mt-9 font-medium text-[#333333] hover:bg-gray-100 duration-300">
+            Book an Appointment
+          </button>
+
+          {/* POP UP */}
+          {selectedPlan && (
+            <SubscriptionModal
+              plan={selectedPlan}
+              onClose={() => setSelectedPlan(null)}
+            />
+          )}
         </div>
 
         <hr className="border-t-1 border-[#00D4D4] my-[75px]" />
