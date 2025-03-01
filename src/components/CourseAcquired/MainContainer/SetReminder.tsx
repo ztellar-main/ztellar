@@ -95,7 +95,7 @@ const SetReminder = ({ courseTitle, courseId, refetch }: SetReminderProps) => {
       <div className="flex-1 bg-[#FAFBFC]">
         {/* MAIN CONTAINER */}
         <div className="w-full py-5 flex justify-center">
-          <div className="flex flex-col w-2/5 bg-white p-5 rounded-lg">
+          <div className="flex flex-col bg-white p-5 rounded-lg md:w-[500px]">
             {/* SECTION TITLE */}
             <h1 className="text-xl font-semibold text-[#333333]">
               Set your Learning Pathway with Ztellar Calendar

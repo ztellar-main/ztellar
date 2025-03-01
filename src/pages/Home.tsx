@@ -148,7 +148,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center py-[32px]">
-          <p className="text-[#1A1F71] text-[18px]">Powered by:</p>
+          <p className="text-[#0D47A1] text-[18px]">Powered by:</p>
           <p className="text-[#7E57C2] text-[18px]">Vizcom Corporation</p>
         </div>
 
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
             {/* PREVIOUS BUTTON */}
             <button
               onClick={handlePrev}
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-[#1A1F71] text-[24px] text-white rounded-full w-[50px] h-[50px]"
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-[#0D47A1] text-[24px] text-white rounded-full w-[50px] h-[50px]"
             >
               &larr;
             </button>
@@ -211,7 +211,7 @@ const Home: React.FC = () => {
             {/* NEXT BUTTON */}
             <button
               onClick={handleNext}
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-[#1A1F71] text-white rounded-full w-[50px] h-[50px]"
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-[#0D47A1] text-white rounded-full w-[50px] h-[50px]"
             >
               &rarr;
             </button>
@@ -220,7 +220,7 @@ const Home: React.FC = () => {
         <hr className="w-full border-t-1 border-[#00D4D4] my-[75px]" />
 
         {/* YOU CAN BE SECTION */}
-        <div className="bg-[#1A1F71] px-4 py-8">
+        <div className="bg-[#0D47A1] px-4 py-8">
           <p className="font-black md:text-4xl text-[24px] text-[#f4f4f4] text-center mb-[56px]">
             The possibilities are endless — you can be...
           </p>
@@ -285,7 +285,7 @@ const Home: React.FC = () => {
         {/* EVENT CARDS SECTION */}
         <div className="p-4">
           <div className="flex justify-between items-center">
-            <p className="text-[32px] font-bold text-[#1A1F71]">Events</p>
+            <p className="text-[32px] font-bold text-[#0D47A1]">Events</p>
             <button className="text-[16px] text-[#2D3648]">See more</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-[8px]">
@@ -325,7 +325,7 @@ const Home: React.FC = () => {
         {/* COURSE CARDS SECTION */}
         <div className="p-4">
           <div className="flex justify-between items-center">
-            <p className="text-[32px] font-bold text-[#1A1F71]">Courses</p>
+            <p className="text-[32px] font-bold text-[#0D47A1]">Courses</p>
             <button className="text-[16px] text-[#2D3648]">See more</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-[8px]">
@@ -421,14 +421,14 @@ const Home: React.FC = () => {
             {/* PREVIOUS BUTTON */}
             <button
               onClick={handlePrev}
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-[#1A1F71] text-[24px] text-white rounded-full w-[50px] h-[50px]"
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-[#0D47A1] text-[24px] text-white rounded-full w-[50px] h-[50px]"
             >
               &larr;
             </button>
             {/* NEXT BUTTON */}
             <button
               onClick={handleNext}
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-[#1A1F71] text-white rounded-full w-[50px] h-[50px]"
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-[#0D47A1] text-white rounded-full w-[50px] h-[50px]"
             >
               &rarr;
             </button>
@@ -439,7 +439,7 @@ const Home: React.FC = () => {
         {/* CONTACT US SECTION */}
         <div className="px-4 py-8">
           <div className="mb-[56px]">
-            <p className="font-black md:text-4xl text-[24px] text-[#1A1F71] text-center">
+            <p className="font-black md:text-4xl text-[24px] text-[#0D47A1] text-center">
               Reach out to our helpful support team
             </p>
             <p className="text-center mt-[20px] text-[18px] font-light">
@@ -488,7 +488,7 @@ const Home: React.FC = () => {
 
                 <p className="text-base  font-normal">{item.description}</p>
 
-                <button className="bg-[#1A1F71] py-[10px] w-full rounded-[4px] mt-[36px] text-white font-extralight">
+                <button className="bg-[#0D47A1] py-[10px] w-full rounded-[4px] mt-[36px] text-white font-extralight">
                   {item.click}
                 </button>
               </div>
