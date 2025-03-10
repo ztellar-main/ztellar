@@ -629,7 +629,7 @@ const ViewEvent = () => {
           {/* 6TH SECTION START - SPONSORS LIST */}
           <section ref={section6Ref} className="w-full  p-2 md:p-8">
             <h1 className="text-2xl font-bold mb-2">
-              List of Teams
+              List of Created Teams
             </h1>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
