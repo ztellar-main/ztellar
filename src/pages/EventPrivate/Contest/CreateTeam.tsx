@@ -11,7 +11,7 @@ import Navbar from '../../../components/Navbar';
 import axios, { AxiosError } from 'axios';
 import { useAppSelector } from '../../../state/store';
 import toas from '../../../utils/toas';
-import { useQuery } from '@tanstack/react-query';
+
 import { useNavigate } from 'react-router-dom';
 
 const CreateTeam = () => {
@@ -33,7 +33,7 @@ const CreateTeam = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [addMemberModal, setAddMemberModal] = useState(false);
 
-  const [eventToJoin, setEventToJoin] = useState('');
+ 
   // STUDENT VALUES
   const [nameOfSchool, setNameOfSchool] = useState('');
   const [degreeProgram, setDegreeProgram] = useState('');
