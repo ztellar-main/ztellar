@@ -639,7 +639,7 @@ const ViewEvent = () => {
                       Team Name
                     </th>
                     <th className="p-3 text-left border border-slate-600">
-                      Number of Team Mates
+                      Number of Members
                     </th>
                     <th className="p-3 text-left border border-slate-600">
                       Action
