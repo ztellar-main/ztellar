@@ -118,7 +118,7 @@ const ViewProduct = () => {
   //   return () => cancelAnimationFrame(animationFrameId);
   // }, []);
 
-  console.log(eventData?.subjects);
+  console.log(eventData?.event_type);
 
   return (
     <div>
@@ -442,6 +442,15 @@ const ViewProduct = () => {
           {/* <button className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration">
             Sponsor Now
           </button> */}
+
+          {eventData?.event_type === 'contest' && (
+            <button
+              onClick={() => navigate(`/event/register-team?id=${productId}`)}
+              className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration"
+            >
+              Create Team
+            </button>
+          )}
           <button
             onClick={() => navigate(`/event/sponsor-now?id=${productId}`)}
             className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration"

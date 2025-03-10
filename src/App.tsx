@@ -96,6 +96,7 @@ import AuthorDashboardAccountDetails from './pages/AuthorDashboard/AuthorDashboa
 
 // GENERAL
 import NewHome from './pages/general/NewHome';
+import CreateTeam from './pages/EventPrivate/Contest/CreateTeam';
 
 const queryClient = new QueryClient();
 
@@ -118,6 +119,7 @@ function App() {
               <Route path="/search" element={<Search />} />
               <Route path="/view/event" element={<ViewProduct />} />
               <Route path="/buy/product" element={<BuyProduct />} />
+              <Route path="/event/register-team" element={<CreateTeam />} />
               <Route
                 path="/complete-info"
                 element={<UpdateUserBeforeLoggingIn />}

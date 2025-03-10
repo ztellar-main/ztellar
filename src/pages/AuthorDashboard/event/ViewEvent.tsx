@@ -25,6 +25,7 @@ import {
   Filler,
 } from 'chart.js';
 import { exportToExcel } from '../../../utils/excelDownloader';
+import ListOfContestants from '../../../components/AuthorDashboard/ListOfContestants';
 
 ChartJS.register(
   CategoryScale,
@@ -482,7 +483,7 @@ const ViewEvent = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  console.log(sponsorsBoothData);
+  console.log(data?.contestTeams);
   return (
     <>
       <div className="w-full">
@@ -624,6 +625,46 @@ const ViewEvent = () => {
             </div>
           </section>
           {/* 5TH SECTION END - REGISTERED LIST */}
+
+          {/* 6TH SECTION START - SPONSORS LIST */}
+          <section ref={section6Ref} className="w-full  p-2 md:p-8">
+            <h1 className="text-2xl font-bold mb-2">
+              List of Teams
+            </h1>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[800px] table-auto border-collapse border border-gray-200">
+                <thead className="bg-indigo-900 text-white">
+                  <tr>
+                    <th className="p-3 text-left border border-slate-600">
+                      Team Name
+                    </th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Number of Team Mates
+                    </th>
+                    <th className="p-3 text-left border border-slate-600">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* {sponsorsBoothData?.map((data: any, i: any) => {
+                    return (
+                      <ListOfSponsorsTableRowComponent
+                        key={i}
+                        data={data}
+                        eventId={eventId}
+                        setRefresher={setRefresher}
+                      />
+                    );
+                  })} */}
+                  {data?.contestTeams?.map((team: any, i: any) => {
+                    return <ListOfContestants key={i} data={team} />;
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+          {/* 6TH SECTION END - SPONSORS LIST */}
 
           {/* 6TH SECTION START - SPONSORS LIST */}
           <section ref={section6Ref} className="w-full  p-2 md:p-8">
