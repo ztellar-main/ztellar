@@ -9,7 +9,7 @@ type Props = {
 const SubscriptionPlan: React.FC<Props> = ({ plan, onMoreDetails }) => {
   return (
     <>
-      <div className={'rounded-lg shadow-md hover:opacity-90 overflow-hidden'}>
+      <div className={'rounded-lg shadow-md hover:opacity-90 overflow-hidden border border-blue-gray-50'}>
         <div
           className={`${plan.appearance.bgColor} p-4 flex items-center justify-center`}
         >
