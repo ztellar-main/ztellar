@@ -171,7 +171,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* BOOK AN APPOINTMENT BUTTON */}
-          <button className="bg-[#333333] w-52 py-3 rounded mt-9 font-medium text-white text-sm tracking-[1px] hover:bg-gray-100 duration-300">
+          <button className="bg-[#333333] w-52 py-3 rounded mt-9 font-medium text-white text-sm tracking-[1px] hover:opacity-80 duration-300">
             Book an Appointment
           </button>
 
@@ -490,7 +490,9 @@ const Home: React.FC = () => {
 
                 <button
                   className={` ${
-                    item.title !== 'Call us' ? 'bg-[#0D47A1] text-white' : "text-[#0D47A1]"
+                    item.title !== 'Call us'
+                      ? 'bg-[#0D47A1] text-white'
+                      : 'text-[#0D47A1]'
                   } py-[10px] w-full rounded-[4px] mt-[36px]  font-extralight`}
                 >
                   {item.click}
