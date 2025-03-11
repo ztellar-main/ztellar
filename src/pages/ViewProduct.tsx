@@ -346,7 +346,7 @@ const ViewProduct = () => {
                     />
                     <div>
                       <p className="text-lg text-[#333333] font-semibold mb-2">
-                        {feedback?.user?.fname} {feedback?.user?.fname}
+                        {feedback?.user?.fname} {feedback?.user?.lname}
                       </p>
                       <div className="flex items-center">
                         <span className="text-yellow-500 text-2xl flex">

@@ -46,39 +46,49 @@ const ViewReminder = ({
   };
 
   return (
-    <div className=" w-full h-[400px] p-4 pt-8 shadow-lg">
-      <p className="text-center mb-4">
-        Time: {reminder?.hours}:{reminder?.minutes}
-      </p>
+    <div className=" w-full bg-[#FAFBFC] h-[400px] p-4 pt-8 shadow-lg">
+      <div className="w-[95%] md:w-1/2   mx-auto shadow-lg rounded-lg p-4">
+        <h1 className="text-[#333333] font-semibold text-xl">View Reminder</h1>
+        <hr className="border-t-1 border-[#CFD8DC] my-4" />
+        <p className="text-[#333333] text-base font-light">
+          Time:{' '}
+          <span className="font-bold">
+            {reminder?.hours}:{reminder?.minutes}
+          </span>
+        </p>
 
-      <div className="mb-4">
-        <p className="text-center mb-2 font-semibold">DAYS</p>
-        {reminder?.days?.map((day: any, i: any) => {
-          return (
-            <p key={i} className="text-center text-sm mb-1">
-              {day}
-            </p>
-          );
-        })}
-      </div>
+        <p className="text-[#333333] text-base font-light py-5">
+          Days:{' '}
+          {reminder?.days?.map((day: any, i: any) => {
+            return (
+              <span key={i} className="font-bold">
+                {day},{' '}
+              </span>
+            );
+          })}
+        </p>
 
-      <p className="text-center mb-4 text-sm">
-        This reminder will stop on {date.toISOString().split('T')[0]}
-      </p>
+        <p className="text-[#333333] text-base font-light">
+          This reminder will stop on:{' '}
+          <span className="font-bold">{date.toISOString().split('T')[0]}</span>
+        </p>
 
-      <div className="w-[300px] ml-[50%] translate-x-[-50%] grid grid-cols-2 gap-2">
-        <button
-          onClick={handleEdit}
-          className="bg-blue-gray-800 text-white py-2 rounded"
-        >
-          Edit
-        </button>
-        <button
-          onClick={handleDelete}
-          className=" text-blue-gray-800 border border-blue-gray-800 py-2 rounded"
-        >
-          Delete
-        </button>
+        <hr className="border-t-1 border-[#CFD8DC] my-4" />
+
+        <div className="w-[300px] ml-[50%] translate-x-[-50%] grid grid-cols-2 gap-2 mt-5">
+          <button
+            onClick={handleEdit}
+            className="bg-blue-gray-800 text-white py-2 rounded"
+          >
+            Edit
+          </button>
+          <button
+            onClick={handleDelete}
+            className=" text-blue-gray-800 border border-blue-gray-800 py-2 rounded"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
