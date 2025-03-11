@@ -87,7 +87,10 @@ const OwnedCard = ({ data, setRefresher }: Props) => {
         {data?.product_type === 'course' && (
           <>
             {expiry?.getTime() < dateNow?.getTime() ? (
-              <button className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900">
+              <button
+                onClick={() => navigate(`/view/course?id=${data?._id?._id}`)}
+                className="w-100 bg-blue-800 text-white mt-[10px] p-[5px] rounded hover:bg-blue-600 active:bg-blue-900"
+              >
                 Subscription Expired
               </button>
             ) : (
