@@ -148,14 +148,14 @@ const Home: React.FC = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center py-[32px]">
-          <p className="text-[#0D47A1] text-[18px]">Powered by:</p>
-          <p className="text-[#7E57C2] text-[18px]">Vizcom Corporation</p>
+          <p className="text-[#333333] text-[18px]">Powered by:</p>
+          <p className="text-[#0D47A1] text-[18px]">Vizcom Corporation</p>
         </div>
 
         {/* SUBSCRIPTION PLAN SECTION */}
-        <div className="bg-[#0D47A1] px-3 py-8 flex flex-col justify-center items-center">
+        <div className="bg-white px-3 py-8 flex flex-col justify-center items-center">
           {/* SECTION TITLE */}
-          <p className="font-black md:text-4xl text-2xl text-white text-center mb-10">
+          <p className="font-bold tracking-[1px] md:text-4xl text-2xl text-[#333333] text-center mb-10">
             Subscription Plan
           </p>
 
@@ -171,7 +171,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* BOOK AN APPOINTMENT BUTTON */}
-          <button className="bg-white w-52 py-3 rounded-sm mt-9 font-medium text-[#333333] hover:bg-gray-100 duration-300">
+          <button className="bg-[#333333] w-52 py-3 rounded mt-9 font-medium text-white text-sm tracking-[1px] hover:bg-gray-100 duration-300">
             Book an Appointment
           </button>
 
@@ -488,7 +488,11 @@ const Home: React.FC = () => {
 
                 <p className="text-base  font-normal">{item.description}</p>
 
-                <button className="bg-[#0D47A1] py-[10px] w-full rounded-[4px] mt-[36px] text-white font-extralight">
+                <button
+                  className={` ${
+                    item.title !== 'Call us' ? 'bg-[#0D47A1] text-white' : "text-[#0D47A1]"
+                  } py-[10px] w-full rounded-[4px] mt-[36px]  font-extralight`}
+                >
                   {item.click}
                 </button>
               </div>
