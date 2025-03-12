@@ -122,6 +122,8 @@ const CoursePreviewPublic = () => {
     }
     return navigate(`/acquire/course?id=${courseData?.data?._id}`);
   };
+
+  console.log(courseData?.data?.video_url);
   return (
     <div>
       <Navbar />
@@ -133,7 +135,14 @@ const CoursePreviewPublic = () => {
           /course/view
         </div>
         {/* VIDEO */}
-        <div className="w-100 h-[400px] bg-black"></div>
+        <div
+          key={courseData?.data?.video_url}
+          className="w-100 h-[400px] bg-black"
+        >
+          <video className="h-[100%] w-100" autoPlay controls>
+            <source src={courseData?.data?.video_url} />
+          </video>
+        </div>
         {/* DETAILS */}
         <div className="w-100 max-w-[1280px] ml-[50%] translate-x-[-50%] laptop:p-[10px]">
           {/* title */}

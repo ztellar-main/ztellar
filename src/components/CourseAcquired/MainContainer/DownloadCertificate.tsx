@@ -13,11 +13,15 @@ const DownloadCertificate = ({ courseId, cert }: Props) => {
   const { token, currentUser } = useAppSelector((state: any) => state?.user);
 
   const name = `${currentUser?.fname} ${currentUser?.lname}`;
+
   const position = {
     left: cert?.left,
     top: cert?.top,
+    // top: 940,
+    // left: 700,
   };
   const fontSize = cert?.font;
+
 
   // certificate
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,6 +35,8 @@ const DownloadCertificate = ({ courseId, cert }: Props) => {
     const image = new Image();
     image.crossOrigin = 'anonymous';
     image.src = cert?.image; // Path to your certificate image
+    // image.src =
+    //   'https://res.cloudinary.com/deiqbqxh6/image/upload/v1741741352/APEP%20certificates/uu0ehhlm1uhfmzmpu8dk.png';
 
     image.onload = () => {
       canvas.width = image.width;
