@@ -61,7 +61,7 @@ const DownloadCertificate = ({ courseId, cert }: Props) => {
     if (!canvas) return;
 
     const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('landscape', 'px', [canvas.width, canvas.height]);
+    const pdf = new jsPDF('portrait', 'px', [canvas.width, canvas.height]);
 
     pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
     pdf.save('certificate.pdf');
