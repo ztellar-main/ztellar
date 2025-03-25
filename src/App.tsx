@@ -97,6 +97,9 @@ import AuthorDashboardAccountDetails from './pages/AuthorDashboard/AuthorDashboa
 // GENERAL
 import NewHome from './pages/general/NewHome';
 import CreateTeam from './pages/EventPrivate/Contest/CreateTeam';
+import ViewMovie from './pages/MoviePublic/ViewMovie';
+import BuyMovie from './pages/MoviePrivate/BuyMovie';
+import SubscribeMoviePage from './pages/Movie/SubscribeMoviePage';
 
 const queryClient = new QueryClient();
 
@@ -305,6 +308,14 @@ function App() {
 
               {/* AUTHOR DASHBOARD NEW END */}
               <Route path="/home" element={<NewHome />} />
+
+              {/* MOVIE */}
+              <Route path="/view/movie" element={<ViewMovie />} />
+              <Route path="/view/movie/subscribe" element={<BuyMovie />} />
+              <Route
+                path="/view/movie/subscribed"
+                element={<SubscribeMoviePage />}
+              />
             </Routes>
           </Router>
         </QueryClientProvider>

@@ -23,6 +23,9 @@ const ProductSearchCards = ({ data }: Props) => {
     if (data?.type === 'course') {
       return navigate(`/view/course?id=${data?._id}`);
     }
+    if (data?.type === 'movie') {
+      return navigate(`/view/movie?id=${data?._id}`);
+    }
     navigate(`/view/event?id=${data?._id}`);
   };
 

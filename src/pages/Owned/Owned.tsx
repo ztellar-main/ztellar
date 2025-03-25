@@ -6,6 +6,7 @@ import { useAppSelector } from '../../state/store';
 import { Navigate } from 'react-router-dom';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import { useState } from 'react';
+import SubscribeMovieCard from '../../components/Owned/SubscribeMovieCard';
 
 const Owned = () => {
   const token = useAppSelector((e) => e.user.token);
@@ -49,16 +50,37 @@ const Owned = () => {
       <div>
         <Navbar />
         {/* MAIN BODY */}
-        <p className="w-100 p-[10px] bg-blue-800 text-white text-lg font-semibold shadow">
+        <p className="w-100 p-[10px] bg-blue-800 text-white text-lg font-semibold shadow mb-2">
           Acquired courses and events
         </p>
+
+        <h1 className="ml-[20px] text-xl text-blue-gray-900">
+          Subscribed/Acquired Events and Course
+        </h1>
         <div className="grid grid-cols-[repeat(auto-fill,270px)] p-[20px] bg-gray-50 gap-[10px] justify-around">
-          {ownedData?.product_owned?.map((data: any, i: any) => {
+          {ownedData?.products?.product_owned?.map((data: any, i: any) => {
             return (
               <OwnedCard setRefresher={setRefresher} key={i} data={data} />
             );
           })}
         </div>
+
+        <h1 className="ml-[20px] text-xl text-blue-gray-900">
+          Subscribed Movies
+        </h1>
+
+        <div className="grid grid-cols-[repeat(auto-fill,270px)] p-[20px] bg-gray-50 gap-[10px] justify-around">
+          {ownedData?.movies?.map((data: any, i: any) => {
+            return (
+              <SubscribeMovieCard
+                key={i}
+                setRefresher={setRefresher}
+                data={data}
+              />
+            );
+          })}
+        </div>
+
         <Loading />
       </div>
     </>

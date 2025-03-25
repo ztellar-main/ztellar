@@ -1,17 +1,5 @@
 import { useState } from 'react';
 
-// IMAGES IMPORT
-// import Logo1 from "../icons/logo1.png";
-// import Logo2 from "../icons/logo2.png";
-// import Logo3 from "../icons/logo3.png";
-// import Logo4 from "../icons/logo4.png";
-// import Logo5 from "../icons/logo5.png";
-// import Logo6 from "../icons/logo6.png";
-// import Logo7 from "../icons/logo7.png";
-// import ProfileAuthor from "../icons/AuthorProf.png";
-// import Prog1 from "../icons/Day1.png";
-// import Prog2 from "../icons/Day2.png";
-
 // REACT ICONS IMPORT
 
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
@@ -31,7 +19,6 @@ const ViewProduct = () => {
   // const logos = [Logo1, Logo2, Logo3, Logo4, Logo5, Logo6, Logo7];
   const [selectedImage, setSelectedImage] = useState('');
   const [openProgram, setOpenProgram] = useState(false);
-  console.log(openProgram);
 
   // START
   const navigate = useNavigate();
@@ -67,6 +54,7 @@ const ViewProduct = () => {
       const res = await axios({
         method: 'get',
         url: `/product/get-view-event-product?id=${productId}`,
+        headers: { Authorization: `${token}` },
       });
       return res?.data;
     },
@@ -89,6 +77,8 @@ const ViewProduct = () => {
   const registered = eventData?.registered?.find((data: any) => {
     return data?._id === user?._id;
   });
+
+
 
   // END
 
@@ -118,8 +108,6 @@ const ViewProduct = () => {
   //   return () => cancelAnimationFrame(animationFrameId);
   // }, []);
 
-  console.log(eventData?.event_type);
-
   return (
     <div>
       {/* NAVBAR SECTION */}
@@ -130,18 +118,18 @@ const ViewProduct = () => {
         {/* PREVIEW VIDEO CONTAINER */}
         <div className="w-full  bg-black">
           <div
-            key={eventData?.video_url}
+            key={eventData?.event?.video_url}
             className="w-100 h-[100%] md:h-[400px] bg-black flex justify-center "
           >
             <video className="h-[100%] w-100" autoPlay controls>
-              <source src={eventData?.video_url} />
+              <source src={eventData?.event?.video_url} />
             </video>
           </div>
         </div>
 
         {/* COURSE TITLE */}
         <p className="py-3 text-xl font-semibold text-[#333333] tracking-[1px] pl-3">
-          {eventData?.title}
+          {eventData?.event?.title}
         </p>
 
         {/* COURSE DESCRIPTION */}
@@ -150,7 +138,7 @@ const ViewProduct = () => {
             Description
           </h1>
           <p className="text-[#333333] font-light tracking-[1px]">
-            {eventData?.description}
+            {eventData?.event?.description}
           </p>
         </div>
         <hr className="w-full border-t-1 border-[#CFD8DC] my-4" />
@@ -160,7 +148,7 @@ const ViewProduct = () => {
           <h1 className="text-[#333333] font-semibold text-lg tracking-[1px]">
             Objectives
           </h1>
-          {eventData?.objectives?.map((obData: any, i: any) => (
+          {eventData?.event?.objectives?.map((obData: any, i: any) => (
             <div key={i} className="flex items-center p-2">
               <div className="h-2 w-2 max-w-2 max-h-2 rounded-full bg-[#333333] mr-3" />
               <p className="text-[#333333] font-light tracking-[1px]">
@@ -192,7 +180,7 @@ const ViewProduct = () => {
             </thead>
 
             <tbody>
-              {eventData?.subjects?.map((subjectData: any, i: any) => {
+              {eventData?.event?.subjects?.map((subjectData: any, i: any) => {
                 return <SubjectCard key={i} subjectData={subjectData} />;
               })}
             </tbody>
@@ -206,7 +194,7 @@ const ViewProduct = () => {
             Event Program
           </h2>
           <div className="flex justify-evenly sm:flex-row flex-col">
-            {eventData?.event_programs?.map((program: any, i: any) => (
+            {eventData?.event?.event_programs?.map((program: any, i: any) => (
               <img
                 key={i}
                 className="my-1 cursor-pointer"
@@ -265,13 +253,14 @@ const ViewProduct = () => {
             <div className="flex justify-start py-2">
               <img
                 className="mr-4 max-w-[40px] max-h-[40px] rounded-full"
-                src={eventData?.author_id?.avatar}
+                src={eventData?.event?.author_id?.avatar}
                 alt=""
               />
 
               <div className="flex flex-col justify-between">
                 <p className="text-xl font-semibold text-[#333333]">
-                  {eventData?.author_id?.fname} {eventData?.author_id?.lname}
+                  {eventData?.event?.author_id?.fname}{' '}
+                  {eventData?.event?.author_id?.lname}
                 </p>
                 <p className="text-sm font-light text-[#333333]">Author</p>
                 <p className="text-[#333333] font-light text-sm underline">
@@ -282,7 +271,7 @@ const ViewProduct = () => {
             <div className="flex flex-col lg:flex-row justify-between pl-2">
               <div className="flex items-center py-2">
                 <p className="text-base text-[#333333] font-normal">
-                  {eventData?.average_rating}
+                  {eventData?.event?.average_rating}
                 </p>
                 <div className="flex items-center mx-5">
                   <span className="text-yellow-500 flex">
@@ -296,7 +285,7 @@ const ViewProduct = () => {
                             cursor: 'pointer',
                           }}
                           color={
-                            eventData?.average_rating > index
+                            eventData?.event?.average_rating > index
                               ? colors.orange
                               : colors.gray
                           }
@@ -306,14 +295,14 @@ const ViewProduct = () => {
                   </span>
                 </div>
                 <p className="text-base text-[#333333] font-normal">
-                  ({eventData?.feedback_count} ratings)
+                  ({eventData?.event?.feedback_count} ratings)
                 </p>
               </div>
               <div className="flex items-center py-2">
                 <p className="text-base font-light text-[#333333]">
                   Number of Registrants:{' '}
                   <span className="font-bold">
-                    {eventData?.registered?.length}
+                    {eventData?.event?.registered?.length}
                   </span>
                 </p>
               </div>
@@ -328,8 +317,7 @@ const ViewProduct = () => {
             FEEDBACKS
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventData?.feedback?.map((feedback: any, index: any) => {
-              console.log(feedback);
+            {eventData?.event?.feedback?.map((feedback: any, index: any) => {
               return (
                 <div
                   key={index}
@@ -360,7 +348,7 @@ const ViewProduct = () => {
                                   cursor: 'pointer',
                                 }}
                                 color={
-                                  eventData?.average_rating > index
+                                  eventData?.event?.average_rating > index
                                     ? colors.orange
                                     : colors.gray
                                 }
@@ -390,7 +378,7 @@ const ViewProduct = () => {
           {/* ALL FEEDBACK SECTION POP UP */}
           {isModalOpen && (
             <FeedbackModal
-              feedbackData={eventData?.feedback}
+              feedbackData={eventData?.event?.feedback}
               onClose={handleCloseModal}
             />
           )}
@@ -420,7 +408,9 @@ const ViewProduct = () => {
           ) : (
             <button
               onClick={() => {
-                if (new Date(eventData?.date_end) < new Date(Date.now())) {
+                if (
+                  new Date(eventData?.event?.date_end) < new Date(Date.now())
+                ) {
                   return toas(
                     'Event ended. Please check SDL equivalent in your dashboard',
                     'error'
@@ -433,22 +423,27 @@ const ViewProduct = () => {
               }}
               className="bg-[#0D47A1] p-3 rounded ml-3 px-3 text-white hover:opacity-80 duration-300"
             >
-              {new Date(eventData?.date_end) < new Date(Date.now())
+              {new Date(eventData?.event?.date_end) < new Date(Date.now())
                 ? 'Event ended'
                 : ' Register now'}
             </button>
           )}
 
-          {/* <button className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration">
+          <button className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration">
             Sponsor Now
-          </button> */}
+          </button>
 
-          {eventData?.event_type === 'contest' && (
+          {eventData?.event?.event_type === 'contest' && eventData?.auth && (
             <button
-              onClick={() => navigate(`/event/register-team?id=${productId}`)}
+              onClick={() => {
+                if (!eventData?.eventContest) {
+                  return navigate(`/event/register-team?id=${productId}`);
+                }
+                navigate(`/event/edit-team?id=${productId}`);
+              }}
               className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration"
             >
-              Create Team
+              {!eventData?.eventContest ? ' Create Team' : 'Edit Team'}
             </button>
           )}
           <button
