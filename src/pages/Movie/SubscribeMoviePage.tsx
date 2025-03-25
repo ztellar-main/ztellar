@@ -19,7 +19,7 @@ const SubscribeMoviePage = () => {
   return (
     <div>
       <iframe
-        src="https://player.vdocipher.com/v2/?otp=20160313versASE323UzKJkDKy2Jr78aQfHUaWiznmGFuLRgG9QTDPlAVTdrgmKo&playbackInfo=eyJ2aWRlb0lkIjoiOWEwM2U1NDg3NjM2NDVmMDlkZTBlNTBlNDBmYjkzODgifQ=="
+        src="https://player.vdocipher.com/v2/?otp=20160313versASE323IyqitftHNO7fIPdfIf43QJ7BA6BF7WK9AJfxgvc0WiTIdK&playbackInfo=eyJ2aWRlb0lkIjoiZTk1YzE2ZWIwMmFlNDQ3Yzg4MWY5MTNhMTQyOTE2OGIifQ=="
         style={{
           border: '0',
           height: '100vh',
@@ -28,9 +28,7 @@ const SubscribeMoviePage = () => {
         }}
         allowFullScreen={true}
         allow="encrypted-media"
-      >
-        
-      </iframe>
+      ></iframe>
     </div>
   );
 };
