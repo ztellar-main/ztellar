@@ -428,10 +428,10 @@ const ViewProduct = () => {
                 : ' Register now'}
             </button>
           )}
-
+{/* 
           <button className="border border-[#0D47A1] p-3 rounded ml-3 px-3 text-[#0D47A1] bg-white hover:bg-gray-100 duration">
             Sponsor Now
-          </button>
+          </button> */}
 
           {eventData?.event?.event_type === 'contest' && eventData?.auth && (
             <button
